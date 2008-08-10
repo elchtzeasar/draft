@@ -1,5 +1,5 @@
 require 'rainbow'
-
+require 'cucumber/rake/task'
 success = true
 
 namespace 'test' do
@@ -12,15 +12,19 @@ namespace 'test' do
   task :component do
     success = success && Kernel.system("env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:#{pwd}/libs bin/component_tests")
   end
+  
+  namespace 'system' do
+    Cucumber::Rake::Task.new(:verified, 'Run non-wip system tests') do |task|
+      task.cucumber_opts = %w{--tags ~@wip features}
+    end
 
-  desc 'Run systems tests'
-  task :system do
-    require 'rake/runtest'
-
-    logdir = "/tmp/b2b.#{Etc.getlogin}"
-    Dir.mkdir(logdir) unless File.exist? logdir
-
-    Rake.run_tests('b2b/test*.rb')
+    Cucumber::Rake::Task.new(:wip, 'Run wip system tests') do |task|
+      task.cucumber_opts = %w{--tags @wip features}
+    end
+  end
+  
+  desc 'Run system tests'
+  task :system => 'test:system:verified' do
   end
 end
 
