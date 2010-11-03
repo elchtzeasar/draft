@@ -10,7 +10,7 @@ class FileMenu : public QMenu {
   Q_OBJECT
 
  public:
-  FileMenu(QWidget* mainWindow);
+  FileMenu(QWidget* parent);
   virtual ~FileMenu();
 
  private slots:

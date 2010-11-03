@@ -4,6 +4,8 @@
 #include <QMainWindow>
 
 class FileMenu;
+class HostDraftDialog;
+
 class QScrollArea;
 
 class MainWindow : public QMainWindow {
@@ -12,11 +14,15 @@ class MainWindow : public QMainWindow {
   MainWindow();
   virtual ~MainWindow();
 
+ public slots:
+  void openHostWindow();
+
  private:
   MainWindow(const MainWindow&);
   MainWindow& operator=(MainWindow&);
 
   FileMenu* fileMenu;
+  HostDraftDialog* hostDraftDialog;
 
   QScrollArea* scrollArea;
 };
