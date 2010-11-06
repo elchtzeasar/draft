@@ -1,4 +1,7 @@
 Makefile
 moc_*
 bin/*
-obj/*
+*/objs/*
+*/*.so.*
+*/*.so
+build/draft
