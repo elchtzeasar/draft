@@ -5,10 +5,10 @@ INCLUDEPATH += . ..
 WARNINGS += -Wall
 
 TEMPLATE = lib
-#CONFIG = staticlib
+CONFIG += staticlib
 
 # The following keeps the generated files at least somewhat separate 
 # from the source files.
 MOC_DIR = mocs
-# DESTDIR = ../libs
+DESTDIR = ../libs
 OBJECTS_DIR = objs
