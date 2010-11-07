@@ -1,6 +1,7 @@
 # Stolen from http://stackoverflow.com/questions/1417776/how-to-use-qmakes-subdirs-template
 
 #Includes common configuration for all subdirectory .pro files.
+
 INCLUDEPATH += . include
 WARNINGS += -Wall
 
