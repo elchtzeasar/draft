@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-INCLUDEPATH += ../gui/src
+INCLUDEPATH += ../gui/include
 OBJECTS_DIR = objs
 SOURCES += main.cpp
 
