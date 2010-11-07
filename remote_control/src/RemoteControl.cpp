@@ -10,6 +10,8 @@ using std::string;
 
 RemoteControl::RemoteControl() {}
 
+RemoteControl::~RemoteControl() {}
+
 void RemoteControl::run() {
   while (true) {
     string command;

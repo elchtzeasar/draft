@@ -1,7 +1,8 @@
-#include <QApplication>
-
 #include "MainWindow.h"
 #include "RemoteControl.h"
+
+#include <QApplication>
+#include <QThread>
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +12,7 @@ int main(int argc, char *argv[])
   mainWindow.show();
 
   RemoteControl remoteControl;
-  remoteControl.run();
+  remoteControl.start(QThread::LowPriority);
 
   return app.exec();
 }
