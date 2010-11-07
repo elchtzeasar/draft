@@ -1,4 +1,4 @@
-#include "RemoteControl.h"
+#include "RemoteController.h"
 
 #include <iostream>
 #include <string>
@@ -8,11 +8,11 @@ using std::cout;
 using std::endl;
 using std::string;
 
-RemoteControl::RemoteControl() {}
+RemoteController::RemoteController() {}
 
-RemoteControl::~RemoteControl() {}
+RemoteController::~RemoteController() {}
 
-void RemoteControl::run() {
+void RemoteController::run() {
   while (true) {
     string command;
     cin >> command;

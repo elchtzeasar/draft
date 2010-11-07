@@ -2,6 +2,6 @@
     error( Couldnt find the common.pri file! )
 }
 
-HEADERS += include/RemoteControl.h
+HEADERS += include/RemoteController.h
 
-SOURCES += src/RemoteControl.cpp
+SOURCES += src/RemoteController.cpp
