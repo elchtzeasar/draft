@@ -2,7 +2,8 @@
     error( Couldnt find the common.pri file! )
 }
 
-HEADERS += src/MainWindow.h
+HEADERS += include/MainWindow.h
+
 HEADERS += src/FileMenu.h
 HEADERS += src/HostDraftDialog.h
 
