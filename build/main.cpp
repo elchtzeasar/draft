@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "Gui.h"
 #include "RemoteController.h"
 
 #include <QApplication>
@@ -8,8 +8,7 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
-  MainWindow mainWindow;
-  mainWindow.show();
+  Gui gui;
 
   RemoteController remoteController;
   remoteController.start(QThread::LowPriority);
