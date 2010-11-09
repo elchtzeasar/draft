@@ -4,13 +4,17 @@
 #include <QThread>
 
 class RemoteController : public QThread {
-  //  Q_OBJECT
+  Q_OBJECT
 
  public:
   RemoteController();
   ~RemoteController();
 
   void run();
+
+ signals:
+  void hostDraftSignal(unsigned int port);
+  void connectToDraftSignal();
 
  private:
   RemoteController(const RemoteController&);

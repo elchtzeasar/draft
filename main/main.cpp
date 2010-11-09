@@ -8,9 +8,7 @@ int main(int argc, char *argv[])
   QApplication app(argc, argv);
 
   DraftApplication<UI_TYPE> draftAppl;
-
-  //RemoteController remoteController;
-  //remoteController.start(QThread::LowPriority);
+  draftAppl.connect();
 
   return app.exec();
 }

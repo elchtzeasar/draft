@@ -10,6 +10,7 @@ class Gui : public QObject {
  public:
   Gui();
   ~Gui();
+
  private:
   Gui(const Gui&);
   Gui& operator=(Gui&);

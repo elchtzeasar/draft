@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = gui remote_controller
+SUBDIRS = gui remote_controller network
 
 # build must be last:
 CONFIG += ordered staticlib
