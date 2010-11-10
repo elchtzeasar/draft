@@ -22,8 +22,8 @@ template <class UI>
 void DraftApplication<UI>::connect() {
   QObject::connect( &ui, SIGNAL(hostDraftSignal(unsigned int)),
 		    &networkComponent, SLOT(hostDraftSlot(unsigned int)) );
-  QObject::connect( &ui, SIGNAL(connectToDraftSignal()),
-		    &networkComponent, SLOT(connectToDraftSlot()) );
+  QObject::connect( &ui, SIGNAL(connectToDraftSignal(unsigned int)),
+		    &networkComponent, SLOT(connectToDraftSlot(unsigned int)) );
 }
 
 template <>

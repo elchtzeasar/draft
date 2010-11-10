@@ -7,6 +7,7 @@ class MainWindow;
 
 class Gui : public QObject {
   Q_OBJECT
+
  public:
   Gui();
   ~Gui();

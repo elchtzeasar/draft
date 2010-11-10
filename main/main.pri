@@ -1,5 +1,7 @@
 TEMPLATE = app
 
+QT += network
+
 INCLUDEPATH += ../gui/include ../remote_controller/include ../network/include
 
 OBJECTS_DIR = objs

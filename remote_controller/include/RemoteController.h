@@ -14,7 +14,7 @@ class RemoteController : public QThread {
 
  signals:
   void hostDraftSignal(unsigned int port);
-  void connectToDraftSignal();
+  void connectToDraftSignal(unsigned int port);
 
  private:
   RemoteController(const RemoteController&);
