@@ -11,6 +11,7 @@ class ConnectionListener : public QObject {
 
  public:
   ConnectionListener(Connection& connection);
+  ~ConnectionListener();
 
   void listen(unsigned int port);
 

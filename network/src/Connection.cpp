@@ -12,6 +12,7 @@ void Connection::addSocket(QTcpSocket* tcpSocket) {
   this->tcpSocket = tcpSocket;
 
   connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readIncommingData()));
+  connect(tcpSocket, SIGNAL(connected()), this, SLOT(connected()));
   connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
 	  this, SLOT(socketError(QAbstractSocket::SocketError)));
 }
@@ -21,9 +22,8 @@ void Connection::write(QByteArray& block) {
 }
 
 void Connection::connectToHost(const char* server, unsigned int port) {
+  cout << "Connecting to server at " << server << " on port " << port << endl;
   tcpSocket->connectToHost(server, port);
-
-  cout << "connectToHost performed..." << endl;
 }
 
 void Connection::disconnectFromHost() {
@@ -31,14 +31,16 @@ void Connection::disconnectFromHost() {
 }
 
 void Connection::readIncommingData() {
-  cout << "readyIncommingData!" << endl;
-
   char* receivedData;
   QDataStream in(tcpSocket);
   in.setVersion(QDataStream::Qt_4_0);
   
   in >> receivedData;
   cout << "Received data: " << receivedData << endl;
+}
+
+void Connection::connected() {
+  cout << "Connected to server." << endl;
 }
 
 void Connection::socketError(QAbstractSocket::SocketError socketError) {

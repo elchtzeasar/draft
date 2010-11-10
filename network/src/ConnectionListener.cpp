@@ -10,6 +10,10 @@ using std::endl;
 
 ConnectionListener::ConnectionListener(Connection& connection) : connection(connection) {}
 
+ConnectionListener::~ConnectionListener() {
+  tcpServer.close();
+}
+
 void ConnectionListener::listen(unsigned int port) {
   connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
   if (!tcpServer.listen(QHostAddress::LocalHost, port)) {
@@ -17,12 +21,12 @@ void ConnectionListener::listen(unsigned int port) {
     return;
   }
 
-  cout << "Listening for new connections..." << endl;
+  cout << "Waiting for connections..." << endl;
 }
 
 void ConnectionListener::acceptConnection() {
-  cout << "acceptConnection!" << endl;
   connection.addSocket(tcpServer.nextPendingConnection());
+  cout << "Received incomming connection from client." << endl;
 
   QByteArray block;
   QDataStream out(&block, QIODevice::WriteOnly);

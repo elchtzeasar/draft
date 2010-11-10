@@ -19,6 +19,7 @@ class Connection : public QObject {
 
  private slots:
   void readIncommingData();
+  void connected();
   void socketError(QAbstractSocket::SocketError socketError);
 
  private:

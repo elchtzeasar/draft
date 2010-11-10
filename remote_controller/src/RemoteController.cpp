@@ -18,7 +18,6 @@ void RemoteController::run() {
   while (true) {
     string command;
 
-    cout << '>';
     cin >> command;
 
     if (command == "host_draft") {
@@ -29,6 +28,9 @@ void RemoteController::run() {
       cout << "Sending connect_to_draft" << endl;
       emit connectToDraftSignal(PORT);
       cout << "connect_to_draft sent" << endl;
+    } else if (command == "exit") {
+      cout << "exit!" << endl;
+      exit(0);
     } else {
       cout << "unknown command: " << command << endl;
     }
