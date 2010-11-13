@@ -1,7 +1,7 @@
 #include "NetworkComponent.h"
 
-#include "ConnectionListener.h"
-#include "Connection.h"
+#include "ConnectionListenerImpl.h"
+#include "ConnectionImpl.h"
 
 #include <QTcpSocket>
 
@@ -13,8 +13,8 @@ using std::cerr;
 using std::endl;
 
 NetworkComponent::NetworkComponent() : 
-  connection(new Connection),
-  connectionListener(new ConnectionListener(*connection)) {}
+  connection(new ConnectionImpl),
+  connectionListener(new ConnectionListenerImpl(*connection)) {}
 
 NetworkComponent::~NetworkComponent() {
   delete connectionListener;

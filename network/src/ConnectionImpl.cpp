@@ -1,4 +1,6 @@
-#include "Connection.h"
+#include "ConnectionImpl.h"
+
+#include <QTcpSocket>
 
 #include <iostream>
 
@@ -6,9 +8,9 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
-Connection::Connection() tcpSocket(0) {}
+ConnectionImpl::ConnectionImpl() : tcpSocket(0) {}
 
-void Connection::addSocket(QTcpSocket* tcpSocket) {
+void ConnectionImpl::addSocket(QTcpSocket* tcpSocket) {
   this->tcpSocket = tcpSocket;
 
   connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readIncommingData()));
@@ -17,20 +19,20 @@ void Connection::addSocket(QTcpSocket* tcpSocket) {
 	  this, SLOT(socketError(QAbstractSocket::SocketError)));
 }
 
-void Connection::write(QByteArray& block) {
+void ConnectionImpl::write(QByteArray& block) {
   tcpSocket->write(block);
 }
 
-void Connection::connectToHost(const char* server, unsigned int port) {
+void ConnectionImpl::connectToHost(const char* server, unsigned int port) {
   cout << "Connecting to server at " << server << " on port " << port << endl;
   tcpSocket->connectToHost(server, port);
 }
 
-void Connection::disconnectFromHost() {
+void ConnectionImpl::disconnectFromHost() {
   tcpSocket->disconnectFromHost();
 }
 
-void Connection::readIncommingData() {
+void ConnectionImpl::readIncommingData() {
   char* receivedData;
   QDataStream in(tcpSocket);
   in.setVersion(QDataStream::Qt_4_0);
@@ -39,11 +41,11 @@ void Connection::readIncommingData() {
   cout << "Received data: " << receivedData << endl;
 }
 
-void Connection::connected() {
+void ConnectionImpl::connected() {
   cout << "Connected to server." << endl;
 }
 
-void Connection::socketError(QAbstractSocket::SocketError socketError) {
+void ConnectionImpl::socketError(QAbstractSocket::SocketError socketError) {
   switch (socketError) {
   case QAbstractSocket::RemoteHostClosedError:
     cerr << "The remote host closed" << endl;

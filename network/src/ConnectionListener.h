@@ -1,7 +1,6 @@
-#ifndef CONNECTION_SERVER_H_
-#define CONNECTION_SERVER_H_
+#ifndef CONNECTION_LISTENER_H_
+#define CONNECTION_LISTENER_H_
 
-#include <QTcpServer>
 #include <QObject>
 
 class Connection;
@@ -10,17 +9,12 @@ class ConnectionListener : public QObject {
   Q_OBJECT
 
  public:
-  ConnectionListener(Connection& connection);
-  ~ConnectionListener();
+  ~ConnectionListener() {}
 
-  void listen(unsigned int port);
+  virtual void listen(unsigned int port) = 0;
 
- private slots:
-  void acceptConnection();
-
- private:
-  Connection& connection;
-  QTcpServer tcpServer;
+ protected slots:
+  virtual void acceptConnection() = 0;
 };
 
-#endif // CONNECTION_SERVER_H_
+#endif // CONNECTION_LISTENER_H_

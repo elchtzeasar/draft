@@ -7,9 +7,11 @@ QT += network
 HEADERS += include/NetworkComponent.h
 
 HEADERS += src/Connection.h
+HEADERS += src/ConnectionImpl.h
 HEADERS += src/ConnectionListener.h
+HEADERS += src/ConnectionListenerImpl.h
 
 SOURCES += src/NetworkComponent.cpp
-SOURCES += src/Connection.cpp
-SOURCES += src/ConnectionListener.cpp
+SOURCES += src/ConnectionImpl.cpp
+SOURCES += src/ConnectionListenerImpl.cpp
 

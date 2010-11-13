@@ -1,4 +1,4 @@
-#include "ConnectionListener.h"
+#include "ConnectionListenerImpl.h"
 
 #include "Connection.h"
 
@@ -8,14 +8,15 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
-ConnectionListener::ConnectionListener(Connection& connection) : connection(connection) {}
+ConnectionListenerImpl::ConnectionListenerImpl(Connection& connection) : connection(connection) {
+  connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+}
 
-ConnectionListener::~ConnectionListener() {
+ConnectionListenerImpl::~ConnectionListenerImpl() {
   tcpServer.close();
 }
 
-void ConnectionListener::listen(unsigned int port) {
-  connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+void ConnectionListenerImpl::listen(unsigned int port) {
   if (!tcpServer.listen(QHostAddress::LocalHost, port)) {
     cerr << "Unable to start the server: " << tcpServer.errorString().toStdString() << endl;
     return;
@@ -24,7 +25,7 @@ void ConnectionListener::listen(unsigned int port) {
   cout << "Waiting for connections..." << endl;
 }
 
-void ConnectionListener::acceptConnection() {
+void ConnectionListenerImpl::acceptConnection() {
   connection.addSocket(tcpServer.nextPendingConnection());
   cout << "Received incomming connection from client." << endl;
 
