@@ -23,14 +23,10 @@ NetworkComponent::~NetworkComponent() {
 }
 
 void NetworkComponent::hostDraftSlot(unsigned int port) {
-  cout << "NetworkComponent::hostDraft(" << port << ')' << endl;
-
   connectionListener->listen(port);
 }
 
 void NetworkComponent::connectToDraftSlot(unsigned int port) {
-  cout << "NetworkComponent::connectToDraft(" << port << ")" << endl;
-
   connection->addSocket(new QTcpSocket(this));
   connection->connectToHost("localhost", port);
 }

@@ -1,17 +1,18 @@
 TEMPLATE = app
 
-QT += testlib
+QT += testlib network
 CONFIG += link_prl
 
-INCLUDEPATH += ../gui/src ../remote_controller/include
-INCLUDEPATH += remote_controller/include
+INCLUDEPATH += ../remote_controller/include
+INCLUDEPATH += ../network/include ../network/src network/include
 
-LIBS += -lgtest_main
-LIBS += -L../libs -lremote_controller
+LIBS += -lgtest_main -lgmock -lgtest
+LIBS += -L../libs -lremote_controller -lnetwork
 
-HEADERS += remote_controller/include/ConnectionMock.h
-HEADERS += remote_controller/include/ConnectionListenerMock.h
+HEADERS += network/include/ConnectionMock.h
+HEADERS += network/include/ConnectionListenerMock.h
 SOURCES += remote_controller/RemoteControllerTest.cpp
+SOURCES += network/NetworkComponentTest.cpp
 
 TARGET = ../bin/unit_tests
 
