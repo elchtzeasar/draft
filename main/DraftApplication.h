@@ -7,6 +7,11 @@
 
 #include <QObject>
 
+#include <iostream>
+
+using std::cin;
+using std::cout;
+
 template <class UI>
 class DraftApplication {
  public:
@@ -31,7 +36,8 @@ DraftApplication<Gui>::DraftApplication() {
 }
 
 template <>
-DraftApplication<RemoteController>::DraftApplication() {
+DraftApplication<RemoteController>::DraftApplication()
+  : ui(std::cout, std::cin){
   ui.start(QThread::LowPriority);
 }
 

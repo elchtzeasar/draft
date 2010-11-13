@@ -3,11 +3,13 @@
 
 #include <QThread>
 
+#include <iostream>
+
 class RemoteController : public QThread {
   Q_OBJECT
 
  public:
-  RemoteController();
+  RemoteController(std::ostream& outputStream, std::istream& inputStream);
   ~RemoteController();
 
   void run();
@@ -19,6 +21,9 @@ class RemoteController : public QThread {
  private:
   RemoteController(const RemoteController&);
   RemoteController& operator=(RemoteController&);
+
+  std::ostream& outputStream;
+  std::istream& inputStream;
 };
 
 #endif // REMOTE_CONTROLLER_H_

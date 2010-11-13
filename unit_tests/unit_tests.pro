@@ -1,10 +1,13 @@
 TEMPLATE = app
 
+QT += testlib
+CONFIG += link_prl
+
 INCLUDEPATH += ../gui/src ../remote_controller/include
 
 LIBS += -L../libs -lgtest_main
-LIBS += -L../libs -lgui -lremote_controller
+LIBS += -L../libs -lremote_controller
 
-#SOURCES += gui/test_gui.cpp
+SOURCES += remote_controller/RemoteControllerTest.cpp
 
 TARGET = ../bin/unit_tests

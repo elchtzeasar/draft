@@ -8,6 +8,9 @@ WARNINGS += -Wall
 TEMPLATE = lib
 CONFIG += staticlib
 
+# Make sure qmake tracks dependencies:
+CONFIG += create_prl
+
 # The following keeps the generated files at least somewhat separate 
 # from the source files.
 MOC_DIR = mocs
