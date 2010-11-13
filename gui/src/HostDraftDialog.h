@@ -13,7 +13,7 @@ class HostDraftDialog : public QDialog {
   Q_OBJECT
 
  public:
-  HostDraftDialog(QWidget* parent = NULL);
+  HostDraftDialog(QWidget* parent = 0);
   virtual ~HostDraftDialog();
 
   const QString& getPortNumber();

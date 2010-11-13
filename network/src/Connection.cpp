@@ -6,7 +6,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
-Connection::Connection() {}
+Connection::Connection() tcpSocket(0) {}
 
 void Connection::addSocket(QTcpSocket* tcpSocket) {
   this->tcpSocket = tcpSocket;
