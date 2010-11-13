@@ -10,7 +10,7 @@ class NetworkComponent : public QObject {
   Q_OBJECT
 
  public:
-  NetworkComponent();
+  NetworkComponent(Connection* connection, ConnectionListener* connectionListner);
   ~NetworkComponent();
 
  public slots:
@@ -18,6 +18,9 @@ class NetworkComponent : public QObject {
   void connectToDraftSlot(unsigned int port);
 
  private:
+  NetworkComponent(const NetworkComponent&);
+  NetworkComponent& operator=(NetworkComponent&);
+
   Connection* connection;
   ConnectionListener* connectionListener;
 };

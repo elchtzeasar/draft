@@ -1,7 +1,7 @@
 #include "NetworkComponent.h"
 
-#include "ConnectionListenerImpl.h"
-#include "ConnectionImpl.h"
+#include "Connection.h"
+#include "ConnectionListener.h"
 
 #include <QTcpSocket>
 
@@ -12,13 +12,14 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
-NetworkComponent::NetworkComponent() : 
-  connection(new ConnectionImpl),
-  connectionListener(new ConnectionListenerImpl(*connection)) {}
+NetworkComponent::NetworkComponent(
+  Connection* connection, ConnectionListener* connectionListener) 
+  : connection(connection),
+    connectionListener(connectionListener) {}
 
 NetworkComponent::~NetworkComponent() {
-  delete connectionListener;
   delete connection;
+  delete connectionListener;
 }
 
 void NetworkComponent::hostDraftSlot(unsigned int port) {
