@@ -4,8 +4,6 @@ require 'b2b/draft_app'
 
 require 'b2b/test_helper'
 
-SLEEP_TIME = 0.5
-
 class B2BTest < Test::Unit::TestCase
   def setup
     Dir.mkdir('/tmp/b2b') unless FileTest.exists?('/tmp/b2b')
@@ -23,7 +21,7 @@ class B2BTest < Test::Unit::TestCase
   should 'log in server when it listens' do
     @server.host
 
-    sleep(SLEEP_TIME)
+    wait_for_log(@server, 'Waiting for connections...')
 
     assert_includes 'Waiting for connections...', @server.read
   end
@@ -31,7 +29,7 @@ class B2BTest < Test::Unit::TestCase
   should 'log in client when it connects' do
     @client.connect
 
-    sleep(SLEEP_TIME)
+    wait_for_log(@client, 'Connecting to server at localhost on port 10001')
 
     assert_includes 'Connecting to server at localhost on port 10001', @client.read
   end
@@ -40,7 +38,7 @@ class B2BTest < Test::Unit::TestCase
     host_and_wait
     connect_and_wait
   
-    sleep(SLEEP_TIME)
+    wait_for_log(@server, 'Received incomming connection from client.')
 
     assert_includes 'Received incomming connection from client.', @server.read
   end
@@ -49,7 +47,7 @@ class B2BTest < Test::Unit::TestCase
     host_and_wait
     connect_and_wait
   
-    sleep(SLEEP_TIME)
+    wait_for_log(@client, 'Connected to server')
 
     assert_includes 'Connected to server.', @client.read
   end
@@ -58,7 +56,7 @@ class B2BTest < Test::Unit::TestCase
     host_and_wait
     connect_and_wait
   
-    sleep(SLEEP_TIME)
+    wait_for_log(@client, 'This is server speaking...')
 
     assert_includes 'This is server speaking...', @client.read
   end
@@ -66,20 +64,20 @@ class B2BTest < Test::Unit::TestCase
   def host_and_wait
     @server.host
 
-    waits = 0
-    while not(@server.read[/Received incomming connection from client/] or waits > 10)
-      waits = waits + 1
-      sleep(0.1)
-    end
+    wait_for_log(@server, 'Received incomming connection from client')
   end
 
   def connect_and_wait
     @client.connect
 
+    wait_for_log(@client, 'Connected to server')
+  end
+
+  def wait_for_log(draftApp, logLine)
     waits = 0
-    while not(@server.read[/Connected to server/] or waits > 10)
+    while not(draftApp.read[logLine] or waits > 10)
       waits = waits + 1
-      sleep(0.1)
+      sleep(0.05)
     end
   end
 
