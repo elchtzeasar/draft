@@ -28,9 +28,7 @@ void MainWindow::openHostWindow() {
   hostDraftDialog->show();
 
   if (hostDraftDialog->exec() == QDialog::Accepted) {
-    QString portNumber = hostDraftDialog->getPortNumber();
-
-    emit hostDraftSignal(portNumber.toUInt());
+    emit hostDraftSignal(hostDraftDialog->getPortNumber());
   }
 }
 

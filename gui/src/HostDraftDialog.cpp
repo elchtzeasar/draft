@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QString>
 
 HostDraftDialog::HostDraftDialog(QWidget* parent) :
   QDialog(parent),
@@ -29,20 +30,30 @@ HostDraftDialog::~HostDraftDialog() {
   delete hostButton;
 }
 
-const QString& HostDraftDialog::getPortNumber() {
+unsigned int HostDraftDialog::getPortNumber() {
   return portNumber;
 }
 
 void HostDraftDialog::hostClicked() {
   QString text = portField->text();
+  bool intConversionOk;
+  unsigned int tempPort = text.toUInt(&intConversionOk);
 
   if (text.isEmpty()) {
     QMessageBox::information(this, tr("Empty Field"),
 			     tr("Please enter a port number."));
-  } else {
-    portNumber = text;
-    portField->clear();
-    hide();
-    accept();
+    return;
   }
+
+  if (!intConversionOk) {
+    text.append(' ');
+    text.append(tr("is not a number. Please enter a port number."));
+    QMessageBox::information(this, tr("Not a number"), text);
+    return;
+  }
+
+  portNumber = tempPort;
+  portField->clear();
+  hide();
+  accept();
 }

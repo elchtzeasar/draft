@@ -2,7 +2,6 @@
 #define HOST_DRAFT_DIALOG_H_
 
 #include <QDialog>
-#include <QString>
 
 class QHBoxLayout;
 class QLabel;
@@ -16,7 +15,7 @@ class HostDraftDialog : public QDialog {
   HostDraftDialog(QWidget* parent = 0);
   virtual ~HostDraftDialog();
 
-  const QString& getPortNumber();
+  unsigned int getPortNumber();
 
  private slots:
   void hostClicked();
@@ -25,7 +24,7 @@ class HostDraftDialog : public QDialog {
   HostDraftDialog(const HostDraftDialog&);
   HostDraftDialog& operator=(HostDraftDialog&);
 
-  QString portNumber;
+  unsigned int portNumber;
 
   QHBoxLayout *layout;
   QLabel* portLabel;
