@@ -12,6 +12,9 @@ class Gui : public QObject {
   Gui();
   ~Gui();
 
+ signals:
+  void hostDraftSignal(unsigned int port);
+
  private:
   Gui(const Gui&);
   Gui& operator=(Gui&);

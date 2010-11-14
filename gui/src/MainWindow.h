@@ -14,7 +14,11 @@ class MainWindow : public QMainWindow {
   MainWindow();
   virtual ~MainWindow();
 
+ signals:
+  void hostDraftSignal(unsigned int port);
+
  public slots:
+  void quitApplication();
   void openHostWindow();
 
  private:

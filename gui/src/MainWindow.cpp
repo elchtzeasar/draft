@@ -3,6 +3,7 @@
 #include "FileMenu.h"
 #include "HostDraftDialog.h"
 
+#include <QApplication>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QScrollArea>
@@ -12,9 +13,6 @@ MainWindow::MainWindow() :
   hostDraftDialog(new HostDraftDialog),
   scrollArea(new QScrollArea)
 {
-  //scrollArea->setBackgroundRole(QPalette::Dark);
-  //scrollArea->setWidget(imageLabel);
-
   setCentralWidget(scrollArea);
 
   menuBar()->addMenu(fileMenu);
@@ -32,12 +30,10 @@ void MainWindow::openHostWindow() {
   if (hostDraftDialog->exec() == QDialog::Accepted) {
     QString portNumber = hostDraftDialog->getPortNumber();
 
-    if (false/* create socket */) {
-      // listen
-    } else {
-      QMessageBox::information(this, tr("Some error"),
-			       tr("Problem with port: \"%1\"?").arg(portNumber));
-      return;
-    }
+    emit hostDraftSignal(portNumber.toUInt());
   }
+}
+
+void MainWindow::quitApplication() {
+  QApplication::quit();
 }

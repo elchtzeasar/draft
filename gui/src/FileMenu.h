@@ -13,9 +13,6 @@ class FileMenu : public QMenu {
   FileMenu(QWidget* parent);
   virtual ~FileMenu();
 
- private slots:
-  void quitApplication();
-
  private:
   QAction* hostDraftAction;
   QAction* quitAction;
