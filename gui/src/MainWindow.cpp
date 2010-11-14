@@ -2,6 +2,7 @@
 
 #include "FileMenu.h"
 #include "HostDraftDialog.h"
+#include "ConnectToDraftDialog.h"
 
 #include <QApplication>
 #include <QMenuBar>
@@ -10,7 +11,8 @@
 
 MainWindow::MainWindow() :
   fileMenu(new FileMenu(this)),
-  hostDraftDialog(new HostDraftDialog),
+  hostDraftDialog(new HostDraftDialog(this)),
+  connectToDraftDialog(new ConnectToDraftDialog(this)),
   scrollArea(new QScrollArea)
 {
   setCentralWidget(scrollArea);
@@ -24,11 +26,19 @@ MainWindow::~MainWindow() {
   delete scrollArea;
 }
 
-void MainWindow::openHostWindow() {
+void MainWindow::openHostDraftWindow() {
   hostDraftDialog->show();
 
   if (hostDraftDialog->exec() == QDialog::Accepted) {
     emit hostDraftSignal(hostDraftDialog->getPortNumber());
+  }
+}
+
+void MainWindow::openConnectToDraftWindow() {
+  connectToDraftDialog->show();
+
+  if (connectToDraftDialog->exec() == QDialog::Accepted) {
+    emit connectToDraftSignal(connectToDraftDialog->getPortNumber());
   }
 }
 

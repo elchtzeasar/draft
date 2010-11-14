@@ -14,6 +14,7 @@ class Gui : public QObject {
 
  signals:
   void hostDraftSignal(unsigned int port);
+  void connectToDraftSignal(unsigned int port);
 
  private:
   Gui(const Gui&);

@@ -5,6 +5,7 @@
 
 class FileMenu;
 class HostDraftDialog;
+class ConnectToDraftDialog;
 
 class QScrollArea;
 
@@ -16,10 +17,12 @@ class MainWindow : public QMainWindow {
 
  signals:
   void hostDraftSignal(unsigned int port);
+  void connectToDraftSignal(unsigned int port);
 
  public slots:
   void quitApplication();
-  void openHostWindow();
+  void openHostDraftWindow();
+  void openConnectToDraftWindow();
 
  private:
   MainWindow(const MainWindow&);
@@ -27,6 +30,7 @@ class MainWindow : public QMainWindow {
 
   FileMenu* fileMenu;
   HostDraftDialog* hostDraftDialog;
+  ConnectToDraftDialog* connectToDraftDialog;
 
   QScrollArea* scrollArea;
 };

@@ -15,6 +15,7 @@ class FileMenu : public QMenu {
 
  private:
   QAction* hostDraftAction;
+  QAction* connectToDraftAction;
   QAction* quitAction;
 
   FileMenu(const FileMenu&);
