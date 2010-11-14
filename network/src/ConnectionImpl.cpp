@@ -23,9 +23,9 @@ void ConnectionImpl::write(QByteArray& block) {
   tcpSocket->write(block);
 }
 
-void ConnectionImpl::connectToHost(const char* server, unsigned int port) {
-  cout << "Connecting to server at " << server << " on port " << port << endl;
-  tcpSocket->connectToHost(server, port);
+void ConnectionImpl::connectToHost(const QString& hostName, unsigned int port) {
+  cout << "Connecting to server at " << hostName.toStdString() << " on port " << port << endl;
+  tcpSocket->connectToHost(hostName, port);
 }
 
 void ConnectionImpl::disconnectFromHost() {

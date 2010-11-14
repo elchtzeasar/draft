@@ -23,7 +23,8 @@ protected:
   NetworkComponent component;
 };
 
-static unsigned int PORT = 12345;
+static unsigned int PORT(12345);
+static const QString HOST("localhost");
 
 TEST_F(NetworkComponentTest, shouldListenWithListenerWhenHostingDraft) {
   EXPECT_CALL(*connectionListener, listen(PORT));
@@ -35,9 +36,9 @@ TEST_F(NetworkComponentTest, shouldCreateSocketAndConnectToHostWhenConnectingToD
   QTcpSocket* socket = 0;
 
   EXPECT_CALL(*connection, addSocket(_)).WillOnce(SaveArg<0>(&socket));
-  EXPECT_CALL(*connection, connectToHost("localhost", PORT));
+  EXPECT_CALL(*connection, connectToHost(HOST, PORT));
 
-  component.connectToDraftSlot(PORT);
+  component.connectToDraftSlot(HOST, PORT);
 
   ASSERT_NE(static_cast<QTcpSocket*>(0), socket);
 }

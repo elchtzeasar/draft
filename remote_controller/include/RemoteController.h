@@ -1,6 +1,7 @@
 #ifndef REMOTE_CONTROLLER_H_
 #define REMOTE_CONTROLLER_H_
 
+#include <QString>
 #include <QThread>
 
 #include <iostream>
@@ -16,7 +17,7 @@ class RemoteController : public QThread {
 
  signals:
   void hostDraftSignal(unsigned int port);
-  void connectToDraftSignal(unsigned int port);
+  void connectToDraftSignal(const QString& hostName, unsigned int port);
 
  private:
   RemoteController(const RemoteController&);

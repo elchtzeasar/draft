@@ -26,7 +26,8 @@ void RemoteController::run() {
       outputStream << "host_draft sent" << endl;
     } else if (command == "connect_to_draft") {
       outputStream << "Sending connect_to_draft" << endl;
-      emit connectToDraftSignal(PORT);
+      const QString hostName("localhost");
+      emit connectToDraftSignal(hostName, PORT);
       outputStream << "connect_to_draft sent" << endl;
     } else if (command == "exit") {
       outputStream << "exit!" << endl;

@@ -4,6 +4,7 @@
 #include <QObject>
 
 class MainWindow;
+class QString;
 
 class Gui : public QObject {
   Q_OBJECT
@@ -14,7 +15,7 @@ class Gui : public QObject {
 
  signals:
   void hostDraftSignal(unsigned int port);
-  void connectToDraftSignal(unsigned int port);
+  void connectToDraftSignal(const QString& hostName, unsigned int port);
 
  private:
   Gui(const Gui&);

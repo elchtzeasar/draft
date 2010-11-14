@@ -11,7 +11,7 @@ class ConnectionImpl : public Connection {
   void addSocket(QTcpSocket* tcpSocket);
   void write(QByteArray& block);
 
-  void connectToHost(const char* server, unsigned int port);
+  void connectToHost(const QString& hostName, unsigned int port);
   void disconnectFromHost();
 
  protected slots:

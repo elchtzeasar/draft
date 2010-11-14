@@ -5,6 +5,7 @@
 #include <QObject>
 
 class QTcpSocket;
+class QString;
 
 class Connection : public QObject {
   Q_OBJECT
@@ -15,7 +16,7 @@ class Connection : public QObject {
   virtual void addSocket(QTcpSocket* tcpSocket) = 0;
   virtual void write(QByteArray& block) = 0;
 
-  virtual void connectToHost(const char* server, unsigned int port) = 0;
+  virtual void connectToHost(const QString& hostName, unsigned int port) = 0;
   virtual void disconnectFromHost() = 0;
 
  protected slots:

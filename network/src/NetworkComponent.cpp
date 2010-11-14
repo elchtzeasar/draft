@@ -5,12 +5,7 @@
 
 #include <QTcpSocket>
 
-#include <iostream>
-#include <cassert>
-
-using std::cout;
-using std::cerr;
-using std::endl;
+using std::string;
 
 NetworkComponent::NetworkComponent(
   Connection* connection, ConnectionListener* connectionListener) 
@@ -26,8 +21,8 @@ void NetworkComponent::hostDraftSlot(unsigned int port) {
   connectionListener->listen(port);
 }
 
-void NetworkComponent::connectToDraftSlot(unsigned int port) {
+void NetworkComponent::connectToDraftSlot(const QString& hostName, unsigned int port) {
   connection->addSocket(new QTcpSocket(this));
-  connection->connectToHost("localhost", port);
+  connection->connectToHost(hostName, port);
 }
 

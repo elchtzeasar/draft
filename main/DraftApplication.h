@@ -7,6 +7,8 @@
 #include "NetworkComponentFactory.h"
 
 #include <QObject>
+#include <QString>
+#include <QMetaType>
 
 #include <iostream>
 
@@ -48,8 +50,8 @@ template <class UI>
 void DraftApplication<UI>::connect() {
   QObject::connect( &ui, SIGNAL(hostDraftSignal(unsigned int)),
 		    networkComponent, SLOT(hostDraftSlot(unsigned int)) );
-  QObject::connect( &ui, SIGNAL(connectToDraftSignal(unsigned int)),
-		    networkComponent, SLOT(connectToDraftSlot(unsigned int)) );
+  QObject::connect( &ui, SIGNAL(connectToDraftSignal(const QString&, unsigned int)),
+		    networkComponent, SLOT(connectToDraftSlot(const QString&, unsigned int)) );
 }
 
 template <class UI>

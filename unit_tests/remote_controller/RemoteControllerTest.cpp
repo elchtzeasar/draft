@@ -1,6 +1,7 @@
 #include "RemoteController.h"
 
 #include <QSignalSpy>
+#include <QString>
 
 #include <gtest/gtest.h>
 
@@ -36,7 +37,7 @@ TEST_F(RemoteControllerTest, shouldSendConnectToDraftSignalWhenConnectToDraftRec
   inputStream << "connect_to_draft" << endl;
   inputStream << "exit" << endl;
 
-  QSignalSpy spy(&remoteController, SIGNAL(connectToDraftSignal(unsigned int)));
+  QSignalSpy spy(&remoteController, SIGNAL(connectToDraftSignal(const QString&, unsigned int)));
 
   remoteController.run();
 

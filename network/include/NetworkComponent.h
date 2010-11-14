@@ -6,6 +6,8 @@
 class Connection;
 class ConnectionListener;
 
+class QString;
+
 class NetworkComponent : public QObject {
   Q_OBJECT
 
@@ -15,7 +17,7 @@ class NetworkComponent : public QObject {
 
  public slots:
   void hostDraftSlot(unsigned int port);
-  void connectToDraftSlot(unsigned int port);
+  void connectToDraftSlot(const QString& hostName, unsigned int port);
 
  private:
   NetworkComponent(const NetworkComponent&);

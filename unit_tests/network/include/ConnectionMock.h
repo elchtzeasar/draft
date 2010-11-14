@@ -10,7 +10,7 @@ class ConnectionMock : public Connection {
   MOCK_METHOD1(addSocket, void(QTcpSocket* tcpSocket));
   MOCK_METHOD1(write, void(QByteArray& block));
 
-  MOCK_METHOD2(connectToHost, void(const char* server, unsigned int port));
+  MOCK_METHOD2(connectToHost, void(const QString& server, unsigned int port));
   MOCK_METHOD0(disconnectFromHost, void());
 
  protected slots:

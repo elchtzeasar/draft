@@ -8,6 +8,7 @@ class HostDraftDialog;
 class ConnectToDraftDialog;
 
 class QScrollArea;
+class QString;
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -17,7 +18,7 @@ class MainWindow : public QMainWindow {
 
  signals:
   void hostDraftSignal(unsigned int port);
-  void connectToDraftSignal(unsigned int port);
+  void connectToDraftSignal(const QString& hostName, unsigned int port);
 
  public slots:
   void quitApplication();

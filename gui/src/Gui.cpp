@@ -5,8 +5,8 @@
 Gui::Gui() : mainWindow(new MainWindow) {
   connect(mainWindow, SIGNAL(hostDraftSignal(unsigned int)),
 	  this, SIGNAL(hostDraftSignal(unsigned int)));
-  connect(mainWindow, SIGNAL(connectToDraftSignal(unsigned int)),
-	  this, SIGNAL(connectToDraftSignal(unsigned int)));
+  connect(mainWindow, SIGNAL(connectToDraftSignal(const QString&, unsigned int)),
+	  this, SIGNAL(connectToDraftSignal(const QString&, unsigned int)));
 
   mainWindow->show();
 }

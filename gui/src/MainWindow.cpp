@@ -38,7 +38,8 @@ void MainWindow::openConnectToDraftWindow() {
   connectToDraftDialog->show();
 
   if (connectToDraftDialog->exec() == QDialog::Accepted) {
-    emit connectToDraftSignal(connectToDraftDialog->getPortNumber());
+    emit connectToDraftSignal(connectToDraftDialog->getHostName(),
+			      connectToDraftDialog->getPortNumber());
   }
 }
 

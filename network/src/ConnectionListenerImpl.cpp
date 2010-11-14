@@ -17,7 +17,7 @@ ConnectionListenerImpl::~ConnectionListenerImpl() {
 }
 
 void ConnectionListenerImpl::listen(unsigned int port) {
-  if (!tcpServer.listen(QHostAddress::LocalHost, port)) {
+  if (!tcpServer.listen(QHostAddress::Any, port)) {
     cerr << "Unable to start the server: " << tcpServer.errorString().toStdString() << endl;
     return;
   }
