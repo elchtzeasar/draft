@@ -5,14 +5,16 @@ CONFIG += link_prl
 
 INCLUDEPATH += ../remote_controller/include
 INCLUDEPATH += ../network/include ../network/src network/include
+INCLUDEPATH += ../configuration/src
 
 LIBS += -lgtest_main -lgmock -lgtest
-LIBS += -L../libs -lremote_controller -lnetwork
+LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration
 
 HEADERS += network/include/ConnectionMock.h
 HEADERS += network/include/ConnectionListenerMock.h
 SOURCES += remote_controller/RemoteControllerTest.cpp
 SOURCES += network/NetworkComponentTest.cpp
+SOURCES += configuration/ConfigurationManagerTest.cpp
 
 TARGET = ../bin/unit_tests
 
