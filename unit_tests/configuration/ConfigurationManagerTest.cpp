@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdio>
+#include <sys/stat.h>
 
 #include <gtest/gtest.h>
 
@@ -14,6 +15,8 @@ class ConfigurationManagerTest : public testing::Test {
 protected:
   ConfigurationManagerTest() : configurationManager(FILENAME) {}
   ~ConfigurationManagerTest() {
+    // Write to file so we dont get an error when we remove it if the test didn't:
+    writeToFile(FILENAME);
     remove(FILENAME);
   }
 

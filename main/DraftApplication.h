@@ -3,6 +3,8 @@
 
 #include "Gui.h"
 #include "RemoteController.h"
+#include "ConfigurationComponent.h"
+#include "ConfigurationComponentFactory.h"
 #include "NetworkComponent.h"
 #include "NetworkComponentFactory.h"
 
@@ -25,6 +27,8 @@ class DraftApplication {
 
  private:
   UI ui;
+  ConfigurationComponentFactory configurationComponentFactory;
+  ConfigurationComponent* configurationComponent;
   NetworkComponentFactory networkComponentFactory;
   NetworkComponent* networkComponent;
 };
@@ -56,6 +60,7 @@ void DraftApplication<UI>::connect() {
 
 template <class UI>
 void DraftApplication<UI>::createComponents() {
+  configurationComponent = configurationComponentFactory.createComponent();
   networkComponent = networkComponentFactory.createComponent();
 }
 

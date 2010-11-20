@@ -6,11 +6,12 @@
 class ConfigurationManager {
  public:
   ConfigurationManager(const std::string& filename);
-  void load();
-  void save() const;
+  virtual ~ConfigurationManager() {}
+  virtual void load();
+  virtual void save() const;
 
-  const std::string& getPlayerName() const;
-  void setPlayerName(const std::string& playerName);
+  virtual const std::string& getPlayerName() const;
+  virtual void setPlayerName(const std::string& playerName);
  private:
   ConfigurationManager(const ConfigurationManager&);
   ConfigurationManager& operator=(ConfigurationManager&);
