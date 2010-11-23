@@ -56,6 +56,13 @@ void DraftApplication<UI>::connect() {
 		    networkComponent, SLOT(hostDraftSlot(unsigned int)) );
   QObject::connect( &ui, SIGNAL(connectToDraftSignal(const QString&, unsigned int)),
 		    networkComponent, SLOT(connectToDraftSlot(const QString&, unsigned int)) );
+
+  QObject::connect( &ui, SIGNAL(setPlayerName(QString)),
+		    configurationComponent, SLOT(setPlayerName(QString)) );
+  QObject::connect( &ui, SIGNAL(configurationRequest()),
+		    configurationComponent, SLOT(configurationRequest()) );
+  QObject::connect( configurationComponent, SIGNAL(configurationResponse(const QString)),
+		    &ui, SLOT(configurationResponse(const QString)) );
 }
 
 template <class UI>

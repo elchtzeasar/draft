@@ -1,6 +1,9 @@
 #include "RemoteController.h"
 
+#include <QString>
+
 #include <string>
+#include <cstdlib>
 
 using std::endl;
 using std::string;
@@ -21,18 +24,53 @@ void RemoteController::run() {
     inputStream >> command;
 
     if (command == "host_draft") {
-      outputStream << "Sending host_draft" << endl;
-      emit hostDraftSignal(PORT);
-      outputStream << "host_draft sent" << endl;
+      sendHostDraft();
     } else if (command == "connect_to_draft") {
-      outputStream << "Sending connect_to_draft" << endl;
-      const QString hostName("localhost");
-      emit connectToDraftSignal(hostName, PORT);
-      outputStream << "connect_to_draft sent" << endl;
+      connectToDraft();
     } else if (command == "exit") {
-      outputStream << "exit!" << endl;
+      exit();
+    } else if (command == "set_name") {
+      setPlayerName();
+    } else if (command == "get_name") {
+      getPlayerName();
     } else {
       outputStream << "unknown command: " << command << endl;
     }
   }
+}
+
+void RemoteController::configurationResponse(const QString playerName) {
+  outputStream << "Player name: " << playerName.toStdString() << endl;
+}
+
+void RemoteController::sendHostDraft() {
+  outputStream << "Sending host_draft" << endl;
+  emit hostDraftSignal(PORT);
+  outputStream << "host_draft sent" << endl;
+}
+
+void RemoteController::connectToDraft() {
+  outputStream << "Sending connect_to_draft" << endl;
+  const QString hostName("localhost");
+  emit connectToDraftSignal(hostName, PORT);
+  outputStream << "connect_to_draft sent" << endl;
+}
+
+void RemoteController::exit() {
+  outputStream << "exit!" << endl;
+  ::exit(0);
+}
+
+void RemoteController::setPlayerName() {
+  string stdPlayerName;
+  inputStream >> stdPlayerName;
+  QString playerName(stdPlayerName.c_str());
+  outputStream << "set_name: " << playerName.toStdString() << endl;
+  emit setPlayerName(playerName);
+}
+
+void RemoteController::getPlayerName() {
+  outputStream << "get_name!" << endl;
+
+  emit configurationRequest();
 }

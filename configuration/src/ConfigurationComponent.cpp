@@ -8,7 +8,6 @@ ConfigurationComponent::ConfigurationComponent(ConfigurationManager* configurati
   : configurationManager(configurationManager) {}
 
 ConfigurationComponent::~ConfigurationComponent() {
-  //configurationManager->save();
   delete configurationManager;
 }
 

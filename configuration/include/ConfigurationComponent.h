@@ -16,7 +16,7 @@ class ConfigurationComponent : public QObject {
   ConfigurationComponent(ConfigurationManager* configurationManager);
   ~ConfigurationComponent();
 
- public slots: // TODO: Make these signals instead and forward them to the Manager through QT
+ public slots:
   void configurationRequest();
   void setPlayerName(QString playerName);
 

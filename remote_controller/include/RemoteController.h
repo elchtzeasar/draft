@@ -18,8 +18,19 @@ class RemoteController : public QThread {
  signals:
   void hostDraftSignal(unsigned int port);
   void connectToDraftSignal(const QString& hostName, unsigned int port);
+  void setPlayerName(QString playerName);
+  void configurationRequest();
 
+ public slots:
+  void configurationResponse(const QString playerName);
+  
  private:
+  void sendHostDraft();
+  void connectToDraft();
+  void exit();
+  void setPlayerName();
+  void getPlayerName();
+
   RemoteController(const RemoteController&);
   RemoteController& operator=(RemoteController&);
 

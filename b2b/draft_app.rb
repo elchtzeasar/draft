@@ -16,14 +16,17 @@ class DraftApp
     @app.write "connect_to_draft\n"
   end
 
+  def set_name(name)
+    @app.write "set_name #{name}\n"
+  end
+
+  def get_name
+    @app.write "get_name\n"
+  end
+
   def read
-    #ret = ''
     @file.rewind
-    #while !@file.eof?
-    #  ret = ret + @file.readline
-    #end
-    #
-    #return ret
+
     @file.read
   end
 
@@ -34,6 +37,14 @@ class DraftApp
 
   def self.kill_all
     Kernel.system('pkill console_draft')
+  end
+
+  def wait_for_log(logLine)
+    waits = 0
+    while not(read[logLine] or waits > 10)
+      waits = waits + 1
+      sleep(0.05)
+    end
   end
 
 private
