@@ -7,11 +7,13 @@ INCLUDEPATH += ../remote_controller/include
 INCLUDEPATH += ../network/include ../network/src network/include
 INCLUDEPATH += ../configuration/include ../configuration/src configuration/include
 
-LIBS += -lgtest_main -lgmock -lgtest
+LIBS += -lgmock -lgtest
 LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration
 
 HEADERS += network/include/ConnectionMock.h
 HEADERS += network/include/ConnectionListenerMock.h
+
+SOURCES += test_main.cpp
 
 SOURCES += network/NetworkComponentTest.cpp
 

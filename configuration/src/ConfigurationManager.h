@@ -10,6 +10,7 @@ class ConfigurationManager {
   virtual void load();
   virtual void save() const;
 
+  // TODO: Make these slots instead and forward signals from component!
   virtual const std::string& getPlayerName() const;
   virtual void setPlayerName(const std::string& playerName);
  private:

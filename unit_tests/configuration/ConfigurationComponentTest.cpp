@@ -3,8 +3,9 @@
 
 #include <gtest/gtest.h>
 
-#include <QSignalSpy>
 #include <QList>
+#include <QSignalSpy>
+#include <QString>
 #include <QVariant>
 
 #include <iostream>
@@ -22,10 +23,6 @@ protected:
     :   configurationManager(new ConfigurationManagerMock),
 	configurationComponent(configurationManager),
 	responseSpy(&configurationComponent, SIGNAL(configurationResponse(const QString&))) {
-    ON_CALL(*configurationManager, save()).WillByDefault(Throw("Mock the call!"));
-    ON_CALL(*configurationManager, load()).WillByDefault(Throw("Mock the call!"));
-    ON_CALL(*configurationManager, getPlayerName()).WillByDefault(Throw("Mock the call!"));
-    ON_CALL(*configurationManager, setPlayerName(_)).WillByDefault(Throw("Mock the call!"));
   }
 
   ~ConfigurationComponentTest() {
@@ -50,6 +47,13 @@ TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfig
   ASSERT_EQ(1, responseSpy.count());
   QList<QVariant> arguments = responseSpy.takeFirst();
   ASSERT_EQ(PLAYER_NAME, arguments.at(0).toString().toStdString());
+}
+
+TEST_F(ConfigurationComponentTest, shouldSetPlayerNameInManagerOnSetPlayerName) {
+  QString playerName("player name");
+  EXPECT_CALL(*configurationManager, setPlayerName(testing::StrEq(playerName.toStdString())));
+
+  configurationComponent.setPlayerName(playerName);
 }
 
 ostream& operator<<(ostream& os, const QString& qString) {

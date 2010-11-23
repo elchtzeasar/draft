@@ -13,11 +13,12 @@ class ConfigurationComponent : public QObject {
   Q_OBJECT
 
  public:
-  ConfigurationComponent(const ConfigurationManager* configurationManager);
+  ConfigurationComponent(ConfigurationManager* configurationManager);
   ~ConfigurationComponent();
 
- public slots:
+ public slots: // TODO: Make these signals instead and forward them to the Manager through QT
   void configurationRequest();
+  void setPlayerName(QString playerName);
 
  signals:
   void configurationResponse(const QString playerName);
@@ -26,7 +27,7 @@ class ConfigurationComponent : public QObject {
   ConfigurationComponent(const ConfigurationComponent&);
   ConfigurationComponent& operator=(ConfigurationComponent&);
 
-  const ConfigurationManager* configurationManager;
+  ConfigurationManager* configurationManager;
 };
 
 #endif // CONFIGURATION_COMPONENT_H_

@@ -4,7 +4,7 @@
 
 #include <QString>
 
-ConfigurationComponent::ConfigurationComponent(const ConfigurationManager* configurationManager)
+ConfigurationComponent::ConfigurationComponent(ConfigurationManager* configurationManager)
   : configurationManager(configurationManager) {}
 
 ConfigurationComponent::~ConfigurationComponent() {
@@ -12,9 +12,12 @@ ConfigurationComponent::~ConfigurationComponent() {
   delete configurationManager;
 }
 
-#include <iostream>
 void ConfigurationComponent::configurationRequest() {
   QString playerName = configurationManager->getPlayerName().c_str();
 
   emit configurationResponse(playerName);
+}
+
+void ConfigurationComponent::setPlayerName(QString playerName) {
+  configurationManager->setPlayerName(playerName.toStdString());
 }
