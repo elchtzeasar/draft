@@ -1,4 +1,4 @@
-#include "ConfigurationManager.h"
+#include "ConfigurationManagerImpl.h"
 
 #include <iostream>
 #include <fstream>
@@ -13,20 +13,26 @@ static const char* FILENAME("testFile.xml");
 
 class ConfigurationManagerTest : public testing::Test {
 protected:
-  ConfigurationManagerTest() : configurationManager(FILENAME) {}
+  ConfigurationManagerTest() : configurationManager(FILENAME) {
+    removeXmlFile();
+  }
   ~ConfigurationManagerTest() {
-    // Write to file so we dont get an error when we remove it if the test didn't:
-    writeToFile(FILENAME);
-    remove(FILENAME);
+    removeXmlFile();
   }
 
-  ConfigurationManager configurationManager;
+  ConfigurationManagerImpl configurationManager;
 
-  void writeToFile(const std::string xmlData) {
+  void writeToXmlFile(const std::string xmlData) {
     ofstream file;
     file.open(FILENAME);
     file << xmlData;
     file.close();
+  }
+
+  void removeXmlFile() {
+    // Write to file so we dont get an error when we remove it if the test didn't:
+    writeToXmlFile(FILENAME);
+    remove(FILENAME);
   }
 };
 
@@ -37,7 +43,7 @@ TEST_F(ConfigurationManagerTest, shouldUseDefaultNameIfNoXmlFileFound) {
 }
 
 TEST_F(ConfigurationManagerTest, shouldUseDefaultNameIfNoneFoundInXmlFile) {
-  writeToFile("");
+  writeToXmlFile("");
 
   configurationManager.load();
 
@@ -45,7 +51,7 @@ TEST_F(ConfigurationManagerTest, shouldUseDefaultNameIfNoneFoundInXmlFile) {
 }
 
 TEST_F(ConfigurationManagerTest, shouldParseFileNameFromXml) {
-  writeToFile("<configuration><player><name>playername</name></player></configuration>");
+  writeToXmlFile("<configuration><player><name>playername</name></player></configuration>");
 
   configurationManager.load();
 
@@ -53,11 +59,11 @@ TEST_F(ConfigurationManagerTest, shouldParseFileNameFromXml) {
 }
 
 TEST_F(ConfigurationManagerTest, shouldSaveConfigurationInXml) {
-  writeToFile("");
+  writeToXmlFile("");
 
   configurationManager.setPlayerName("playername");
   configurationManager.save();
-  ConfigurationManager configurationManager2(FILENAME);
+  ConfigurationManagerImpl configurationManager2(FILENAME);
   configurationManager2.load();
 
   ASSERT_EQ("playername", configurationManager2.getPlayerName());

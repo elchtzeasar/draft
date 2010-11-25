@@ -8,7 +8,8 @@ HEADERS += include/ConfigurationComponent.h
 HEADERS += include/ConfigurationComponentFactory.h
 
 HEADERS += src/ConfigurationManager.h
+HEADERS += src/ConfigurationManagerImpl.h
 
 SOURCES += src/ConfigurationComponent.cpp
 SOURCES += src/ConfigurationComponentFactory.cpp
-SOURCES += src/ConfigurationManager.cpp
+SOURCES += src/ConfigurationManagerImpl.cpp

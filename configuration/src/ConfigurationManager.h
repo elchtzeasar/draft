@@ -5,19 +5,12 @@
 
 class ConfigurationManager {
  public:
-  ConfigurationManager(const std::string& filename);
-  virtual ~ConfigurationManager();
-  virtual void load();
-  virtual void save() const;
+  virtual ~ConfigurationManager() {}
+  virtual void load() = 0;
+  virtual void save() const = 0;
 
-  virtual const std::string& getPlayerName() const;
-  virtual void setPlayerName(const std::string& playerName);
- private:
-  ConfigurationManager(const ConfigurationManager&);
-  ConfigurationManager& operator=(ConfigurationManager&);
-
-  const std::string filename;
-  std::string playerName;
+  virtual const std::string& getPlayerName() const = 0;
+  virtual void setPlayerName(const std::string& playerName) = 0;
 };
 
 #endif // CONFIGURATION_MANAGER_H_
