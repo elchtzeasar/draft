@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+require 'etc'
 require 'io/wait'
 
 class DraftApp
@@ -49,6 +50,8 @@ class DraftApp
 
 private
   def filename
-    "/tmp/b2b/#{@name}.log"
+    logdir = "/tmp/b2b.#{Etc.getlogin}"
+    Dir.mkdir(logdir) unless FileTest.exist? logdir
+    return "#{logdir}/draft_app_#{@name}.log"
   end
 end
