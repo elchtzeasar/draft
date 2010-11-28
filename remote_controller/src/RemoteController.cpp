@@ -45,19 +45,22 @@ void RemoteController::configurationResponse(const QString playerName) {
 
 void RemoteController::sendHostDraft() {
   outputStream << "Sending host_draft" << endl;
-  emit hostDraftSignal(PORT);
+  emit hostDraft(PORT);
   outputStream << "host_draft sent" << endl;
 }
 
 void RemoteController::connectToDraft() {
   outputStream << "Sending connect_to_draft" << endl;
   const QString hostName("localhost");
-  emit connectToDraftSignal(hostName, PORT);
-  outputStream << "connect_to_draft sent" << endl;
+  emit connectToDraft(hostName, PORT);
+  outputStream << "connectToDraft sent" << endl;
 }
 
+#include <iostream>
 void RemoteController::exit() {
   outputStream << "exit!" << endl;
+  std::cout << std::flush;
+  std::cerr << std::flush;
   ::exit(0);
 }
 

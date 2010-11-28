@@ -16,8 +16,8 @@ class NetworkComponent : public QObject {
   ~NetworkComponent();
 
  public slots:
-  void hostDraftSlot(unsigned int port);
-  void connectToDraftSlot(const QString& hostName, unsigned int port);
+  void handleHostDraft(unsigned int port);
+  void handleConnectToDraft(const QString& hostName, unsigned int port);
 
  private:
   NetworkComponent(const NetworkComponent&);

@@ -8,13 +8,17 @@ class Connection < Test::Unit::TestCase
   def setup
     Dir.mkdir('/tmp/b2b') unless FileTest.exists?('/tmp/b2b')
 
-    @server = DraftApp.new('connection-server')
-    @client = DraftApp.new('connection-client')
+    @server = DraftApp.new("#{app_name}-server")
+    @client = DraftApp.new("#{app_name}-client")
   end
 
   def teardown
     @server.close
     @client.close
+  end
+
+  def app_name
+    return self.name.gsub(/test: |\.|\([^\)]*\)/, '').gsub(' ', '_')
   end
 
   should 'log in server when it listens' do

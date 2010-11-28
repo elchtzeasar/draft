@@ -74,11 +74,10 @@ void DraftApplication<UI>::connect (const QObject * sender,
 
 template <class UI>
 void DraftApplication<UI>::connectSlotsToSignals() {
-  connect( &ui, SIGNAL(hostDraftSignal(unsigned int)),
-	   networkComponent, SLOT(hostDraftSlot(unsigned int)) );
-  connect( &ui, SIGNAL(connectToDraftSignal(const QString&, unsigned int)),
-	   networkComponent, SLOT(connectToDraftSlot(const QString&, unsigned int)) );
-
+  connect( &ui, SIGNAL(hostDraft(unsigned int)),
+	   networkComponent, SLOT(handleHostDraft(unsigned int)) );
+  connect( &ui, SIGNAL(connectToDraft(const QString&, unsigned int)),
+	   networkComponent, SLOT(handleConnectToDraft(const QString&, unsigned int)) );
   connect( &ui, SIGNAL(setPlayerName(QString)),
 	   configurationComponent, SLOT(setPlayerName(QString)) );
   connect( &ui, SIGNAL(configurationRequest()),

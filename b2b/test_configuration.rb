@@ -8,22 +8,26 @@ class Configuration < Test::Unit::TestCase
   def setup
     Dir.mkdir('/tmp/b2b') unless FileTest.exists?('/tmp/b2b')
 
-    createConfigurationFile
+    create_configuration_file
 
-    @app = DraftApp.new('configuration-app')
+    @app = DraftApp.new(app_name)
   end
 
   def teardown
     @app.close
 
-    removeConfigurationFile
+    remove_configuration_file
   end
 
-  def createConfigurationFile
+  def app_name
+    return self.name.gsub(/test: |\.|\([^\)]*\)/, '').gsub(' ', '_')
+  end
+
+  def create_configuration_file
     File.open('configuration.xml', File::CREAT|File::TRUNC|File::WRONLY)
   end
 
-  def removeConfigurationFile
+  def remove_configuration_file
     File.delete('configuration.xml')
   end
 

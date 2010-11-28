@@ -29,7 +29,7 @@ static const QString HOST("localhost");
 TEST_F(NetworkComponentTest, shouldListenWithListenerWhenHostingDraft) {
   EXPECT_CALL(*connectionListener, listen(PORT));
 
-  component.hostDraftSlot(PORT);
+  component.handleHostDraft(PORT);
 }
 
 TEST_F(NetworkComponentTest, shouldCreateSocketAndConnectToHostWhenConnectingToDraftSlot) {
@@ -38,7 +38,7 @@ TEST_F(NetworkComponentTest, shouldCreateSocketAndConnectToHostWhenConnectingToD
   EXPECT_CALL(*connection, addSocket(_)).WillOnce(SaveArg<0>(&socket));
   EXPECT_CALL(*connection, connectToHost(HOST, PORT));
 
-  component.connectToDraftSlot(HOST, PORT);
+  component.handleConnectToDraft(HOST, PORT);
 
   ASSERT_NE(static_cast<QTcpSocket*>(0), socket);
 }

@@ -30,7 +30,7 @@ void MainWindow::openHostDraftWindow() {
   hostDraftDialog->show();
 
   if (hostDraftDialog->exec() == QDialog::Accepted) {
-    emit hostDraftSignal(hostDraftDialog->getPortNumber());
+    emit hostDraft(hostDraftDialog->getPortNumber());
   }
 }
 
@@ -38,7 +38,7 @@ void MainWindow::openConnectToDraftWindow() {
   connectToDraftDialog->show();
 
   if (connectToDraftDialog->exec() == QDialog::Accepted) {
-    emit connectToDraftSignal(connectToDraftDialog->getHostName(),
+    emit connectToDraft(connectToDraftDialog->getHostName(),
 			      connectToDraftDialog->getPortNumber());
   }
 }

@@ -17,11 +17,11 @@ NetworkComponent::~NetworkComponent() {
   delete connectionListener;
 }
 
-void NetworkComponent::hostDraftSlot(unsigned int port) {
+void NetworkComponent::handleHostDraft(unsigned int port) {
   connectionListener->listen(port);
 }
 
-void NetworkComponent::connectToDraftSlot(const QString& hostName, unsigned int port) {
+void NetworkComponent::handleConnectToDraft(const QString& hostName, unsigned int port) {
   connection->addSocket(new QTcpSocket(this));
   connection->connectToHost(hostName, port);
 }

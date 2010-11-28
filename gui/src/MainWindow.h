@@ -17,8 +17,8 @@ class MainWindow : public QMainWindow {
   virtual ~MainWindow();
 
  signals:
-  void hostDraftSignal(unsigned int port);
-  void connectToDraftSignal(const QString& hostName, unsigned int port);
+  void hostDraft(unsigned int port);
+  void connectToDraft(const QString& hostName, unsigned int port);
 
  public slots:
   void quitApplication();
