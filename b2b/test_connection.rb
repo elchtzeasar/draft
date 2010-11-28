@@ -7,7 +7,6 @@ require 'b2b/test_helper'
 class Connection < Test::Unit::TestCase
   def setup
     Dir.mkdir('/tmp/b2b') unless FileTest.exists?('/tmp/b2b')
-    DraftApp.kill_all
 
     @server = DraftApp.new('connection-server')
     @client = DraftApp.new('connection-client')
@@ -20,7 +19,7 @@ class Connection < Test::Unit::TestCase
 
   should 'log in server when it listens' do
     @server.host
-
+  
     assert_includes 'Waiting for connections...', @server
   end
 
@@ -36,21 +35,21 @@ class Connection < Test::Unit::TestCase
   
     assert_includes 'Received incomming connection from client.', @server
   end
-
+  
   should 'log in client when client connects' do
     host_and_wait
     connect_and_wait
   
     assert_includes 'Connected to server.', @client
   end
-
+  
   should 'send message from server to client upon connection' do
     host_and_wait
     connect_and_wait
   
     assert_includes 'This is server speaking...', @client
   end
-
+  
   def host_and_wait
     @server.host
 

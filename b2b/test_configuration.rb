@@ -7,7 +7,6 @@ require 'b2b/test_helper'
 class Configuration < Test::Unit::TestCase
   def setup
     Dir.mkdir('/tmp/b2b') unless FileTest.exists?('/tmp/b2b')
-    DraftApp.kill_all
 
     createConfigurationFile
 

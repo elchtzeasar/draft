@@ -5,7 +5,7 @@ require 'io/wait'
 class DraftApp
   def initialize(name)
     @name = name
-    @app = Kernel.open("|bin/console_draft > #{filename}", 'w')
+    @app = Kernel.open("|bin/console_draft > #{filename} 2>&1", 'w')
     @file = File.open(filename, File::RDONLY | File::CREAT | File::TRUNC)
   end
 
@@ -34,10 +34,8 @@ class DraftApp
   def close
     @app.write "exit\n"
     @file.close
-  end
 
-  def self.kill_all
-    Kernel.system('pkill console_draft')
+    @app.close
   end
 
   def wait_for_log(logLine)
