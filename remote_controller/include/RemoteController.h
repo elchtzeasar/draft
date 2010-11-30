@@ -16,6 +16,7 @@ class RemoteController : public QThread {
   void run();
 
  signals:
+  void exit(int status);
   void hostDraft(unsigned int port);
   void connectToDraft(const QString& hostName, unsigned int port);
   void setPlayerName(QString playerName);
@@ -27,7 +28,7 @@ class RemoteController : public QThread {
  private:
   void sendHostDraft();
   void connectToDraft();
-  void exit();
+  void exitCommand();
   void setPlayerName();
   void getPlayerName();
 

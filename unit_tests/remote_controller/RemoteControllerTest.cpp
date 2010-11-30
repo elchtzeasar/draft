@@ -26,7 +26,7 @@ TEST_F(RemoteControllerTest, shouldSendHostDraftSignalWhenHostDraftReceived) {
   inputStream << "host_draft" << endl;
   inputStream << "exit" << endl;
 
-  QSignalSpy spy(&remoteController, SIGNAL(hostDraftSignal(unsigned int)));
+  QSignalSpy spy(&remoteController, SIGNAL(hostDraft(unsigned int)));
 
   remoteController.run();
 
@@ -37,7 +37,7 @@ TEST_F(RemoteControllerTest, shouldSendConnectToDraftSignalWhenConnectToDraftRec
   inputStream << "connect_to_draft" << endl;
   inputStream << "exit" << endl;
 
-  QSignalSpy spy(&remoteController, SIGNAL(connectToDraftSignal(const QString&, unsigned int)));
+  QSignalSpy spy(&remoteController, SIGNAL(connectToDraft(const QString&, unsigned int)));
 
   remoteController.run();
 

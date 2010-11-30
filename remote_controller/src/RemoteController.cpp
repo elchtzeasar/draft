@@ -28,7 +28,7 @@ void RemoteController::run() {
     } else if (command == "connect_to_draft") {
       connectToDraft();
     } else if (command == "exit") {
-      exit();
+      exitCommand();
     } else if (command == "set_name") {
       setPlayerName();
     } else if (command == "get_name") {
@@ -56,12 +56,9 @@ void RemoteController::connectToDraft() {
   outputStream << "connectToDraft sent" << endl;
 }
 
-#include <iostream>
-void RemoteController::exit() {
+void RemoteController::exitCommand() {
   outputStream << "exit!" << endl;
-  std::cout << std::flush;
-  std::cerr << std::flush;
-  ::exit(0);
+  emit exit(0);
 }
 
 void RemoteController::setPlayerName() {
