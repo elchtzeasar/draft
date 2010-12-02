@@ -33,10 +33,10 @@
 #include <gmock/gmock.h>
 
 #include <exception>
-int main(int argc, char **argv) {
+GTEST_API_ int main(int argc, char **argv) {
   std::cout << "Running main() from unit_tests/test_main.cpp\n";
 
-  testing::GTEST_FLAG(throw_on_failure) = true;
+  testing::GTEST_FLAG(throw_on_failure) = false;
   testing::InitGoogleMock(&argc, argv);
   testing::InitGoogleTest(&argc, argv);
   try {

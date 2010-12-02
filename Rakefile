@@ -4,9 +4,13 @@ namespace 'test' do
     Kernel.system('bin/unit_tests')
   end
 
-  desc 'Run systemt tests'
+  desc 'Run systems tests'
   task :system do
     require 'rake/runtest'
+
+    logdir = "/tmp/b2b.#{Etc.getlogin}"
+    Dir.mkdir(logdir) unless File.exist? logdir
+
     Rake.run_tests('b2b/test*.rb')
   end
 end

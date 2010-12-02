@@ -40,7 +40,7 @@ class DraftApp
 
   def wait_for_log(logLine)
     waits = 0
-    while not(read[logLine] or waits > 10)
+    while not(read[logLine]) and waits < 10
       waits = waits + 1
       sleep(0.05)
     end
