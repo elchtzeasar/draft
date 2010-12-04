@@ -1,0 +1,50 @@
+digraph G {
+  node [shape=box];
+
+  subgraph cluster1 {
+    label = "client";
+
+    subgraph cluster11 {
+      label = "Configuring";
+
+      requestingName [label = "requestingName\nenter: configurationRequest"];
+      sendingName [label = "sendingName\nenter: send(PlayerNameCfg)"]
+      savingPlayerNames [label = "savingPlayerNames\nenter: savePlayerNames\nenter:send(PlayerListCnf)"];
+
+      requestingName -> sendingName [label = "configurationResponse"];
+      sendingName -> receivingPlayerList [label = "received: PlayerNameCnf"];
+      receivingPlayerList -> savingPlayerNames [label = "received: PlayerNamesCfg"];
+    }
+
+    savingPlayerNames -> clientDone;
+  }
+
+  subgraph cluster2 {
+    label = "Server";
+
+    listeningForConnections [label = "listeningForConnections\nclientConnected: create ClientStateMachine for client"];
+
+    subgraph cluster21 {
+      label = "ClientStateMachine";
+  
+      subgraph cluster211 {
+        label = "Configuring";
+
+	waitingForAllPlayersToConnect [label = "waitingForAllPlayersToConnect\nenter: send(PlayerNameCnf)"];
+	sendingPlayerList [label = "sendingPlayerList\nenter: send(PlayerNamesCfg)"];
+
+	receivingClientName -> waitingForAllPlayersToConnect [label = "received: PlayerNameCfg"];
+	waitingForAllPlayersToConnect -> sendingPlayerList [label = "startDraft"];
+      }
+
+      sendingPlayerList -> serverDone [label = "received: PlayerNamesCnf"];
+    } 
+
+    listeningForConnections -> receivingClientName [style=dotted];
+  }
+
+  null [shape = plaintext label=""];
+  null -> chooseClientOrServer;
+  chooseClientOrServer -> requestingName [label = "connectToDraft"];
+  chooseClientOrServer -> listeningForConnections [label = "hostDraft"];
+}

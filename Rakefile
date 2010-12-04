@@ -17,3 +17,10 @@ end
 
 desc 'Run unit and system tests'
 task :test => ['test:unit', 'test:system']
+
+namespace 'statemachine' do
+  desc 'Generate state machine graph'
+  task :generate do
+    Kernel.system('dot -Tjpg state/graph.dot -o state/graph.jpg')
+  end
+end

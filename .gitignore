@@ -4,3 +4,4 @@ libs/*
 */objs/*
 */mocs/*
 build/draft
+state/graph.jpg
