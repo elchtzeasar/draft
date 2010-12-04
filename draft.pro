@@ -3,6 +3,5 @@ SUBDIRS = gui remote_controller network configuration
 
 # build must be last:
 CONFIG += ordered staticlib
-SUBDIRS += console_draft
-SUBDIRS += gui_draft
+SUBDIRS += main
 SUBDIRS += unit_tests

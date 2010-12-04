@@ -2,18 +2,20 @@ TEMPLATE = app
 
 QT += network
 
-INCLUDEPATH += ../gui/include ../remote_controller/include
-INCLUDEPATH += ../configuration/include ../network/include
+INCLUDEPATH += ../src
+INCLUDEPATH += ../../gui/include ../../remote_controller/include
+INCLUDEPATH += ../../configuration/include ../../network/include
 
-OBJECTS_DIR = objs
+OBJECTS_DIR = ../objs
+MOC_DIR = ../mocs
 
-HEADERS += ../main/DraftApplication.h
-HEADERS += ../main/GuiDraftApplication.h
-HEADERS += ../main/ConsoleDraftApplication.h
+HEADERS += ../src/DraftApplication.h
+HEADERS += ../src/GuiDraftApplication.h
+HEADERS += ../src/ConsoleDraftApplication.h
 
-SOURCES += ../main/DraftApplication.cpp
-SOURCES += ../main/GuiDraftApplication.cpp
-SOURCES += ../main/ConsoleDraftApplication.cpp
-SOURCES += ../main/main.cpp
+SOURCES += ../src/DraftApplication.cpp
+SOURCES += ../src/GuiDraftApplication.cpp
+SOURCES += ../src/ConsoleDraftApplication.cpp
+SOURCES += ../main.cpp
 
-LIBS += -L../libs -lgui -lremote_controller -lconfiguration -lnetwork
+LIBS += -L../../libs -lgui -lremote_controller -lconfiguration -lnetwork
