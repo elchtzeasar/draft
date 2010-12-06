@@ -1,14 +1,16 @@
 #ifndef DRAFT_APPLICATION_H_
 #define DRAFT_APPLICATION_H_
 
-#include "ConfigurationComponent.h"
 #include "ConfigurationComponentFactory.h"
-#include "NetworkComponent.h"
 #include "NetworkComponentFactory.h"
 
 #include <Qt>
+#include <QObject>
 
-class QObject;
+class ConfigurationComponent;
+class NetworkComponent;
+class StateMachineComponent;
+
 
 class DraftApplication : public QObject {
   Q_OBJECT
@@ -21,6 +23,7 @@ class DraftApplication : public QObject {
 
  public slots:
   virtual void exit(int status) = 0;
+  virtual void start();
 
  protected:
   void connect ( const QObject * sender,
@@ -34,6 +37,7 @@ class DraftApplication : public QObject {
   ConfigurationComponent* configurationComponent;
   NetworkComponentFactory networkComponentFactory;
   NetworkComponent* networkComponent;
+  StateMachineComponent* stateMachineComponent;
 };
 
 

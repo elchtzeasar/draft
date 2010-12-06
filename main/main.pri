@@ -5,6 +5,7 @@ QT += network
 INCLUDEPATH += ../src
 INCLUDEPATH += ../../gui/include ../../remote_controller/include
 INCLUDEPATH += ../../configuration/include ../../network/include
+INCLUDEPATH += ../../state/include
 
 OBJECTS_DIR = ../objs
 MOC_DIR = ../mocs
@@ -18,4 +19,4 @@ SOURCES += ../src/GuiDraftApplication.cpp
 SOURCES += ../src/ConsoleDraftApplication.cpp
 SOURCES += ../main.cpp
 
-LIBS += -L../../libs -lgui -lremote_controller -lconfiguration -lnetwork
+LIBS += -L../../libs -lgui -lremote_controller -lconfiguration -lnetwork -lstate

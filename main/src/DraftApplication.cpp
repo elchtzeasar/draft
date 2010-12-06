@@ -1,5 +1,9 @@
 #include "DraftApplication.h"
 
+#include "ConfigurationComponent.h"
+#include "NetworkComponent.h"
+#include "StateMachineComponent.h"
+
 #include <QObject>
 
 #include <iostream>
@@ -9,11 +13,13 @@ using std::endl;
 DraftApplication::DraftApplication(QObject& ui) :
   ui(ui),
   configurationComponent(configurationComponentFactory.createComponent()),
-  networkComponent(networkComponentFactory.createComponent()) {}
+  networkComponent(networkComponentFactory.createComponent()),
+  stateMachineComponent(new StateMachineComponent) {}
 
 DraftApplication::~DraftApplication() {
   delete configurationComponent;
   delete networkComponent;
+  delete stateMachineComponent;
 }
 
 void DraftApplication::connect (const QObject * sender,
@@ -45,4 +51,21 @@ void DraftApplication::connectSlotsToSignals() {
   // UI -> DraftApplication:
   connect( &ui, SIGNAL(exit(int)),
 	   this, SLOT(exit(int)) );
+
+  // UI -> StateMachine:
+  connect( &ui, SIGNAL(connectToDraft(const QString&, unsigned int)),
+	   stateMachineComponent, SIGNAL(connectToDraft(const QString&, unsigned int)) );
+
+  // UI -> ConfigurationComponent
+  connect( stateMachineComponent, SIGNAL(configurationResponse(const QString)),
+	   configurationComponent, SIGNAL(configurationResponse(const QString)) );
+
+  // StateMachine -> UI
+  connect( &ui, SIGNAL(configurationRequest()),
+	   stateMachineComponent, SIGNAL(configurationRequest()) );
+
+}
+
+void DraftApplication::start() {
+  stateMachineComponent->start();
 }

@@ -16,6 +16,7 @@ class ConsoleDraftApplication : public QCoreApplication, public DraftApplication
 
  public slots:
   virtual void exit(int status);
+  virtual void start();
 
  private:
   RemoteController remoteController;

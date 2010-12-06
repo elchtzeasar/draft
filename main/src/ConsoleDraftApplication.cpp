@@ -7,11 +7,15 @@ ConsoleDraftApplication::ConsoleDraftApplication(int argc, char* argv[]) :
 }
 
 int ConsoleDraftApplication::exec() {
-  remoteController.start(QThread::LowPriority);
-
   return QCoreApplication::exec();
 }
 
 void ConsoleDraftApplication::exit(int status) {
   QCoreApplication::exit(status);
+}
+
+void ConsoleDraftApplication::start() {
+  DraftApplication::start();
+
+  remoteController.start(QThread::LowPriority);
 }
