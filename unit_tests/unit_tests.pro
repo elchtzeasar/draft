@@ -6,10 +6,9 @@ CONFIG += link_prl
 INCLUDEPATH += ../remote_controller/include
 INCLUDEPATH += ../network/include ../network/src network/include
 INCLUDEPATH += ../configuration/include ../configuration/src configuration/include
-INCLUDEPATH += ../state/include
 
 LIBS += -lgmock -lgtest
-LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration -lstate
+LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration
 
 SOURCES += test_main.cpp
 
@@ -23,9 +22,6 @@ SOURCES += remote_controller/RemoteControllerTest.cpp
 HEADERS += configuration/include/ConfigurationManagerMock.h
 SOURCES += configuration/ConfigurationComponentTest.cpp
 SOURCES += configuration/ConfigurationManagerTest.cpp
-
-HEADERS += state/StateMachineComponentTest.h
-SOURCES += state/StateMachineComponentTest.cpp
 
 TARGET = ../bin/unit_tests
 
