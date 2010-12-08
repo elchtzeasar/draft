@@ -6,17 +6,8 @@
 #include <QStateMachine>
 
 #include <iostream>
-class State : public QState {
- public:
- State(const char* name) : name(name) {}
- protected:
-  virtual void onEntry() {
-    std::cout << "State class: Entered state " << name << '.' << std::endl;
-  }
 
- private:
-  const char* name;
-};
+class State;
 
 class StateMachineComponent : public QObject {
   Q_OBJECT
@@ -46,7 +37,6 @@ class StateMachineComponent : public QObject {
   State* chooseClientOrServer;
   State* requestingName;
   QString activeState;
-
 };
 
 #endif // STATE_MACHINE_COMPONENT_H_
