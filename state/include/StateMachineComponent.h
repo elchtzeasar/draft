@@ -8,6 +8,7 @@
 #include <iostream>
 
 class State;
+class ClientState;
 
 class StateMachineComponent : public QObject {
   Q_OBJECT
@@ -35,7 +36,7 @@ class StateMachineComponent : public QObject {
 
   QStateMachine* stateMachine;
   State* chooseClientOrServer;
-  State* requestingName;
+  ClientState* clientState;
   QString activeState;
 };
 

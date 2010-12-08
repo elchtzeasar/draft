@@ -1,22 +1,21 @@
 #include "StateMachineComponent.h"
 
 #include "State.h"
+#include "ClientState.h"
 
 #include <QSignalTransition>
 
 StateMachineComponent::StateMachineComponent() : 
   stateMachine(new QStateMachine(this)),
-  chooseClientOrServer(new State(this, 0, "ChooseClientOrServer")),
-  requestingName(new State(this, 0, "RequestingName")),
+  chooseClientOrServer(new State(this, static_cast<State*>(0), "ChooseClientOrServer")),
+  clientState(new ClientState(this, static_cast<State*>(0), "Client")),
   activeState("Init") {
 
   chooseClientOrServer->addTransition(
-    this, SIGNAL(connectToDraft(const QString&, unsigned int)), requestingName);
-
-  connect(requestingName, SIGNAL(entered()), this, SIGNAL(configurationRequest()));
+    this, SIGNAL(connectToDraft(const QString&, unsigned int)), clientState);
 
   stateMachine->addState(chooseClientOrServer);
-  stateMachine->addState(requestingName);
+  stateMachine->addState(clientState);
   stateMachine->setInitialState(chooseClientOrServer);
 }
 
@@ -25,6 +24,7 @@ void StateMachineComponent::start() {
 }
 
 StateMachineComponent::~StateMachineComponent() {
-  delete requestingName;
+  delete clientState;
+  delete chooseClientOrServer;
   delete stateMachine;
 }
