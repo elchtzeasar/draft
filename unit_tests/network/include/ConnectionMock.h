@@ -12,6 +12,11 @@ class ConnectionMock : public Connection {
 
   MOCK_METHOD2(connectToHost, void(const QString& server, unsigned int port));
   MOCK_METHOD0(disconnectFromHost, void());
+
+ protected slots:
+  MOCK_METHOD0(readIncommingData, void());
+  MOCK_METHOD0(connected, void());
+  MOCK_METHOD1(socketError, void(QAbstractSocket::SocketError socketError));
 };
 
 #endif // CONNECTION_MOCK_H_
