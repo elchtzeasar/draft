@@ -1,18 +1,14 @@
 #include "ClientState.h"
 
+#include "ClientConfiguringState.h"
+
 ClientState::ClientState(QObject* component, State* parent, const char* name) :
   State(component, parent, name, false),
-  requestingName(new State(component, this, "RequestingName")),
-  sendingName(new State(component, this, "SendingName")) {
+  configuring(new ClientConfiguringState(component, this, "Configuring")) {
 
-  connect(requestingName, SIGNAL(entered()), component, SIGNAL(configurationRequest()));
-
-  requestingName->addTransition(
-    component, SIGNAL(configurationResponse(const QString)), sendingName);
-
-  setInitialState(requestingName);
+  setInitialState(configuring);
 }
 
 ClientState::~ClientState() {
-  delete requestingName;
+  delete configuring;
 }
