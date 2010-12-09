@@ -21,10 +21,10 @@ class Connection < Test::Unit::TestCase
     return self.name.gsub(/test: |\.|\([^\)]*\)/, '').gsub(' ', '_')
   end
 
-  should 'change state in server when it listens' do
+  should 'change state to ListentingForConnections in server when it listens' do
     @server.host
   
-    assert_includes 'Waiting for connections...', @server
+    assert_includes '-> Server::ListeningForConnections', @server
   end
 
   should 'change state to WaitingForConnection as it tries to connect' do
