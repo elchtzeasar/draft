@@ -56,13 +56,14 @@ void DraftApplication::connectSlotsToSignals() {
   connect( &ui, SIGNAL(connectToDraft(const QString&, unsigned int)),
 	   stateMachineComponent, SIGNAL(connectToDraft(const QString&, unsigned int)) );
 
-  // UI -> ConfigurationComponent
-  connect( stateMachineComponent, SIGNAL(configurationResponse(const QString)),
-	   configurationComponent, SIGNAL(configurationResponse(const QString)) );
+  // StateMachine -> ConfigurationComponent
+  connect( stateMachineComponent, SIGNAL(configurationRequest()),
+	   configurationComponent, SLOT(configurationRequest()) );
 
-  // StateMachine -> UI
-  connect( &ui, SIGNAL(configurationRequest()),
-	   stateMachineComponent, SIGNAL(configurationRequest()) );
+  // ConfigurationComponent -> StateMachine
+  connect( configurationComponent, SIGNAL(configurationResponse(const QString)),
+	   stateMachineComponent, SIGNAL(configurationResponse(const QString)) );
+
 
 }
 

@@ -14,8 +14,8 @@ class ClientState : public State {
   ClientState(const ClientState&);
   ClientState& operator=(ClientState&);
 
-  State* chooseClientOrServer;
   State* requestingName;
+  State* sendingName;
 };
 
 #endif // CLIENT_STATE_H
