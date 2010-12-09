@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-using std::cout;
 using std::cerr;
+using std::cout;
 using std::endl;
 
 ConnectionImpl::ConnectionImpl() : tcpSocket(0) {}
@@ -24,7 +24,6 @@ void ConnectionImpl::write(QByteArray& block) {
 }
 
 void ConnectionImpl::connectToHost(const QString& hostName, unsigned int port) {
-  cout << "Connecting to server at " << hostName.toStdString() << " on port " << port << endl;
   tcpSocket->connectToHost(hostName, port);
 }
 

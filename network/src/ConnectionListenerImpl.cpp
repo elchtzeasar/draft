@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-using std::cout;
 using std::cerr;
 using std::endl;
 
@@ -22,13 +21,10 @@ void ConnectionListenerImpl::listen(unsigned int port) {
     cerr << "Unable to start the server: " << tcpServer.errorString().toStdString() << endl;
     return;
   }
-
-  cout << "Waiting for connections..." << endl;
 }
 
 void ConnectionListenerImpl::acceptConnection() {
   connection.addSocket(tcpServer.nextPendingConnection());
-  cout << "Received incomming connection from client." << endl;
 
   QByteArray block;
   QDataStream out(&block, QIODevice::WriteOnly);
