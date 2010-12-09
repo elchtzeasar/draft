@@ -10,6 +10,7 @@ using std::endl;
 
 ConnectionListenerImpl::ConnectionListenerImpl(Connection& connection) : connection(connection) {
   connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+  connect(&tcpServer, SIGNAL(newConnection()), this, SIGNAL(clientConnected()));
 }
 
 ConnectionListenerImpl::~ConnectionListenerImpl() {

@@ -15,6 +15,7 @@ class ServerState : public State {
   ServerState& operator=(ServerState&);
 
   State* listeningForConnections;
+  State* clientStateMachine;
 };
 
 #endif // SERVER_STATE_H

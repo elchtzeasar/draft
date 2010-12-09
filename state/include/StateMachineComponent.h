@@ -21,6 +21,7 @@ class StateMachineComponent : public QObject {
 
  signals:
   void hostDraft(unsigned int);
+  void clientConnected();
 
   void connectToDraft(const QString&, unsigned int);
   void connectedToDraft();
