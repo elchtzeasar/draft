@@ -9,6 +9,7 @@
 
 class State;
 class ClientState;
+class ServerState;
 
 class StateMachineComponent : public QObject {
   Q_OBJECT
@@ -19,6 +20,9 @@ class StateMachineComponent : public QObject {
   void start();
 
  signals:
+  void hostDraft(unsigned int);
+  void clientConnected();
+
   void connectToDraft(const QString&, unsigned int);
   void connectedToDraft();
   void configurationRequest();
@@ -38,6 +42,7 @@ class StateMachineComponent : public QObject {
   QStateMachine* stateMachine;
   State* chooseClientOrServer;
   ClientState* clientState;
+  ServerState* serverState;
   QString activeState;
 };
 

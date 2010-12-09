@@ -13,6 +13,9 @@ class ConnectionListener : public QObject {
 
   virtual void listen(unsigned int port) = 0;
 
+ signals:
+  void clientConnected();
+
  protected slots:
   virtual void acceptConnection() = 0;
 };

@@ -55,6 +55,8 @@ void DraftApplication::connectSlotsToSignals() {
   // UI -> StateMachine:
   connect( &ui, SIGNAL(connectToDraft(const QString&, unsigned int)),
 	   stateMachineComponent, SIGNAL(connectToDraft(const QString&, unsigned int)) );
+  connect( &ui, SIGNAL(hostDraft(unsigned int)),
+	   stateMachineComponent, SIGNAL(hostDraft(unsigned int)) );
 
   // StateMachine -> ConfigurationComponent
   connect( stateMachineComponent, SIGNAL(configurationRequest()),
@@ -67,6 +69,8 @@ void DraftApplication::connectSlotsToSignals() {
   // NetworkComponent -> StateMachine
   connect( networkComponent, SIGNAL(connectedToDraft()),
 	   stateMachineComponent, SIGNAL(connectedToDraft()) );
+  connect( networkComponent, SIGNAL(clientConnected()),
+	   stateMachineComponent, SIGNAL(clientConnected()) );
 
 }
 

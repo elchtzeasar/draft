@@ -8,7 +8,6 @@
 using boost::property_tree::ptree;
 
 using std::cerr;
-using std::cout;
 using std::endl;
 
 static const char* PLAYER_NAME_PATH = "configuration.player.name";
@@ -37,8 +36,6 @@ void ConfigurationManagerImpl::save() const {
   pt.put(PLAYER_NAME_PATH, playerName);
   
   write_xml(filename, pt);
-
-  cout << "Configuration saved" << endl;
 }
 
 const std::string& ConfigurationManagerImpl::getPlayerName() const {

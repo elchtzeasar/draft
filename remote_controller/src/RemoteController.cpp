@@ -44,20 +44,15 @@ void RemoteController::configurationResponse(const QString playerName) {
 }
 
 void RemoteController::sendHostDraft() {
-  outputStream << "Sending host_draft" << endl;
   emit hostDraft(PORT);
-  outputStream << "host_draft sent" << endl;
 }
 
 void RemoteController::connectToDraft() {
-  outputStream << "Sending connect_to_draft" << endl;
   const QString hostName("localhost");
   emit connectToDraft(hostName, PORT);
-  outputStream << "connectToDraft sent" << endl;
 }
 
 void RemoteController::exitCommand() {
-  outputStream << "exit!" << endl;
   emit exit(0);
 }
 
@@ -65,12 +60,9 @@ void RemoteController::setPlayerName() {
   string stdPlayerName;
   inputStream >> stdPlayerName;
   QString playerName(stdPlayerName.c_str());
-  outputStream << "set_name: " << playerName.toStdString() << endl;
   emit setPlayerName(playerName);
 }
 
 void RemoteController::getPlayerName() {
-  outputStream << "get_name!" << endl;
-
   emit configurationRequest();
 }

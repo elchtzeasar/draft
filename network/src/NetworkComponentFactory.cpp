@@ -14,6 +14,8 @@ NetworkComponent* NetworkComponentFactory::createComponent() {
 
   QObject::connect( connection, SIGNAL(connectedToDraft()),
 		    networkComponent, SIGNAL(connectedToDraft()) );
+  QObject::connect( connectionListener, SIGNAL(clientConnected()),
+		    networkComponent, SIGNAL(clientConnected()) );
 
   return networkComponent;
 }

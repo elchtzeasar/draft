@@ -21,6 +21,7 @@ class NetworkComponent : public QObject {
 
  signals:
   void connectedToDraft();
+  void clientConnected();
 
  private:
   NetworkComponent(const NetworkComponent&);
