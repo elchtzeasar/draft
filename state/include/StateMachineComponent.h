@@ -20,6 +20,7 @@ class StateMachineComponent : public QObject {
 
  signals:
   void connectToDraft(const QString&, unsigned int);
+  void connectedToDraft();
   void configurationRequest();
   void configurationResponse(const QString);
 

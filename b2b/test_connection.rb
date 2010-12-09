@@ -21,30 +21,30 @@ class Connection < Test::Unit::TestCase
     return self.name.gsub(/test: |\.|\([^\)]*\)/, '').gsub(' ', '_')
   end
 
-  should 'log in server when it listens' do
+  should 'change state in server when it listens' do
     @server.host
   
     assert_includes 'Waiting for connections...', @server
   end
 
-  should 'log in client when it connects' do
+  should 'change state to WaitingForConnection as it tries to connect' do
     @client.connect
 
-    assert_includes 'Connecting to server at localhost on port 10001', @client
+    assert_includes '-> Client::WaitingForConnection', @client
   end
 
-  should 'log in server when client connects' do
+  should 'change state in server when client connects' do
     host_and_wait
     connect_and_wait
   
     assert_includes 'Received incomming connection from client.', @server
   end
   
-  should 'log in client when client connects' do
+  should 'change change state to Configuring in client when it successfully connects' do
     host_and_wait
     connect_and_wait
   
-    assert_includes 'Connected to server.', @client
+    assert_includes '-> Client::Configuring', @client
   end
   
   should 'send message from server to client upon connection' do
@@ -63,6 +63,6 @@ class Connection < Test::Unit::TestCase
   def connect_and_wait
     @client.connect
 
-    @client.wait_for_log('Connected to server')
+    @client.wait_for_log('-> Client::Configuring')
   end
 end

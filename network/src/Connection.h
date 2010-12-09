@@ -21,8 +21,11 @@ class Connection : public QObject {
 
  protected slots:
   virtual void readIncommingData() = 0;
-  virtual void connected() = 0;
   virtual void socketError(QAbstractSocket::SocketError socketError) = 0;
+
+ signals:
+  void connectedToDraft();
+
 };
 
 #endif // CONNECTION_H_
