@@ -3,6 +3,7 @@
 #include "ConnectionMock.h"
 #include "ConnectionListenerMock.h"
 
+#include <QSignalSpy>
 #include <QTcpSocket>
 
 #include <gtest/gtest.h>

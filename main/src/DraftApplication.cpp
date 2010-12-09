@@ -64,6 +64,9 @@ void DraftApplication::connectSlotsToSignals() {
   connect( configurationComponent, SIGNAL(configurationResponse(const QString)),
 	   stateMachineComponent, SIGNAL(configurationResponse(const QString)) );
 
+  // NetworkComponent -> StateMachine
+  connect( networkComponent, SIGNAL(connectedToDraft()),
+	   stateMachineComponent, SIGNAL(connectedToDraft()) );
 
 }
 
