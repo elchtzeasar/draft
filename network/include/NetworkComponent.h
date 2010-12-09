@@ -19,6 +19,9 @@ class NetworkComponent : public QObject {
   void handleHostDraft(unsigned int port);
   void handleConnectToDraft(const QString& hostName, unsigned int port);
 
+ signals:
+  void connectedToDraft();
+
  private:
   NetworkComponent(const NetworkComponent&);
   NetworkComponent& operator=(NetworkComponent&);

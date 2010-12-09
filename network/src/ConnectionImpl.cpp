@@ -14,7 +14,7 @@ void ConnectionImpl::addSocket(QTcpSocket* tcpSocket) {
   this->tcpSocket = tcpSocket;
 
   connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readIncommingData()));
-  connect(tcpSocket, SIGNAL(connected()), this, SLOT(connected()));
+  connect(tcpSocket, SIGNAL(connected()), this, SIGNAL(connectedToDraft()));
   connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
 	  this, SLOT(socketError(QAbstractSocket::SocketError)));
 }
@@ -39,10 +39,6 @@ void ConnectionImpl::readIncommingData() {
   
   in >> receivedData;
   cout << "Received data: " << receivedData << endl;
-}
-
-void ConnectionImpl::connected() {
-  cout << "Connected to server." << endl;
 }
 
 void ConnectionImpl::socketError(QAbstractSocket::SocketError socketError) {

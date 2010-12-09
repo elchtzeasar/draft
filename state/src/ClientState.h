@@ -14,6 +14,7 @@ class ClientState : public State {
   ClientState(const ClientState&);
   ClientState& operator=(ClientState&);
 
+  State* waitingForConnection;
   State* configuring;
 };
 
