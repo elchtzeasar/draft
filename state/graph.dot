@@ -16,6 +16,7 @@ digraph G {
       receivingPlayerList -> savingPlayerNames [label = "received: PlayerNamesCfg"];
     }
 
+    waitingForConnection -> requestingName [label = "connectedToDraft"];
     savingPlayerNames -> clientDone;
   }
 
@@ -45,6 +46,6 @@ digraph G {
 
   null [shape = plaintext label=""];
   null -> chooseClientOrServer;
-  chooseClientOrServer -> requestingName [label = "connectToDraft"];
+  chooseClientOrServer -> waitingForConnection [label = "connectToDraft"];
   chooseClientOrServer -> listeningForConnections [label = "hostDraft"];
 }
