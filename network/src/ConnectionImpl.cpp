@@ -32,12 +32,13 @@ void ConnectionImpl::disconnectFromHost() {
 }
 
 void ConnectionImpl::readIncommingData() {
-  char* receivedData;
+  QByteArray data;
   QDataStream in(tcpSocket);
   in.setVersion(QDataStream::Qt_4_0);
   
-  in >> receivedData;
-  cout << "Received data: " << receivedData << endl;
+  in >> data;
+
+  emit dataReceived(data);
 }
 
 void ConnectionImpl::socketError(QAbstractSocket::SocketError socketError) {

@@ -25,7 +25,7 @@ class Connection : public QObject {
 
  signals:
   void connectedToDraft();
-
+  void dataReceived(const QByteArray& data);
 };
 
 #endif // CONNECTION_H_

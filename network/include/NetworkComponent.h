@@ -23,6 +23,8 @@ class NetworkComponent : public QObject {
   void connectedToDraft();
   void clientConnected();
 
+  void dataReceived(const QByteArray& data);
+
  private:
   NetworkComponent(const NetworkComponent&);
   NetworkComponent& operator=(NetworkComponent&);

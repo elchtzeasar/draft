@@ -71,7 +71,8 @@ void DraftApplication::connectSlotsToSignals() {
 	   stateMachineComponent, SIGNAL(connectedToDraft()) );
   connect( networkComponent, SIGNAL(clientConnected()),
 	   stateMachineComponent, SIGNAL(clientConnected()) );
-
+  connect( networkComponent, SIGNAL(dataReceived(const QByteArray&)),
+	   stateMachineComponent, SIGNAL(dataReceived(const QByteArray&)) );
 }
 
 void DraftApplication::start() {

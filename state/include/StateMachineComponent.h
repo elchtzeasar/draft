@@ -28,6 +28,12 @@ class StateMachineComponent : public QObject {
   void configurationRequest();
   void configurationResponse(const QString);
 
+  void sendData(const QByteArray&);
+  void dataReceived(const QByteArray&);
+
+ public slots:
+  void handleDataReceived(const QByteArray& data);
+
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState)
   const QString getActiveState() const {
