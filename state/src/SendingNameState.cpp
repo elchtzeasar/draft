@@ -1,5 +1,11 @@
 #include "SendingNameState.h"
 
+#include <QEvent>
+#include <QSignalTransition>
+#include <QStateMachine>
+
+#include <cassert>
+
 SendingNameState::SendingNameState(QObject* component, State* parent) : 
   State(component, parent, "SendingName") {
 }
@@ -7,11 +13,10 @@ SendingNameState::SendingNameState(QObject* component, State* parent) :
 SendingNameState::~SendingNameState() {}
 
 void SendingNameState::onEntry(QEvent* event) {
-  QByteArray data;
-  QDataStream out(&data, QIODevice::WriteOnly);
-  out.setVersion(QDataStream::Qt_4_0);
+  assert(event->type() == QEvent::StateMachineSignal &&
+	 "SendingNameState should only be entered with a QEvent::StateMachineSignal");
+  QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
+  const QString playerName = signalEvent->arguments().at(0).toString();
 
-  out << "This is server speaking...";
-
-  emit sendData(data);
+  emit sendData(playerName);
 }

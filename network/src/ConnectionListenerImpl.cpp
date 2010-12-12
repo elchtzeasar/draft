@@ -26,11 +26,5 @@ void ConnectionListenerImpl::listen(unsigned int port) {
 void ConnectionListenerImpl::acceptConnection() {
   connection.addSocket(tcpServer.nextPendingConnection());
 
-  QByteArray block;
-  QDataStream out(&block, QIODevice::WriteOnly);
-  out.setVersion(QDataStream::Qt_4_0);
-
-  out << "This is server speaking...";
-
-  connection.write(block);
+  connection.handleSendData(QString("This is server speaking..."));
 }

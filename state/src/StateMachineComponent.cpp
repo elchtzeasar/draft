@@ -13,8 +13,8 @@ StateMachineComponent::StateMachineComponent() :
   serverState(new ServerState(this, static_cast<State*>(0), "Server")),
   activeState("Init") {
 
-  connect( this, SIGNAL(dataReceived(const QByteArray&)),
-	   SLOT(handleDataReceived(const QByteArray&)) );
+  connect( this, SIGNAL(dataReceived(const QString&)),
+	   SLOT(handleDataReceived(const QString&)) );
 
   chooseClientOrServer->addTransition(
     this, SIGNAL(connectToDraft(const QString&, unsigned int)), clientState);
@@ -29,9 +29,9 @@ StateMachineComponent::StateMachineComponent() :
 
 // TODO: Remove the following function:
 #include <iostream>
-void StateMachineComponent::handleDataReceived(const QByteArray& data) {
+void StateMachineComponent::handleDataReceived(const QString& data) {
   std::cout << "StateMachineComponent::handleDataReceived("
-	    << static_cast<const char*>(data) << ')' << std::endl;
+	    << data.toStdString().c_str() << ')' << std::endl;
 }
 
 void StateMachineComponent::start() {

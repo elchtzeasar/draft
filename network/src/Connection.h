@@ -14,13 +14,12 @@ class Connection : public QObject {
   virtual ~Connection() {}
 
   virtual void addSocket(QTcpSocket* tcpSocket) = 0;
-  virtual void write(QByteArray& block) = 0;
 
   virtual void connectToHost(const QString& hostName, unsigned int port) = 0;
   virtual void disconnectFromHost() = 0;
 
  public slots:
-  virtual void handleSendData(const QByteArray& data) = 0;
+  virtual void handleSendData(const QString& data) = 0;
 
  protected slots:
   virtual void readIncommingData() = 0;
@@ -28,7 +27,7 @@ class Connection : public QObject {
 
  signals:
   void connectedToDraft();
-  void dataReceived(const QByteArray& data);
+  void dataReceived(const QString& data);
 };
 
 #endif // CONNECTION_H_

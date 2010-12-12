@@ -17,6 +17,7 @@ class Connection < Test::Unit::TestCase
     @client.close
   end
 
+  # TODO: Change this to use folders instead of just a log file name
   def app_name
     return self.name.gsub(/test: |\.|\([^\)]*\)/, '').gsub(' ', '_')
   end
@@ -47,6 +48,14 @@ class Connection < Test::Unit::TestCase
     assert_state_change 'Client::Configuring', @client
   end
 
+  should 'send name from client to server upon connection' do
+    @client.configure_name
+    host_and_wait
+    connect_and_wait
+
+    assert_includes @client.name, @server
+  end
+  
   should 'send message from server to client upon connection' do
     host_and_wait
     connect_and_wait

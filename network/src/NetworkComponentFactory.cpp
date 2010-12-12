@@ -15,14 +15,14 @@ NetworkComponent* NetworkComponentFactory::createComponent() {
     new NetworkComponent(connection, connectionListener);
 
   // NetworkComponent -> Connection
-  QObject::connect( networkComponent, SIGNAL(sendData(const QByteArray&)),
-		    connection, SLOT(handleSendData(const QByteArray&)) );
+  QObject::connect( networkComponent, SIGNAL(sendData(const QString&)),
+		    connection, SLOT(handleSendData(const QString&)) );
 
   // Connection -> NetworkComponent
   QObject::connect( connection, SIGNAL(connectedToDraft()),
 		    networkComponent, SIGNAL(connectedToDraft()) );
-  QObject::connect( connection, SIGNAL(dataReceived(const QByteArray&)),
-		    networkComponent, SIGNAL(dataReceived(const QByteArray&)) );
+  QObject::connect( connection, SIGNAL(dataReceived(const QString&)),
+		    networkComponent, SIGNAL(dataReceived(const QString&)) );
 
   // ConnectionListener -> NetworkComponent
   QObject::connect( connectionListener, SIGNAL(clientConnected()),

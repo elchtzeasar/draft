@@ -15,7 +15,7 @@ class SendingNameState : public State {
   virtual void onEntry(QEvent* event);
   
  signals:
-  void sendData(const QByteArray& data);
+  void sendData(const QString& data);
 
  private:
   SendingNameState(const SendingNameState&);

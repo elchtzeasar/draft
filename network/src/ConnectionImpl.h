@@ -9,13 +9,12 @@ class ConnectionImpl : public Connection {
   virtual ~ConnectionImpl() {}
 
   void addSocket(QTcpSocket* tcpSocket);
-  void write(QByteArray& block);
 
   void connectToHost(const QString& hostName, unsigned int port);
   void disconnectFromHost();
 
  public slots:
-  virtual void handleSendData(const QByteArray& data);
+  virtual void handleSendData(const QString& data);
 
  protected slots:
   void readIncommingData();

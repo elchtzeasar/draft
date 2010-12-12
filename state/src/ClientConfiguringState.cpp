@@ -14,9 +14,9 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
     component, SIGNAL(configurationResponse(const QString)), sendingName);
 
   sendingName->addTransition(
-    component, SIGNAL(dataReceived(const QByteArray&)), receivingPlayerList);
-  connect(sendingName, SIGNAL(sendData(const QByteArray&)),
-	  component, SIGNAL(sendData(const QByteArray&)) );
+    component, SIGNAL(dataReceived(const QString&)), receivingPlayerList);
+  connect(sendingName, SIGNAL(sendData(const QString&)),
+	  component, SIGNAL(sendData(const QString&)) );
 
   setInitialState(requestingName);
 }

@@ -21,7 +21,11 @@ class DraftApp
 
   def set_name(name)
     @name = name
-    @app.write "set_name #{name}\n"
+    configure_name
+  end
+
+  def configure_name
+    @app.write "set_name #{@name}\n"
   end
 
   def get_name
