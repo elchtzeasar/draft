@@ -19,8 +19,8 @@ void ConnectionImpl::addSocket(QTcpSocket* tcpSocket) {
 	  this, SLOT(socketError(QAbstractSocket::SocketError)));
 }
 
-void ConnectionImpl::write(QByteArray& block) {
-  tcpSocket->write(block);
+void ConnectionImpl::write(QByteArray& data) {
+  tcpSocket->write(data);
 }
 
 void ConnectionImpl::connectToHost(const QString& hostName, unsigned int port) {
@@ -29,6 +29,10 @@ void ConnectionImpl::connectToHost(const QString& hostName, unsigned int port) {
 
 void ConnectionImpl::disconnectFromHost() {
   tcpSocket->disconnectFromHost();
+}
+
+void ConnectionImpl::handleSendData(const QByteArray& data) {
+  tcpSocket->write(data);
 }
 
 void ConnectionImpl::readIncommingData() {

@@ -33,5 +33,4 @@ void ConnectionListenerImpl::acceptConnection() {
   out << "This is server speaking...";
 
   connection.write(block);
-  connection.disconnectFromHost();
 }

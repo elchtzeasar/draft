@@ -14,6 +14,9 @@ class ConnectionImpl : public Connection {
   void connectToHost(const QString& hostName, unsigned int port);
   void disconnectFromHost();
 
+ public slots:
+  virtual void handleSendData(const QByteArray& data);
+
  protected slots:
   void readIncommingData();
   void socketError(QAbstractSocket::SocketError socketError);

@@ -14,6 +14,10 @@ NetworkComponent* NetworkComponentFactory::createComponent() {
   NetworkComponent* networkComponent =
     new NetworkComponent(connection, connectionListener);
 
+  // NetworkComponent -> Connection
+  QObject::connect( networkComponent, SIGNAL(sendData(const QByteArray&)),
+		    connection, SLOT(handleSendData(const QByteArray&)) );
+
   // Connection -> NetworkComponent
   QObject::connect( connection, SIGNAL(connectedToDraft()),
 		    networkComponent, SIGNAL(connectedToDraft()) );

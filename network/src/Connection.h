@@ -19,6 +19,9 @@ class Connection : public QObject {
   virtual void connectToHost(const QString& hostName, unsigned int port) = 0;
   virtual void disconnectFromHost() = 0;
 
+ public slots:
+  virtual void handleSendData(const QByteArray& data) = 0;
+
  protected slots:
   virtual void readIncommingData() = 0;
   virtual void socketError(QAbstractSocket::SocketError socketError) = 0;
