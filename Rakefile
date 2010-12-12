@@ -25,3 +25,21 @@ namespace 'statemachine' do
     puts 'state/graph.jpg file generated'
   end
 end
+
+desc 'Clean all generated files'
+task :clean do
+  puts 'Removing moc files'
+  `find . -name moc_* | xargs rm`
+
+  puts 'Removing .o files'
+  `find . -name *.o | xargs rm`
+
+  puts 'Removing binaries'
+  `rm bin/*`
+
+  puts 'Removing libs'
+  `rm libs/*`
+
+  puts 'make clean...'
+  `make clean`
+end
