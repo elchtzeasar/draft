@@ -24,27 +24,34 @@ class Connection < Test::Unit::TestCase
   should 'change state to ListentingForConnections in server when it listens' do
     @server.host
   
-    assert_includes '-> Server::ListeningForConnections', @server
+    assert_state_change 'Server::ListeningForConnections', @server
   end
 
   should 'change state to WaitingForConnection as it tries to connect' do
     @client.connect
 
-    assert_includes '-> Client::WaitingForConnection', @client
+    assert_state_change 'Client::WaitingForConnection', @client
   end
 
   should 'change state to Configuring in server when client connects' do
     host_and_wait
     connect_and_wait
   
-    assert_includes '-> Server::ClientStateMachine::Configuring', @server
+    assert_state_change 'Server::ClientStateMachine::Configuring', @server
   end
   
   should 'change change state to Configuring in client when it successfully connects' do
     host_and_wait
     connect_and_wait
   
-    assert_includes '-> Client::Configuring', @client
+    assert_state_change 'Client::Configuring', @client
+  end
+
+  should 'send name from client to server upon connection' do
+    host_and_wait
+    connect_and_wait
+
+    assert_includes @client.name, @server
   end
   
   should 'send message from server to client upon connection' do
@@ -57,12 +64,12 @@ class Connection < Test::Unit::TestCase
   def host_and_wait
     @server.host
 
-    @server.wait_for_log('-> Server::ClientStateMachine::Configuring')
+    @server.wait_for_state_change('Server::ClientStateMachine::Configuring')
   end
 
   def connect_and_wait
     @client.connect
 
-    @client.wait_for_log('-> Client::Configuring')
+    @client.wait_for_state_change('Client::Configuring')
   end
 end

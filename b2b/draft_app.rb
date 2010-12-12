@@ -9,6 +9,8 @@ class DraftApp
     @file = File.open(filename, File::RDONLY | File::CREAT | File::TRUNC)
   end
 
+  attr_reader :name
+
   def host
     @app.write "host_draft\n"
   end
@@ -18,6 +20,7 @@ class DraftApp
   end
 
   def set_name(name)
+    @name = name
     @app.write "set_name #{name}\n"
   end
 
@@ -38,12 +41,19 @@ class DraftApp
     @app.close
   end
 
-  def wait_for_log(logLine)
+  def wait_for_state_change(new_state)
+    wait_for_log(/STATE CHANGE [[:alpha:]*:{0,2}]+ -> #{new_state}/)
+  end
+
+  def wait_for_log(log_line)
     waits = 0
-    while not(read[logLine]) and waits < 10
+    while not(read[log_line])
+      return false if waits > 10
       waits = waits + 1
       sleep(0.05)
     end
+
+    return true
   end
 
 private
