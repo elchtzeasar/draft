@@ -18,5 +18,5 @@ void SendingNameState::onEntry(QEvent* event) {
   QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
   const QString playerName = signalEvent->arguments().at(0).toString();
 
-  emit sendData(playerName);
+  //emit sendData(playerName);
 }

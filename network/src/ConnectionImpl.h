@@ -3,6 +3,8 @@
 
 #include "Connection.h"
 
+class AddressedMessage;
+
 class ConnectionImpl : public Connection {
  public:
   ConnectionImpl();
@@ -14,7 +16,7 @@ class ConnectionImpl : public Connection {
   void disconnectFromHost();
 
  public slots:
-  virtual void handleSendData(const QString& data);
+  virtual void handleSendData(const AddressedMessage& message);
 
  protected slots:
   void readIncommingData();

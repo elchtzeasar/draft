@@ -5,6 +5,8 @@
 
 #include <QObject>
 
+class AddressedMessage;
+
 class SendingNameState : public State {
   Q_OBJECT
 
@@ -15,7 +17,7 @@ class SendingNameState : public State {
   virtual void onEntry(QEvent* event);
   
  signals:
-  void sendData(const QString& data);
+  void sendData(const AddressedMessage& message);
 
  private:
   SendingNameState(const SendingNameState&);

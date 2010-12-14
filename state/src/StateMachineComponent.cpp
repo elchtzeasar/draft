@@ -1,8 +1,9 @@
 #include "StateMachineComponent.h"
 
-#include "State.h"
+#include "AddressedMessage.h"
 #include "ClientState.h"
 #include "ServerState.h"
+#include "State.h"
 
 #include <QSignalTransition>
 
@@ -13,8 +14,8 @@ StateMachineComponent::StateMachineComponent() :
   serverState(new ServerState(this, static_cast<State*>(0), "Server")),
   activeState("Init") {
 
-  connect( this, SIGNAL(dataReceived(const QString&)),
-	   SLOT(handleDataReceived(const QString&)) );
+  connect( this, SIGNAL(dataReceived(const AddressedMessage&)),
+	   SLOT(handleDataReceived(const AddressedMessage&)) );
 
   chooseClientOrServer->addTransition(
     this, SIGNAL(connectToDraft(const QString&, unsigned int)), clientState);
@@ -29,9 +30,9 @@ StateMachineComponent::StateMachineComponent() :
 
 // TODO: Remove the following function:
 #include <iostream>
-void StateMachineComponent::handleDataReceived(const QString& data) {
+void StateMachineComponent::handleDataReceived(const AddressedMessage& message) {
   std::cout << "StateMachineComponent::handleDataReceived("
-	    << data.toStdString().c_str() << ')' << std::endl;
+	    << message << ')' << std::endl;
 }
 
 void StateMachineComponent::start() {

@@ -63,8 +63,8 @@ void DraftApplication::connectSlotsToSignals() {
 	   configurationComponent, SLOT(configurationRequest()) );
 
   // StateMachine -> NetworkComponent
-  connect( stateMachineComponent, SIGNAL(sendData(const QString&)),
-	   networkComponent, SIGNAL(sendData(const QString&)) );
+  connect( stateMachineComponent, SIGNAL(sendData(const AddressedMessage&)),
+	   networkComponent, SIGNAL(sendData(const AddressedMessage&)) );
 
   // ConfigurationComponent -> StateMachine
   connect( configurationComponent, SIGNAL(configurationResponse(const QString)),
@@ -75,8 +75,8 @@ void DraftApplication::connectSlotsToSignals() {
 	   stateMachineComponent, SIGNAL(connectedToDraft()) );
   connect( networkComponent, SIGNAL(clientConnected()),
 	   stateMachineComponent, SIGNAL(clientConnected()) );
-  connect( networkComponent, SIGNAL(dataReceived(const QString&)),
-	   stateMachineComponent, SIGNAL(dataReceived(const QString&)) );
+  connect( networkComponent, SIGNAL(dataReceived(const AddressedMessage&)),
+	   stateMachineComponent, SIGNAL(dataReceived(const AddressedMessage&)) );
 }
 
 void DraftApplication::start() {

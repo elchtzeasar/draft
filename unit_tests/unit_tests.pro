@@ -3,12 +3,13 @@ TEMPLATE = app
 QT += testlib network
 CONFIG += link_prl
 
+INCLUDEPATH += ../common/include
 INCLUDEPATH += ../remote_controller/include
 INCLUDEPATH += ../network/include ../network/src network/include
 INCLUDEPATH += ../configuration/include ../configuration/src configuration/include
 
 LIBS += -lgmock -lgtest
-LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration
+LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration -lcommon
 
 SOURCES += test_main.cpp
 

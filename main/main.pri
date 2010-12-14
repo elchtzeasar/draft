@@ -19,4 +19,4 @@ SOURCES += ../src/GuiDraftApplication.cpp
 SOURCES += ../src/ConsoleDraftApplication.cpp
 SOURCES += ../main.cpp
 
-LIBS += -L../../libs -lgui -lremote_controller -lconfiguration -lnetwork -lstate
+LIBS += -L../../libs -lgui -lremote_controller -lconfiguration -lnetwork -lstate -lcommon

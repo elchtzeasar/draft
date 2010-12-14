@@ -3,6 +3,8 @@
 
 #include "Connection.h"
 
+#include "AddressedMessage.h"
+
 #include <gmock/gmock.h>
 
 class ConnectionMock : public Connection {
@@ -13,7 +15,7 @@ class ConnectionMock : public Connection {
   MOCK_METHOD0(disconnectFromHost, void());
 
  public slots:
-  MOCK_METHOD1(handleSendData, void(const QString& data));
+  MOCK_METHOD1(handleSendData, void(const AddressedMessage& message));
 
  protected slots:
   MOCK_METHOD0(readIncommingData, void());

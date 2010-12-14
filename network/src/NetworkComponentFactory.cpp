@@ -6,8 +6,6 @@
 
 #include <QObject>
 
-class QByteArray;
-
 NetworkComponent* NetworkComponentFactory::createComponent() {
   Connection* connection = new ConnectionImpl;
   ConnectionListener* connectionListener = new ConnectionListenerImpl(*connection);
@@ -15,14 +13,14 @@ NetworkComponent* NetworkComponentFactory::createComponent() {
     new NetworkComponent(connection, connectionListener);
 
   // NetworkComponent -> Connection
-  QObject::connect( networkComponent, SIGNAL(sendData(const QString&)),
-		    connection, SLOT(handleSendData(const QString&)) );
+  QObject::connect( networkComponent, SIGNAL(sendData(const AddressedMessage&)),
+		    connection, SLOT(handleSendData(const AddressedMessage&)) );
 
   // Connection -> NetworkComponent
   QObject::connect( connection, SIGNAL(connectedToDraft()),
 		    networkComponent, SIGNAL(connectedToDraft()) );
-  QObject::connect( connection, SIGNAL(dataReceived(const QString&)),
-		    networkComponent, SIGNAL(dataReceived(const QString&)) );
+  QObject::connect( connection, SIGNAL(dataReceived(const AddressedMessage&)),
+		    networkComponent, SIGNAL(dataReceived(const AddressedMessage&)) );
 
   // ConnectionListener -> NetworkComponent
   QObject::connect( connectionListener, SIGNAL(clientConnected()),

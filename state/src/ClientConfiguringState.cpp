@@ -2,6 +2,8 @@
 
 #include "SendingNameState.h"
 
+class AddressedMessage;
+
 ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent, const char* name) :
   State(component, parent, name, false),
   requestingName(new State(component, this, "RequestingName")),
@@ -14,9 +16,9 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
     component, SIGNAL(configurationResponse(const QString)), sendingName);
 
   sendingName->addTransition(
-    component, SIGNAL(dataReceived(const QString&)), receivingPlayerList);
-  connect(sendingName, SIGNAL(sendData(const QString&)),
-	  component, SIGNAL(sendData(const QString&)) );
+    component, SIGNAL(dataReceived(const AddressedMessage&)), receivingPlayerList);
+  connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
+	  component, SIGNAL(sendData(const AddressedMessage&)) );
 
   setInitialState(requestingName);
 }

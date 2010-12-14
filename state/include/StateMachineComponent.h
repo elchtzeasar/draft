@@ -10,6 +10,7 @@
 class State;
 class ClientState;
 class ServerState;
+class AddressedMessage;
 
 class StateMachineComponent : public QObject {
   Q_OBJECT
@@ -28,11 +29,11 @@ class StateMachineComponent : public QObject {
   void configurationRequest();
   void configurationResponse(const QString);
 
-  void sendData(const QString&);
-  void dataReceived(const QString&);
+  void sendData(const AddressedMessage&);
+  void dataReceived(const AddressedMessage&);
 
  public slots:
-  void handleDataReceived(const QString& data);
+  void handleDataReceived(const AddressedMessage& message);
 
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState)

@@ -1,5 +1,7 @@
 #include "ConnectionImpl.h"
 
+#include "AddressedMessage.h"
+
 #include <QTcpSocket>
 
 #include <iostream>
@@ -27,21 +29,21 @@ void ConnectionImpl::disconnectFromHost() {
   tcpSocket->disconnectFromHost();
 }
 
-void ConnectionImpl::handleSendData(const QString& playerName) {
+void ConnectionImpl::handleSendData(const AddressedMessage& message) {
   QDataStream out(tcpSocket);
   out.setVersion(QDataStream::Qt_4_0);
 
-  out << playerName;
+  out << message;
 }
 
 void ConnectionImpl::readIncommingData() {
-  QString data;
+  AddressedMessage message;
   QDataStream in(tcpSocket);
   in.setVersion(QDataStream::Qt_4_0);
   
-  in >> data;
+  in >> message;
 
-  emit dataReceived(data);
+  emit dataReceived(message);
 }
 
 void ConnectionImpl::socketError(QAbstractSocket::SocketError socketError) {

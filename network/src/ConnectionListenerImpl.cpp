@@ -26,5 +26,5 @@ void ConnectionListenerImpl::listen(unsigned int port) {
 void ConnectionListenerImpl::acceptConnection() {
   connection.addSocket(tcpServer.nextPendingConnection());
 
-  connection.handleSendData(QString("This is server speaking..."));
+  //connection.handleSendData(QString("This is server speaking..."));
 }

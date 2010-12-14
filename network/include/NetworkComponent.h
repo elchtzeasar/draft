@@ -6,7 +6,7 @@
 class Connection;
 class ConnectionListener;
 
-class QString;
+class AddressedMessage;
 
 class NetworkComponent : public QObject {
   Q_OBJECT
@@ -23,8 +23,8 @@ class NetworkComponent : public QObject {
   void connectedToDraft();
   void clientConnected();
 
-  void sendData(const QString& data);
-  void dataReceived(const QString& data);
+  void sendData(const AddressedMessage& message);
+  void dataReceived(const AddressedMessage& message);
 
  private:
   NetworkComponent(const NetworkComponent&);

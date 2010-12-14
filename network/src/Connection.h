@@ -6,6 +6,7 @@
 
 class QTcpSocket;
 class QString;
+class AddressedMessage;
 
 class Connection : public QObject {
   Q_OBJECT
@@ -19,7 +20,7 @@ class Connection : public QObject {
   virtual void disconnectFromHost() = 0;
 
  public slots:
-  virtual void handleSendData(const QString& data) = 0;
+  virtual void handleSendData(const AddressedMessage& message) = 0;
 
  protected slots:
   virtual void readIncommingData() = 0;
@@ -27,7 +28,7 @@ class Connection : public QObject {
 
  signals:
   void connectedToDraft();
-  void dataReceived(const QString& data);
+  void dataReceived(const AddressedMessage& message);
 };
 
 #endif // CONNECTION_H_
