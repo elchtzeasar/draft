@@ -4,15 +4,23 @@
 
 using std::ostream;
 
-std::ostream& operator<<(std::ostream& stream, const Message& message) {
-  stream << "NullMessage {}";
+NullMessage::NullMessage() : Message(NULL_MESSAGE) {}
+
+Message* NullMessage::clone() {
+  return new NullMessage;
+}
+
+std::ostream& operator<<(std::ostream& stream, const NullMessage&) {
+  stream << "NullMessage { }";
   return stream;
 }
 
-QDataStream& operator<<(QDataStream& stream, const Message& message) {
+QDataStream& operator<<(QDataStream& stream, const NullMessage&) {
   return stream;
 }
 
-QDataStream& operator>>(QDataStream& stream, Message& message) {
+QDataStream& operator>>(QDataStream& stream, NullMessage&) {
   return stream;
 }
+
+const quint16 NullMessage::MESSAGE_NUMBER(NULL_MESSAGE);

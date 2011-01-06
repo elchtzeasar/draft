@@ -5,3 +5,5 @@ libs/*
 */mocs/*
 build/draft
 state/graph.jpg
+configuration.xml
+testFile.xml

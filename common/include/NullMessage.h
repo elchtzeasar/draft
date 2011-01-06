@@ -5,15 +5,20 @@
 
 class NullMessage : public Message {
  public:
-  NullMessage() {}
+  NullMessage();
 
-  friend std::ostream& operator<<(std::ostream& stream, const Message& message);
-  friend QDataStream& operator<<(QDataStream& stream, const Message& message);
-  friend QDataStream& operator>>(QDataStream& stream, Message& message);
+  virtual Message* clone();
+
+  static const quint16 MESSAGE_NUMBER;
+
+ private:
+  friend std::ostream& operator<<(std::ostream& stream, const NullMessage& message);
+  friend QDataStream& operator<<(QDataStream& stream, const NullMessage& message);
+  friend QDataStream& operator>>(QDataStream& stream, NullMessage& message);
 };
 
-std::ostream& operator<<(std::ostream& stream, const Message& message);
-QDataStream& operator<<(QDataStream& stream, const Message& message);
-QDataStream& operator>>(QDataStream& stream, Message& message);
+std::ostream& operator<<(std::ostream& stream, const NullMessage& message);
+QDataStream& operator<<(QDataStream& stream, const NullMessage& message);
+QDataStream& operator>>(QDataStream& stream, NullMessage& message);
 
 #endif // NULL_MESSAGE_H_

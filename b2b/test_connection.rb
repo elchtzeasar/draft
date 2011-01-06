@@ -34,6 +34,16 @@ class Connection < Test::Unit::TestCase
     assert_state_change 'Client::WaitingForConnection', @client
   end
 
+  should 'connect client with server without errors' do
+    host_and_wait
+    connect_and_wait
+
+    for not_allowed_word in ['Assertion', 'Segmentation fault'] do
+      assert_does_not_include not_allowed_word, @server
+      assert_does_not_include not_allowed_word, @client
+    end
+  end
+
   should 'change state to Configuring in server when client connects' do
     host_and_wait
     connect_and_wait

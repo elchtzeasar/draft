@@ -3,6 +3,7 @@ TEMPLATE = app
 QT += network
 
 INCLUDEPATH += ../src
+INCLUDEPATH += ../../common/include
 INCLUDEPATH += ../../gui/include ../../remote_controller/include
 INCLUDEPATH += ../../configuration/include ../../network/include
 INCLUDEPATH += ../../state/include

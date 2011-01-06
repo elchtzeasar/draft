@@ -2,6 +2,8 @@
 require 'etc'
 require 'io/wait'
 
+require 'rainbow'
+
 class DraftApp
   def initialize(name)
     @name = name
@@ -39,7 +41,12 @@ class DraftApp
   end
 
   def close
-    @app.write "exit\n"
+    begin
+      @app.write "exit\n"
+    rescue
+      puts "Error when closing application: #{@name}, killing all console_drafts".color(:red)
+      Kernel.system('pkill console_draft')
+    end
     @file.close
 
     @app.close

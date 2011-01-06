@@ -9,7 +9,7 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 # Make sure qmake tracks dependencies:
-CONFIG += create_prl
+CONFIG += create_prl debug
 
 # The following keeps the generated files at least somewhat separate 
 # from the source files.

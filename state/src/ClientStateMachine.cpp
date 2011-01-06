@@ -1,8 +1,10 @@
 #include "ClientStateMachine.h"
 
+#include "ServerConfiguringState.h"
+
 ClientStateMachine::ClientStateMachine(QObject* component, State* parent, const char* name) :
   State(component, parent, name, false),
-  configuring(new State(component, this, "Configuring")) {
+  configuring(new ServerConfiguringState(component, this, "Configuring")) {
 
   setInitialState(configuring);
 }

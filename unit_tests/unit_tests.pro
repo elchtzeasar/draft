@@ -24,6 +24,11 @@ HEADERS += configuration/include/ConfigurationManagerMock.h
 SOURCES += configuration/ConfigurationComponentTest.cpp
 SOURCES += configuration/ConfigurationManagerTest.cpp
 
+SOURCES += common/AddressHeaderTest.cpp
+SOURCES += common/MessageTest.cpp
+SOURCES += common/NullMessageTest.cpp
+SOURCES += common/PlayerNameCfgMessageTest.cpp
+
 TARGET = ../bin/unit_tests
 
 # The following keeps the generated files at least somewhat separate 

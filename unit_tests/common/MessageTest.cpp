@@ -1,0 +1,59 @@
+#include "Message.h"
+#include "NullMessage.h"
+
+#include <QByteArray>
+#include <QDataStream>
+
+#include <sstream>
+#include <cstring>
+
+#include <gtest/gtest.h>
+
+bool operator==(const Message& lhs, const Message& rhs);
+
+using std::stringstream;
+class MessageTest : public testing::Test {
+};
+
+bool operator==(const Message& lhs, const Message& rhs) {
+  return memcmp(&lhs, &rhs, sizeof(Message)) == 0;
+}
+
+TEST_F(MessageTest, shouldPrintMessageCorrectly) {
+  stringstream s;
+  NullMessage nullMessage;
+  Message& message(nullMessage);
+  s << message;
+
+  ASSERT_EQ("Message { messageNumber=0 => NullMessage { } }", s.str());
+}
+
+TEST_F(MessageTest, shouldGetACopyOfMessageAfterSerializingThenDeserializingWithReferences) {
+  NullMessage nullMessage1, nullMessage2;
+
+  Message& message1(nullMessage1);
+  Message& message2(nullMessage2);
+  QByteArray byteArray;
+  QDataStream writeStream(&byteArray, QIODevice::WriteOnly);
+  QDataStream readStream(&byteArray, QIODevice::ReadOnly);
+
+  writeStream << message1;
+  readStream >> message2;
+
+  ASSERT_EQ(nullMessage1, nullMessage2);
+}
+
+TEST_F(MessageTest, shouldGetACopyOfMessageAfterSerializingThenDeserializingWithPointers) {
+  NullMessage nullMessage1;
+
+  Message& message1(nullMessage1);
+  Message* message2;
+  QByteArray byteArray;
+  QDataStream writeStream(&byteArray, QIODevice::WriteOnly);
+  QDataStream readStream(&byteArray, QIODevice::ReadOnly);
+
+  writeStream << message1;
+  readStream >> message2;
+
+  ASSERT_EQ(nullMessage1, *message2);
+}

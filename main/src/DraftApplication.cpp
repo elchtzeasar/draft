@@ -1,10 +1,12 @@
 #include "DraftApplication.h"
 
+#include "AddressedMessage.h"
 #include "ConfigurationComponent.h"
 #include "NetworkComponent.h"
 #include "StateMachineComponent.h"
 
 #include <QObject>
+#include <QMetaType>
 
 #include <iostream>
 
@@ -33,6 +35,8 @@ void DraftApplication::connect (const QObject * sender,
 }
 
 void DraftApplication::connectSlotsToSignals() {
+  qRegisterMetaType<AddressedMessage>();
+
   // UI -> NetworkComponent:
   connect( &ui, SIGNAL(hostDraft(unsigned int)),
 	   networkComponent, SLOT(handleHostDraft(unsigned int)) );

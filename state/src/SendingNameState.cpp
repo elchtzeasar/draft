@@ -1,5 +1,9 @@
 #include "SendingNameState.h"
 
+#include "AddressHeader.h"
+#include "AddressedMessage.h"
+#include "PlayerNameCfgMessage.h"
+
 #include <QEvent>
 #include <QSignalTransition>
 #include <QStateMachine>
@@ -18,5 +22,7 @@ void SendingNameState::onEntry(QEvent* event) {
   QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
   const QString playerName = signalEvent->arguments().at(0).toString();
 
-  //emit sendData(playerName);
+  AddressHeader* addressHeader = new AddressHeader;
+  PlayerNameCfgMessage* playerNameCfg = new PlayerNameCfgMessage(playerName.toStdString().c_str());
+  emit sendData(AddressedMessage(addressHeader, playerNameCfg));
 }
