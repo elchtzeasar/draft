@@ -9,13 +9,13 @@ digraph G {
 
       requestingName_client [label = "requestingName\nenter: configurationRequest"];
       sendingName_client [label = "sendingName\nenter: send(PlayerNameCfg)"]
-      savingName_client [label = "savingName\nenter: save received name"]
+      savingPlayerName_client [label = "savingPlayerName\nenter: save received name"]
       receivingPlayerList [label = "receivingPlayerList\nenter: send(PlayerNameCnf)"];
       savingPlayerNames [label = "savingPlayerNames\nenter: savePlayerNames\nenter:send(PlayerListCnf)"];
 
       requestingName_client -> sendingName_client [label = "configurationResponse"];
-      sendingName_client -> savingName_client [label = "received: PlayerNameCfg"];
-      savingName_client -> receivingPlayerList;
+      sendingName_client -> savingPlayerName_client [label = "received: PlayerNameCfg"];
+      savingPlayerName_client -> receivingPlayerList;
       receivingPlayerList -> savingPlayerNames [label = "received: PlayerNamesCfg"];
     }
 
@@ -36,12 +36,12 @@ digraph G {
 
         requestingName_server [label = "requestingName\nenter: configurationRequest"];
 	sendingName_server [label = "sendingName\nenter: send(PlayerNameCfg)"];	
-	savingName_server [label = "savingName\nenter: save received name"];
+	savingPlayerName_server [label = "savingPlayerName\nenter: save received name"];
 	waitingForAllPlayersToConnect;
 	sendingPlayerList [label = "sendingPlayerList\nenter: send(PlayerNamesCfg)"];
 
-	receivingClientName -> savingName_server [label = "received: PlayerNameCfg"];
-	savingName_server -> requestingName_server;
+	receivingClientName -> savingPlayerName_server [label = "received: PlayerNameCfg"];
+	savingPlayerName_server -> requestingName_server;
 	requestingName_server -> sendingName_server [label = "configurationResponse"];
 	sendingName_server -> waitingForAllPlayersToConnect [label = "received: PlayerNameCnf"];
 	waitingForAllPlayersToConnect -> sendingPlayerList [label = "startDraft"];

@@ -1,4 +1,4 @@
-#include "WaitingForAllPlayersToConnectState.h"
+#include "SavingPlayerNameState.h"
 
 #include "AddressHeader.h"
 #include "AddressedMessage.h"
@@ -10,15 +10,15 @@
 
 #include <cassert>
 
-WaitingForAllPlayersToConnectState::WaitingForAllPlayersToConnectState(QObject* component, State* parent) : 
-  State(component, parent, "WaitingForAllPlayersToConnect") {
+SavingPlayerNameState::SavingPlayerNameState(QObject* component, State* parent) : 
+  State(component, parent, "SavingPlayerName") {
 }
 
-WaitingForAllPlayersToConnectState::~WaitingForAllPlayersToConnectState() {}
+SavingPlayerNameState::~SavingPlayerNameState() {}
 
-void WaitingForAllPlayersToConnectState::onEntry(QEvent* event) {
+void SavingPlayerNameState::onEntry(QEvent* event) {
   assert(event->type() == QEvent::StateMachineSignal &&
-	 "WaitingForAllPlayersToConnectState should only be entered with a QEvent::StateMachineSignal");
+	 "SavingPlayerNameState should only be entered with a QEvent::StateMachineSignal");
 
   QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
   const QVariant& qVariant(signalEvent->arguments().at(0));
@@ -28,5 +28,5 @@ void WaitingForAllPlayersToConnectState::onEntry(QEvent* event) {
 
   const PlayerNameCfgMessage& playerNameCfgMessage(message.getMessage().to<PlayerNameCfgMessage>());
 
-  std::cout << "WaitingForAllPlayersToConnectState: Received player name: " << playerNameCfgMessage.getPlayerName() << std::endl;
+  std::cout << "SavingPlayerNameState: Received player name: " << playerNameCfgMessage.getPlayerName() << std::endl;
 }

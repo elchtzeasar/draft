@@ -17,7 +17,7 @@ class ServerConfiguringState : public State {
   State* receivingClientName;
   State* requestingName;
   State* sendingName;
-  State* waitingForAllPlayersToConnect;
+  State* savingPlayerName;
 };
 
 #endif // SERVER_CONFIGURATION_STATE_H

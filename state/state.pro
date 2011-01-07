@@ -8,10 +8,12 @@ HEADERS += include/StateMachineComponent.h
 
 HEADERS += src/State.h
 HEADERS += src/SendingNameState.h
+HEADERS += src/SavingPlayerNameState.h
 
 SOURCES += src/StateMachineComponent.cpp
 SOURCES += src/State.cpp
 SOURCES += src/SendingNameState.cpp
+SOURCES += src/SavingPlayerNameState.cpp
 
 # Client states:
 HEADERS += src/client/ClientState.h
@@ -24,9 +26,7 @@ SOURCES += src/client/ClientConfiguringState.cpp
 HEADERS += src/server/ServerState.h
 HEADERS += src/server/ClientStateMachine.h
 HEADERS += src/server/ServerConfiguringState.h
-HEADERS += src/server/WaitingForAllPlayersToConnectState.h
 
 SOURCES += src/server/ServerState.cpp
 SOURCES += src/server/ClientStateMachine.cpp
 SOURCES += src/server/ServerConfiguringState.cpp
-SOURCES += src/server/WaitingForAllPlayersToConnectState.cpp
