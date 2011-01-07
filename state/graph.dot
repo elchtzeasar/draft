@@ -7,16 +7,19 @@ digraph G {
     subgraph cluster11 {
       label = "Configuring";
 
-      requestingName [label = "requestingName\nenter: configurationRequest"];
-      sendingName [label = "sendingName\nenter: send(PlayerNameCfg)"]
+      requestingName_client [label = "requestingName\nenter: configurationRequest"];
+      sendingName_client [label = "sendingName\nenter: send(PlayerNameCfg)"]
+      savingName_client [label = "savingName\nenter: save received name"]
+      receivingPlayerList [label = "receivingPlayerList\nenter: send(PlayerNameCnf)"];
       savingPlayerNames [label = "savingPlayerNames\nenter: savePlayerNames\nenter:send(PlayerListCnf)"];
 
-      requestingName -> sendingName [label = "configurationResponse"];
-      sendingName -> receivingPlayerList [label = "received: PlayerNameCnf"];
+      requestingName_client -> sendingName_client [label = "configurationResponse"];
+      sendingName_client -> savingName_client [label = "received: PlayerNameCfg"];
+      savingName_client -> receivingPlayerList;
       receivingPlayerList -> savingPlayerNames [label = "received: PlayerNamesCfg"];
     }
 
-    waitingForConnection -> requestingName [label = "connectedToDraft"];
+    waitingForConnection -> requestingName_client [label = "connectedToDraft"];
     savingPlayerNames -> clientDone;
   }
 
@@ -31,17 +34,22 @@ digraph G {
       subgraph cluster211 {
         label = "Configuring";
 
-	waitingForAllPlayersToConnect [label = "waitingForAllPlayersToConnect\nenter: send(PlayerNameCnf)"];
+        requestingName_server [label = "requestingName\nenter: configurationRequest"];
+	sendingName_server [label = "sendingName\nenter: send(PlayerNameCfg)"];	
+	savingName_server [label = "savingName\nenter: save received name"];
+	waitingForAllPlayersToConnect;
 	sendingPlayerList [label = "sendingPlayerList\nenter: send(PlayerNamesCfg)"];
 
-	receivingClientName -> waitingForAllPlayersToConnect [label = "received: PlayerNameCfg"];
+	receivingClientName -> savingName_server [label = "received: PlayerNameCfg"];
+	savingName_server -> requestingName_server;
+	requestingName_server -> sendingName_server [label = "configurationResponse"];
+	sendingName_server -> waitingForAllPlayersToConnect [label = "received: PlayerNameCnf"];
 	waitingForAllPlayersToConnect -> sendingPlayerList [label = "startDraft"];
       }
-
-      sendingPlayerList -> serverDone [label = "received: PlayerNamesCnf"];
     } 
 
     listeningForConnections -> receivingClientName [style=dotted];
+    sendingPlayerList -> serverDone [label = "received: PlayerNamesCnf"];
   }
 
   null [shape = plaintext label=""];
