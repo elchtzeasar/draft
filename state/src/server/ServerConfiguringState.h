@@ -15,6 +15,8 @@ class ServerConfiguringState : public State {
   ServerConfiguringState& operator=(ServerConfiguringState&);
 
   State* receivingClientName;
+  State* requestingName;
+  State* sendingName;
   State* waitingForAllPlayersToConnect;
 };
 
