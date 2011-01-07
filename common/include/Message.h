@@ -23,7 +23,7 @@ class Message {
 
   template<typename T>
   const T& to() const {
-    assert(messageNumber == T::MESSAGE_NUMBER && "Casting message to wrong type!");
+    assert(T::messageNumberIsAllowed(messageNumber) && "Casting message to wrong type!");
     return *static_cast<const T*>(this);
   }
 

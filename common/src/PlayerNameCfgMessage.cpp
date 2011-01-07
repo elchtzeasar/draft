@@ -18,6 +18,10 @@ Message* PlayerNameCfgMessage::clone() {
   return new PlayerNameCfgMessage(playerName);
 }
 
+bool PlayerNameCfgMessage::messageNumberIsAllowed(quint16 messageNumber) {
+  return PLAYER_NAME_CFG == messageNumber;
+}
+
 const char* PlayerNameCfgMessage::getPlayerName() const {
   return playerName;
 }
@@ -39,5 +43,3 @@ QDataStream& operator>>(QDataStream& stream, PlayerNameCfgMessage& message) {
 
   return stream;
 }
-
-const quint16 PlayerNameCfgMessage::MESSAGE_NUMBER(PLAYER_NAME_CFG);

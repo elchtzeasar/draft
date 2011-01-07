@@ -11,13 +11,12 @@ class PlayerNameCfgMessage : public Message {
   PlayerNameCfgMessage(const char* playerName);
 
   virtual Message* clone();
+  static bool messageNumberIsAllowed(quint16 messageNumber);
 
   const char* getPlayerName() const;
 
   const int unused;
   char* playerName;
-
-  static const quint16 MESSAGE_NUMBER;
 
  private:
   PlayerNameCfgMessage(const PlayerNameCfgMessage&);

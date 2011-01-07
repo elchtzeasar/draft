@@ -8,8 +8,7 @@ class NullMessage : public Message {
   NullMessage();
 
   virtual Message* clone();
-
-  static const quint16 MESSAGE_NUMBER;
+  static bool messageNumberIsAllowed(quint16 messageNumber);
 
  private:
   friend std::ostream& operator<<(std::ostream& stream, const NullMessage& message);
