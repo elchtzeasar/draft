@@ -1,5 +1,7 @@
 #include "ConfigurationComponent.h"
+
 #include "ConfigurationManagerMock.h"
+#include "ConfigurationLoaderMock.h"
 
 #include <gtest/gtest.h>
 
@@ -10,6 +12,7 @@
 
 #include <iostream>
 
+using testing::Return;
 using testing::ReturnRef;
 using testing::Throw;
 using testing::_;
@@ -21,14 +24,15 @@ class ConfigurationComponentTest : public testing::Test {
 protected:
   ConfigurationComponentTest()
     :   configurationManager(new ConfigurationManagerMock),
-	configurationComponent(configurationManager),
+	configurationLoader(new ConfigurationLoaderMock),
+	configurationComponent(configurationManager, configurationLoader),
 	responseSpy(&configurationComponent, SIGNAL(configurationResponse(const QString&))) {
   }
 
-  ~ConfigurationComponentTest() {
-  }
+  ~ConfigurationComponentTest() {}
 
   ConfigurationManagerMock* configurationManager;
+  ConfigurationLoaderMock* configurationLoader;
   ConfigurationComponent configurationComponent;
   QSignalSpy responseSpy;
 
@@ -54,6 +58,12 @@ TEST_F(ConfigurationComponentTest, shouldSetPlayerNameInManagerOnSetPlayerName) 
   EXPECT_CALL(*configurationManager, setPlayerName(testing::StrEq(playerName.toStdString())));
 
   configurationComponent.setPlayerName(playerName);
+}
+
+TEST_F(ConfigurationComponentTest, shouldDeallocateSaveConfigurationUponExit) {
+  EXPECT_CALL(*configurationLoader, save()).WillOnce(Return());
+
+  configurationComponent.handleExit(0);
 }
 
 ostream& operator<<(ostream& os, const QString& qString) {

@@ -20,9 +20,10 @@ SOURCES += network/NetworkComponentTest.cpp
 
 SOURCES += remote_controller/RemoteControllerTest.cpp
 
+HEADERS += configuration/include/ConfigurationLoaderMock.h
 HEADERS += configuration/include/ConfigurationManagerMock.h
 SOURCES += configuration/ConfigurationComponentTest.cpp
-SOURCES += configuration/ConfigurationManagerTest.cpp
+SOURCES += configuration/ConfigurationLoaderTest.cpp
 
 SOURCES += common/AddressHeaderTest.cpp
 SOURCES += common/MessageTest.cpp

@@ -48,6 +48,8 @@ void DraftApplication::connectSlotsToSignals() {
 	   configurationComponent, SLOT(setPlayerName(QString)) );
   connect( &ui, SIGNAL(configurationRequest()),
 	   configurationComponent, SLOT(configurationRequest()) );
+  connect( &ui, SIGNAL(exit(int)),
+	   configurationComponent, SLOT(handleExit(int)) );
   // UI <- ConfigurationComponent:
   connect( configurationComponent, SIGNAL(configurationResponse(const QString)),
 	   &ui, SLOT(configurationResponse(const QString)) );

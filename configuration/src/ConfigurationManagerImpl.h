@@ -5,10 +5,8 @@
 
 class ConfigurationManagerImpl : public ConfigurationManager {
  public:
-  ConfigurationManagerImpl(const std::string& filename);
+  ConfigurationManagerImpl();
   virtual ~ConfigurationManagerImpl();
-  virtual void load();
-  virtual void save() const;
 
   virtual const std::string& getPlayerName() const;
   virtual void setPlayerName(const std::string& playerName);
@@ -16,7 +14,6 @@ class ConfigurationManagerImpl : public ConfigurationManager {
   ConfigurationManagerImpl(const ConfigurationManager&);
   ConfigurationManagerImpl& operator=(ConfigurationManager&);
 
-  const std::string filename;
   std::string playerName;
 };
 
