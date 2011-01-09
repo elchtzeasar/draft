@@ -5,11 +5,13 @@
 
 #include <QTcpServer>
 
+class NetworkComponentFactory;
+
 class ConnectionListenerImpl : public ConnectionListener {
   Q_OBJECT
 
  public:
-  ConnectionListenerImpl(Connection& connection);
+  ConnectionListenerImpl(NetworkComponentFactory& componentFactory);
   ~ConnectionListenerImpl();
 
   void listen(unsigned int port);
@@ -18,7 +20,10 @@ class ConnectionListenerImpl : public ConnectionListener {
   void acceptConnection();
 
  private:
-  Connection& connection;
+  ConnectionListenerImpl(const ConnectionListenerImpl&);
+  ConnectionListenerImpl& operator=(ConnectionListenerImpl&);
+
+  NetworkComponentFactory& componentFactory;
   QTcpServer tcpServer;
 };
 

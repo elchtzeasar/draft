@@ -15,6 +15,7 @@ SOURCES += test_main.cpp
 
 HEADERS += network/include/ConnectionMock.h
 HEADERS += network/include/ConnectionListenerMock.h
+HEADERS += network/include/NetworkComponentFactoryMock.h
 
 SOURCES += network/NetworkComponentTest.cpp
 

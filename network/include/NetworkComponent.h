@@ -5,6 +5,7 @@
 
 class Connection;
 class ConnectionListener;
+class NetworkComponentFactory;
 
 class AddressedMessage;
 
@@ -12,8 +13,9 @@ class NetworkComponent : public QObject {
   Q_OBJECT
 
  public:
-  NetworkComponent(Connection* connection, ConnectionListener* connectionListner);
-  ~NetworkComponent();
+  NetworkComponent(NetworkComponentFactory& componentFactory,
+		   ConnectionListener* connectionListener);
+  virtual ~NetworkComponent();
 
  public slots:
   void handleHostDraft(unsigned int port);
@@ -30,7 +32,7 @@ class NetworkComponent : public QObject {
   NetworkComponent(const NetworkComponent&);
   NetworkComponent& operator=(NetworkComponent&);
 
-  Connection* connection;
+  NetworkComponentFactory& componentFactory;
   ConnectionListener* connectionListener;
 };
 

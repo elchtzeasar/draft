@@ -2,6 +2,7 @@
 
 #include "ConnectionMock.h"
 #include "ConnectionListenerMock.h"
+#include "NetworkComponentFactoryMock.h"
 
 #include <QSignalSpy>
 #include <QTcpSocket>
@@ -9,18 +10,20 @@
 #include <gtest/gtest.h>
 
 using testing::_;
+using testing::NiceMock;
+using testing::Return;
 using testing::SaveArg;
 
 class NetworkComponentTest : public testing::Test {
 public:
   NetworkComponentTest() : 
-    connection(new ConnectionMock),
-    connectionListener(new ConnectionListenerMock),
-    component(connection, connectionListener) {}
+    connectionListener(new NiceMock<ConnectionListenerMock>),
+    component(networkComponentFactory, connectionListener) {}
 
 protected:
-  ConnectionMock* connection;
-  ConnectionListenerMock* connectionListener;
+  NiceMock<ConnectionMock> connection;
+  NiceMock<ConnectionListenerMock>* connectionListener;
+  NiceMock<NetworkComponentFactoryMock> networkComponentFactory;
   NetworkComponent component;
 };
 
@@ -33,13 +36,16 @@ TEST_F(NetworkComponentTest, shouldListenWithListenerWhenHostingDraft) {
   component.handleHostDraft(PORT);
 }
 
-TEST_F(NetworkComponentTest, shouldCreateSocketAndConnectToHostWhenConnectingToDraftSlot) {
-  QTcpSocket* socket = 0;
-
-  EXPECT_CALL(*connection, addSocket(_)).WillOnce(SaveArg<0>(&socket));
-  EXPECT_CALL(*connection, connectToHost(HOST, PORT));
+TEST_F(NetworkComponentTest, shouldCreateConnectionWhenConnectingToDraftSlot) {
+  EXPECT_CALL(networkComponentFactory, createConnection(_)).WillOnce(Return(&connection));;
+  ON_CALL(connection, connectToHost(_, _)).WillByDefault(Return());
 
   component.handleConnectToDraft(HOST, PORT);
+}
 
-  ASSERT_NE(static_cast<QTcpSocket*>(0), socket);
+TEST_F(NetworkComponentTest, shouldConnectNewConnectionWhenConnectingToDraftSlot) {
+  ON_CALL(networkComponentFactory, createConnection(_)).WillByDefault(Return(&connection));;
+  EXPECT_CALL(connection, connectToHost(HOST, PORT)).WillOnce(Return());
+
+  component.handleConnectToDraft(HOST, PORT);
 }

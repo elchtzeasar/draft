@@ -7,10 +7,8 @@ class AddressedMessage;
 
 class ConnectionImpl : public Connection {
  public:
-  ConnectionImpl();
-  virtual ~ConnectionImpl() {}
-
-  void addSocket(QTcpSocket* tcpSocket);
+  ConnectionImpl(QTcpSocket* tcpSocket);
+  virtual ~ConnectionImpl();
 
   void connectToHost(const QString& hostName, unsigned int port);
   void disconnectFromHost();

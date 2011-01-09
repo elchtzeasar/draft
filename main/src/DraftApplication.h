@@ -2,7 +2,7 @@
 #define DRAFT_APPLICATION_H_
 
 #include "ConfigurationComponentFactory.h"
-#include "NetworkComponentFactory.h"
+#include "NetworkComponentFactoryImpl.h"
 
 #include <Qt>
 #include <QObject>
@@ -35,7 +35,7 @@ class DraftApplication : public QObject {
   QObject& ui;
   ConfigurationComponentFactory configurationComponentFactory;
   ConfigurationComponent* configurationComponent;
-  NetworkComponentFactory networkComponentFactory;
+  NetworkComponentFactoryImpl networkComponentFactory;
   NetworkComponent* networkComponent;
   StateMachineComponent* stateMachineComponent;
 };

@@ -1,13 +1,15 @@
 #include "ConnectionListenerImpl.h"
 
 #include "Connection.h"
+#include "NetworkComponentFactory.h"
 
 #include <iostream>
 
 using std::cerr;
 using std::endl;
 
-ConnectionListenerImpl::ConnectionListenerImpl(Connection& connection) : connection(connection) {
+ConnectionListenerImpl::ConnectionListenerImpl(NetworkComponentFactory& componentFactory) :
+  componentFactory(componentFactory) {
   connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
   connect(&tcpServer, SIGNAL(newConnection()), this, SIGNAL(clientConnected()));
 }
@@ -24,7 +26,8 @@ void ConnectionListenerImpl::listen(unsigned int port) {
 }
 
 void ConnectionListenerImpl::acceptConnection() {
-  connection.addSocket(tcpServer.nextPendingConnection());
+  Connection* connection =
+    componentFactory.createConnection(tcpServer.nextPendingConnection());
 
   //connection.handleSendData(QString("This is server speaking..."));
 }

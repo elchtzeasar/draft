@@ -2,18 +2,17 @@
 
 #include "Connection.h"
 #include "ConnectionListener.h"
-
+#include "NetworkComponentFactory.h"
 #include <QTcpSocket>
 
 using std::string;
 
-NetworkComponent::NetworkComponent(
-  Connection* connection, ConnectionListener* connectionListener) 
-  : connection(connection),
+NetworkComponent::NetworkComponent(NetworkComponentFactory& componentFactory,
+				   ConnectionListener* connectionListener) 
+  : componentFactory(componentFactory),
     connectionListener(connectionListener) {}
 
 NetworkComponent::~NetworkComponent() {
-  delete connection;
   delete connectionListener;
 }
 
@@ -22,7 +21,7 @@ void NetworkComponent::handleHostDraft(unsigned int port) {
 }
 
 void NetworkComponent::handleConnectToDraft(const QString& hostName, unsigned int port) {
-  connection->addSocket(new QTcpSocket(this));
+  Connection* connection = componentFactory.createConnection(new QTcpSocket(this));
   connection->connectToHost(hostName, port);
 }
 

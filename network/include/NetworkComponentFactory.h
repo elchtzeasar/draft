@@ -1,16 +1,17 @@
 #ifndef NETWORK_COMPONENT_FACTORY_H_
 #define NETWORK_COMPONENT_FACTORY_H_
 
+class Connection;
 class NetworkComponent;
+
+class QTcpSocket;
 
 class NetworkComponentFactory {
  public:
-  NetworkComponentFactory() {}
-  NetworkComponent* createComponent();
+  virtual ~NetworkComponentFactory() {}
 
- private:
-  NetworkComponentFactory(const NetworkComponentFactory&);
-  NetworkComponentFactory& operator=(NetworkComponentFactory&);
+  virtual NetworkComponent* createComponent() = 0;
+  virtual Connection* createConnection(QTcpSocket* tcpSocket) = 0;
 };
 
 #endif // NETWORK_COMPONENT_FACTORY_H_

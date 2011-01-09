@@ -10,15 +10,17 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
-ConnectionImpl::ConnectionImpl() : tcpSocket(0) {}
-
-void ConnectionImpl::addSocket(QTcpSocket* tcpSocket) {
-  this->tcpSocket = tcpSocket;
+ConnectionImpl::ConnectionImpl(QTcpSocket* tcpSocket) :
+  tcpSocket(tcpSocket) {
 
   connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readIncommingData()));
   connect(tcpSocket, SIGNAL(connected()), this, SIGNAL(connectedToDraft()));
   connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
 	  this, SLOT(socketError(QAbstractSocket::SocketError)));
+}
+
+ConnectionImpl::~ConnectionImpl() {
+  delete tcpSocket;
 }
 
 void ConnectionImpl::connectToHost(const QString& hostName, unsigned int port) {
