@@ -1,5 +1,6 @@
 #include "ServerConfiguringState.h"
 
+#include "SendingPlayerIdState.h"
 #include "SendingNameState.h"
 #include "SavingPlayerNameState.h"
 
@@ -7,6 +8,7 @@ class AddressedMessage;
 
 ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent, const char* name) :
   State(component, parent, name, false),
+  sendingPlayerId(new SendingPlayerIdState(component, this)),
   receivingClientName(new State(component, this, "ReceivingClientName")),
   savingPlayerName(new SavingPlayerNameState(component, this)),
   requestingName(new State(component, this, "RequestingName")),
@@ -14,6 +16,10 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
 
   connect(requestingName, SIGNAL(entered()), component, SIGNAL(configurationRequest()));
 
+  // TODO: Make this dependent on the message type:
+  sendingPlayerId->addTransition(
+    component, SIGNAL(dataReceived(const AddressedMessage&)), receivingClientName);
+  // TODO: Make this dependent on the message type:
   receivingClientName->addTransition(
     component, SIGNAL(dataReceived(const AddressedMessage&)), savingPlayerName);
   savingPlayerName->addTransition(
@@ -21,10 +27,12 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   requestingName->addTransition(
     component, SIGNAL(configurationResponse(const QString)), sendingName);
 
+  connect(sendingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
+	  component, SIGNAL(sendData(const AddressedMessage&)) );
   connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
 
-  setInitialState(receivingClientName);
+  setInitialState(sendingPlayerId);
 }
 
 ServerConfiguringState::~ServerConfiguringState() {

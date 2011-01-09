@@ -22,7 +22,7 @@ class StateMachineComponent : public QObject {
 
  signals:
   void hostDraft(unsigned int);
-  void clientConnected();
+  void clientConnected(quint8 playerId);
 
   void connectToDraft(const QString&, unsigned int);
   void connectedToDraft();
@@ -31,9 +31,6 @@ class StateMachineComponent : public QObject {
 
   void sendData(const AddressedMessage&);
   void dataReceived(const AddressedMessage&);
-
- public slots:
-  void handleDataReceived(const AddressedMessage& message);
 
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState)

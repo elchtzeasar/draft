@@ -14,6 +14,8 @@ class ClientConfiguringState : public State {
   ClientConfiguringState(const ClientConfiguringState&);
   ClientConfiguringState& operator=(ClientConfiguringState&);
 
+  State* receivingPlayerId;
+  State* savingPlayerId;
   State* requestingName;
   State* sendingName;
   State* receivingPlayerList;

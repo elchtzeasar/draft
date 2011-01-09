@@ -6,7 +6,8 @@
 
 #include <QObject>
 
-NetworkComponentFactoryImpl::NetworkComponentFactoryImpl() : networkComponent(0) {
+NetworkComponentFactoryImpl::NetworkComponentFactoryImpl() : 
+  nextPlayerId(0), networkComponent(0) {
 }
 
 NetworkComponent* NetworkComponentFactoryImpl::createComponent() {
@@ -14,14 +15,14 @@ NetworkComponent* NetworkComponentFactoryImpl::createComponent() {
   networkComponent = new NetworkComponent(*this, connectionListener);
 
   // ConnectionListener -> NetworkComponent
-  QObject::connect( connectionListener, SIGNAL(clientConnected()),
-		    networkComponent, SIGNAL(clientConnected()) );
+  QObject::connect( connectionListener, SIGNAL(clientConnected(quint8)),
+		    networkComponent, SIGNAL(clientConnected(quint8)) );
 
   return networkComponent;
 }
 
 Connection* NetworkComponentFactoryImpl::createConnection(QTcpSocket* tcpSocket) {
-  Connection* connection = new ConnectionImpl(tcpSocket);
+  Connection* connection = new ConnectionImpl(nextPlayerId++, tcpSocket);
 
   // NetworkComponent -> Connection
   QObject::connect( networkComponent, SIGNAL(sendData(const AddressedMessage&)),

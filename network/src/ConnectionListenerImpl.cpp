@@ -11,7 +11,6 @@ using std::endl;
 ConnectionListenerImpl::ConnectionListenerImpl(NetworkComponentFactory& componentFactory) :
   componentFactory(componentFactory) {
   connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
-  connect(&tcpServer, SIGNAL(newConnection()), this, SIGNAL(clientConnected()));
 }
 
 ConnectionListenerImpl::~ConnectionListenerImpl() {
@@ -29,5 +28,6 @@ void ConnectionListenerImpl::acceptConnection() {
   Connection* connection =
     componentFactory.createConnection(tcpServer.nextPendingConnection());
 
+  emit clientConnected(connection->getPlayerId());
   //connection.handleSendData(QString("This is server speaking..."));
 }

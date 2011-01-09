@@ -20,14 +20,14 @@ bool operator==(const NullMessage& lhs, const NullMessage& rhs) {
 
 TEST_F(NullMessageTest, shouldPrintMessageCorrectly) {
   stringstream s;
-  NullMessage nullMessage;
+  NullMessage nullMessage(NULL_MESSAGE);
   s << nullMessage;
 
-  ASSERT_EQ("NullMessage { }", s.str());
+  ASSERT_EQ("NullMessage { NullMessage }", s.str());
 }
 
 TEST_F(NullMessageTest, shouldGetACopyOfNullMessageAfterSerializingThenDeserializing) {
-  NullMessage nullMessage1, nullMessage2;
+  NullMessage nullMessage1(NULL_MESSAGE), nullMessage2(NULL_MESSAGE);
 
   Message& message1(nullMessage1);
   Message& message2(nullMessage2);

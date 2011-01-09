@@ -23,7 +23,7 @@ class NetworkComponent : public QObject {
 
  signals:
   void connectedToDraft();
-  void clientConnected();
+  void clientConnected(quint8 playerId);
 
   void sendData(const AddressedMessage& message);
   void dataReceived(const AddressedMessage& message);

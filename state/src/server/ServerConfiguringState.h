@@ -14,10 +14,11 @@ class ServerConfiguringState : public State {
   ServerConfiguringState(const ServerConfiguringState&);
   ServerConfiguringState& operator=(ServerConfiguringState&);
 
+  State* sendingPlayerId;
   State* receivingClientName;
+  State* savingPlayerName;
   State* requestingName;
   State* sendingName;
-  State* savingPlayerName;
 };
 
 #endif // SERVER_CONFIGURATION_STATE_H

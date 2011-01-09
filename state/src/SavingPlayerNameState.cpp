@@ -9,6 +9,7 @@
 #include <QStateMachine>
 
 #include <cassert>
+#include <iostream>
 
 SavingPlayerNameState::SavingPlayerNameState(QObject* component, State* parent) : 
   State(component, parent, "SavingPlayerName") {

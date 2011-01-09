@@ -5,8 +5,10 @@
 #include <cstring>
 #include <cstdlib>
 
-PlayerNameCfgMessage::PlayerNameCfgMessage() :
-  Message(PLAYER_NAME_CFG), unused(0), playerName(const_cast<char*>("default message")) {}
+PlayerNameCfgMessage::PlayerNameCfgMessage(quint16 messageNumber) :
+  Message(messageNumber), unused(0), playerName(const_cast<char*>("default message")) {
+  assert(messageNumberIsAllowed(messageNumber) && "Message number must be allowed!");
+}
 
 PlayerNameCfgMessage::PlayerNameCfgMessage(const char* playerName) :
   Message(PLAYER_NAME_CFG), unused(0),

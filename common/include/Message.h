@@ -5,11 +5,14 @@
 
 #include <iostream>
 #include <cassert>
+
 class QDataStream;
 
 enum {
   NULL_MESSAGE,
   PLAYER_NAME_CFG,
+  PLAYER_ID_CFG,
+  PLAYER_ID_CNF,
 
   NO_MESSAGE = 0xff
 };
@@ -26,6 +29,9 @@ class Message {
     assert(T::messageNumberIsAllowed(messageNumber) && "Casting message to wrong type!");
     return *static_cast<const T*>(this);
   }
+
+  // TODO: The message numbers should be a class containing a toString function instead:
+  static const char* messageNumberToString(quint16 messageNumber);
 
  protected:
   quint16 messageNumber;

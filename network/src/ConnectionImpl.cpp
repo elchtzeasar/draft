@@ -10,8 +10,8 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
-ConnectionImpl::ConnectionImpl(QTcpSocket* tcpSocket) :
-  tcpSocket(tcpSocket) {
+ConnectionImpl::ConnectionImpl(quint8 playerId, QTcpSocket* tcpSocket) :
+  playerId(playerId), tcpSocket(tcpSocket) {
 
   connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readIncommingData()));
   connect(tcpSocket, SIGNAL(connected()), this, SIGNAL(connectedToDraft()));
@@ -31,21 +31,31 @@ void ConnectionImpl::disconnectFromHost() {
   tcpSocket->disconnectFromHost();
 }
 
+quint8 ConnectionImpl::getPlayerId() const {
+  return playerId;
+}
+
 void ConnectionImpl::handleSendData(const AddressedMessage& message) {
   QDataStream out(tcpSocket);
   out.setVersion(QDataStream::Qt_4_0);
 
   out << message;
+
+  cout << "ConnectionImpl: Message sent: " << message << endl;
 }
 
 void ConnectionImpl::readIncommingData() {
-  AddressedMessage message;
   QDataStream in(tcpSocket);
   in.setVersion(QDataStream::Qt_4_0);
-  
-  in >> message;
 
-  emit dataReceived(message);
+  while (!in.atEnd()) {
+    AddressedMessage message;
+    in >> message;
+
+    cout << "ConnectionImpl: Received message: " << message << endl;
+
+    emit dataReceived(message);
+  }
 }
 
 void ConnectionImpl::socketError(QAbstractSocket::SocketError socketError) {

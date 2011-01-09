@@ -3,6 +3,8 @@
 
 #include "NetworkComponentFactory.h"
 
+#include <QtGlobal>
+
 class QTcpSocket;
 
 class NetworkComponentFactoryImpl : public NetworkComponentFactory {
@@ -17,6 +19,7 @@ class NetworkComponentFactoryImpl : public NetworkComponentFactory {
   NetworkComponentFactoryImpl(const NetworkComponentFactoryImpl&);
   NetworkComponentFactoryImpl& operator=(NetworkComponentFactoryImpl&);
 
+  quint8 nextPlayerId;
   NetworkComponent* networkComponent;
 };
 

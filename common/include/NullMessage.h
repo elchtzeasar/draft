@@ -5,7 +5,7 @@
 
 class NullMessage : public Message {
  public:
-  NullMessage();
+  NullMessage(quint16 messageNumber);
 
   virtual Message* clone();
   static bool messageNumberIsAllowed(quint16 messageNumber);

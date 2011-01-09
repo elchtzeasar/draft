@@ -16,6 +16,7 @@ class Connection : public QObject {
 
   virtual void connectToHost(const QString& hostName, unsigned int port) = 0;
   virtual void disconnectFromHost() = 0;
+  virtual quint8 getPlayerId() const = 0;
 
  public slots:
   virtual void handleSendData(const AddressedMessage& message) = 0;

@@ -7,7 +7,7 @@
 
 class PlayerNameCfgMessage : public Message {
  public:
-  PlayerNameCfgMessage();
+  PlayerNameCfgMessage(quint16 messageNumber = PLAYER_NAME_CFG);
   PlayerNameCfgMessage(const char* playerName);
 
   virtual Message* clone();

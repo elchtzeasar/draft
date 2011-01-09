@@ -79,8 +79,8 @@ void DraftApplication::connectSlotsToSignals() {
   // NetworkComponent -> StateMachine
   connect( networkComponent, SIGNAL(connectedToDraft()),
 	   stateMachineComponent, SIGNAL(connectedToDraft()) );
-  connect( networkComponent, SIGNAL(clientConnected()),
-	   stateMachineComponent, SIGNAL(clientConnected()) );
+  connect( networkComponent, SIGNAL(clientConnected(quint8)),
+	   stateMachineComponent, SIGNAL(clientConnected(quint8)) );
   connect( networkComponent, SIGNAL(dataReceived(const AddressedMessage&)),
 	   stateMachineComponent, SIGNAL(dataReceived(const AddressedMessage&)) );
 }

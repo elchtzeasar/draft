@@ -6,7 +6,7 @@ ServerState::ServerState(QObject* component, State* parent, const char* name) :
   listeningForConnections(new State(component, this, "ListeningForConnections")),
   clientStateMachine(new ClientStateMachine(component, this, "ClientStateMachine")) {
 
-  listeningForConnections->addTransition(component, SIGNAL(clientConnected()), clientStateMachine);
+  listeningForConnections->addTransition(component, SIGNAL(clientConnected(quint8)), clientStateMachine);
 
   setInitialState(listeningForConnections);
 }

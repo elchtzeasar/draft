@@ -7,19 +7,22 @@ digraph G {
     subgraph cluster11 {
       label = "Configuring";
 
+      savingPlayerId [label = "savingPlayerId\nenter: save playerId\nenter: send(PlayerIdCnf)"];
       requestingName_client [label = "requestingName\nenter: configurationRequest"];
       sendingName_client [label = "sendingName\nenter: send(PlayerNameCfg)"]
       savingPlayerName_client [label = "savingPlayerName\nenter: save received name"]
       receivingPlayerList [label = "receivingPlayerList\nenter: send(PlayerNameCnf)"];
       savingPlayerNames [label = "savingPlayerNames\nenter: savePlayerNames\nenter:send(PlayerListCnf)"];
 
+      receivingPlayerId -> savingPlayerId [label = "received: PlayerIdCfg"];
+      savingPlayerId -> requestingName_client;
       requestingName_client -> sendingName_client [label = "configurationResponse"];
       sendingName_client -> savingPlayerName_client [label = "received: PlayerNameCfg"];
       savingPlayerName_client -> receivingPlayerList;
       receivingPlayerList -> savingPlayerNames [label = "received: PlayerNamesCfg"];
     }
 
-    waitingForConnection -> requestingName_client [label = "connectedToDraft"];
+    waitingForConnection -> receivingPlayerId [label = "connectedToDraft"];
     savingPlayerNames -> clientDone;
   }
 
@@ -34,12 +37,14 @@ digraph G {
       subgraph cluster211 {
         label = "Configuring";
 
+	sendingPlayerId [label = "sendingPlayerId\nenter: send(PlayerIdCfg)"];
         requestingName_server [label = "requestingName\nenter: configurationRequest"];
 	sendingName_server [label = "sendingName\nenter: send(PlayerNameCfg)"];	
 	savingPlayerName_server [label = "savingPlayerName\nenter: save received name"];
 	waitingForAllPlayersToConnect;
 	sendingPlayerList [label = "sendingPlayerList\nenter: send(PlayerNamesCfg)"];
 
+	sendingPlayerId -> receivingClientName [label = "received: PlayerIdCnf"];
 	receivingClientName -> savingPlayerName_server [label = "received: PlayerNameCfg"];
 	savingPlayerName_server -> requestingName_server;
 	requestingName_server -> sendingName_server [label = "configurationResponse"];
@@ -48,7 +53,7 @@ digraph G {
       }
     } 
 
-    listeningForConnections -> receivingClientName [style=dotted];
+    listeningForConnections -> sendingPlayerId [style=dotted];
     sendingPlayerList -> serverDone [label = "received: PlayerNamesCnf"];
   }
 

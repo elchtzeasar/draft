@@ -58,6 +58,13 @@ class Connection < Test::Unit::TestCase
     assert_state_change 'Client::Configuring', @client
   end
 
+  should 'send playerId from server when client connects' do
+    host_and_wait
+    connect_and_wait
+
+    assert_state_change 'Server::ClientStateMachine::Configuring::SendingPlayerId', @server
+  end
+
   should 'send name from client to server upon connection' do
     @client.configure_name
     host_and_wait

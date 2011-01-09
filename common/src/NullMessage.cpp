@@ -2,20 +2,26 @@
 
 #include <QDataStream>
 
+#include <cassert>
+
 using std::ostream;
 
-NullMessage::NullMessage() : Message(NULL_MESSAGE) {}
+NullMessage::NullMessage(quint16 messageNumber) : Message(messageNumber) {
+  assert(messageNumberIsAllowed(messageNumber) && "Message number must be allowed!");
+}
 
 Message* NullMessage::clone() {
-  return new NullMessage;
+  return new NullMessage(messageNumber);
 }
 
 bool NullMessage::messageNumberIsAllowed(quint16 messageNumber) {
-  return NULL_MESSAGE == messageNumber;
+  return NULL_MESSAGE == messageNumber ||
+         PLAYER_ID_CFG == messageNumber ||
+         PLAYER_ID_CNF == messageNumber;
 }
 
-std::ostream& operator<<(std::ostream& stream, const NullMessage&) {
-  stream << "NullMessage { }";
+std::ostream& operator<<(std::ostream& stream, const NullMessage& message) {
+  stream << "NullMessage { " << Message::messageNumberToString(message.messageNumber) << " }";
   return stream;
 }
 

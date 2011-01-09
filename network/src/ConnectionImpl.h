@@ -7,11 +7,12 @@ class AddressedMessage;
 
 class ConnectionImpl : public Connection {
  public:
-  ConnectionImpl(QTcpSocket* tcpSocket);
+  ConnectionImpl(quint8 playerId, QTcpSocket* tcpSocket);
   virtual ~ConnectionImpl();
 
   void connectToHost(const QString& hostName, unsigned int port);
   void disconnectFromHost();
+  quint8 getPlayerId() const;
 
  public slots:
   virtual void handleSendData(const AddressedMessage& message);
@@ -21,6 +22,7 @@ class ConnectionImpl : public Connection {
   void socketError(QAbstractSocket::SocketError socketError);
 
  private:
+  quint8 playerId;
   QTcpSocket* tcpSocket;
 };
 
