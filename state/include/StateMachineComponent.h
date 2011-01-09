@@ -18,6 +18,7 @@ class StateMachineComponent : public QObject {
  public:
   StateMachineComponent();
   virtual ~StateMachineComponent();
+
   void start();
 
  signals:
@@ -26,8 +27,8 @@ class StateMachineComponent : public QObject {
 
   void connectToDraft(const QString&, unsigned int);
   void connectedToDraft();
-  void configurationRequest();
-  void configurationResponse(const QString);
+  void configurationRequest(quint8 playerId);
+  void configurationResponse(quint8 playerId, const QString);
 
   void sendData(const AddressedMessage&);
   void dataReceived(const AddressedMessage&);

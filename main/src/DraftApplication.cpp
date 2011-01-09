@@ -30,7 +30,7 @@ void DraftApplication::connect (const QObject * sender,
 				const char * method,
 				Qt::ConnectionType type) {
   if (!QObject::connect(sender, signal, receiver, method, type)) {
-    cerr << "Failed to connect signal " << signal << " to slot " << method << '!' << endl;
+    cerr << "DraftApplication: Failed to connect signal " << signal << " to slot " << method << '!' << endl;
   }
 }
 
@@ -44,15 +44,15 @@ void DraftApplication::connectSlotsToSignals() {
 	   networkComponent, SLOT(handleConnectToDraft(const QString&, unsigned int)) );
 
   // UI -> ConfigurationComponent:
-  connect( &ui, SIGNAL(setPlayerName(QString)),
-	   configurationComponent, SLOT(setPlayerName(QString)) );
-  connect( &ui, SIGNAL(configurationRequest()),
-	   configurationComponent, SLOT(configurationRequest()) );
+  connect( &ui, SIGNAL(setPlayerName(quint8, QString)),
+	   configurationComponent, SLOT(setPlayerName(quint8, QString)) );
+  connect( &ui, SIGNAL(configurationRequest(quint8)),
+	   configurationComponent, SLOT(configurationRequest(quint8)) );
   connect( &ui, SIGNAL(exit(int)),
 	   configurationComponent, SLOT(handleExit(int)) );
   // UI <- ConfigurationComponent:
-  connect( configurationComponent, SIGNAL(configurationResponse(const QString)),
-	   &ui, SLOT(configurationResponse(const QString)) );
+  connect( configurationComponent, SIGNAL(configurationResponse(quint8, const QString)),
+	   &ui, SLOT(configurationResponse(quint8, const QString)) );
 
   // UI -> DraftApplication:
   connect( &ui, SIGNAL(exit(int)),
@@ -65,16 +65,16 @@ void DraftApplication::connectSlotsToSignals() {
 	   stateMachineComponent, SIGNAL(hostDraft(unsigned int)) );
 
   // StateMachine -> ConfigurationComponent
-  connect( stateMachineComponent, SIGNAL(configurationRequest()),
-	   configurationComponent, SLOT(configurationRequest()) );
+  connect( stateMachineComponent, SIGNAL(configurationRequest(quint8)),
+	   configurationComponent, SLOT(configurationRequest(quint8)) );
 
   // StateMachine -> NetworkComponent
   connect( stateMachineComponent, SIGNAL(sendData(const AddressedMessage&)),
 	   networkComponent, SIGNAL(sendData(const AddressedMessage&)) );
 
   // ConfigurationComponent -> StateMachine
-  connect( configurationComponent, SIGNAL(configurationResponse(const QString)),
-	   stateMachineComponent, SIGNAL(configurationResponse(const QString)) );
+  connect( configurationComponent, SIGNAL(configurationResponse(quint8, const QString)),
+	   stateMachineComponent, SIGNAL(configurationResponse(quint8, const QString)) );
 
   // NetworkComponent -> StateMachine
   connect( networkComponent, SIGNAL(connectedToDraft()),

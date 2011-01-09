@@ -13,17 +13,20 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   sendingName(new SendingNameState(component, this)),
   receivingPlayerList(new State(receivingPlayerList, this, "ReceivingPlayerList")) {
 
-  connect(requestingName, SIGNAL(entered()), component, SIGNAL(configurationRequest()));
   connect(savingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
+  connect(requestingName, SIGNAL(entered()), this, SLOT(sendConfigurationRequest()));
   connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
+  connect(this, SIGNAL(configurationRequest(quint8)),
+	  component, SIGNAL(configurationRequest(quint8)));
 
   receivingPlayerId->addTransition(
     component, SIGNAL(dataReceived(const AddressedMessage&)), savingPlayerId);
   savingPlayerId->addTransition(requestingName);
   requestingName->addTransition(
-    component, SIGNAL(configurationResponse(const QString)), sendingName);
+    component, SIGNAL(configurationResponse(quint8, const QString)), sendingName);
+
   sendingName->addTransition(
     component, SIGNAL(dataReceived(const AddressedMessage&)), receivingPlayerList);
 
@@ -33,4 +36,9 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
 ClientConfiguringState::~ClientConfiguringState() {
   delete sendingName;
   delete requestingName;
+}
+
+void ClientConfiguringState::sendConfigurationRequest() {
+  // TODO: Use real playerId here!
+  emit configurationRequest(0);
 }

@@ -3,9 +3,11 @@
 
 #include "State.h"
 
-class QObject;
+#include <QObject>
 
 class ClientState : public State {
+  Q_OBJECT
+
  public:
   ClientState(QObject* component, State* parent, const char* name);
   virtual ~ClientState();

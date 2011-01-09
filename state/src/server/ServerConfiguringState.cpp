@@ -14,7 +14,9 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   requestingName(new State(component, this, "RequestingName")),
   sendingName(new SendingNameState(component, this)) {
 
-  connect(requestingName, SIGNAL(entered()), component, SIGNAL(configurationRequest()));
+  connect(requestingName, SIGNAL(entered()), this, SLOT(sendConfigurationRequest()));
+  connect(this, SIGNAL(configurationRequest(quint8)),
+	  component, SIGNAL(configurationRequest(quint8)));
 
   // TODO: Make this dependent on the message type:
   sendingPlayerId->addTransition(
@@ -25,7 +27,7 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   savingPlayerName->addTransition(
     savingPlayerName, SIGNAL(entered()), requestingName);
   requestingName->addTransition(
-    component, SIGNAL(configurationResponse(const QString)), sendingName);
+    component, SIGNAL(configurationResponse(quint8, const QString)), sendingName);
 
   connect(sendingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
@@ -40,4 +42,9 @@ ServerConfiguringState::~ServerConfiguringState() {
   delete requestingName;
   delete sendingName;
   delete savingPlayerName;
+}
+
+void ServerConfiguringState::sendConfigurationRequest() {
+  // TODO: Use real playerId here!
+  emit configurationRequest(0);
 }

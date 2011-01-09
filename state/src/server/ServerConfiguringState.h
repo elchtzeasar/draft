@@ -3,12 +3,20 @@
 
 #include "State.h"
 
-class QObject;
+#include <QObject>
 
 class ServerConfiguringState : public State {
+  Q_OBJECT
+
  public:
   ServerConfiguringState(QObject* component, State* parent, const char* name);
   virtual ~ServerConfiguringState();
+
+ signals:
+  void configurationRequest(quint8 playerId);
+
+ private slots:
+  void sendConfigurationRequest();
 
  private:
   ServerConfiguringState(const ServerConfiguringState&);

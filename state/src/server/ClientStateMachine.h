@@ -12,6 +12,7 @@ class ClientStateMachine : public State {
   ClientStateMachine(const ClientStateMachine&);
   ClientStateMachine& operator=(ClientStateMachine&);
 
+  quint8 playerId;
   State* configuring;
 };
 #endif // CLIENT_STATE_MACHINE_H_

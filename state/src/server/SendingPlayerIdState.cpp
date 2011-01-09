@@ -22,13 +22,16 @@ void SendingPlayerIdState::onEntry(QEvent* event) {
 	 "SendingPlayerIdState should only be entered with a QEvent::StateMachineSignal");
 
   QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
-  const QVariant& qVariant(signalEvent->arguments().at(0));
-  assert(qVariant.canConvert<quint8>() && 
+  const QVariant& playerIdVariant(signalEvent->arguments().at(0));
+  assert(playerIdVariant.canConvert<quint8>() && 
   	 "Must be able to convert argument to quint8!");
-  const quint8 playerId = qVariant.value<quint8>();
+  const quint8 playerId = playerIdVariant.value<quint8>();
 
+  // Set playerId in "root" State (currently ClientStateMachine):
+  findAndSetProperty("playerId", playerIdVariant);
+
+  // Send playerId to client:
   AddressHeader* addressHeader = new AddressHeader;
   NullMessage* playerNameCfg = new NullMessage(PLAYER_ID_CFG);
   emit sendData(AddressedMessage(addressHeader, playerNameCfg));
-  std::cout << "SendingPlayerIdState: Received player id: " << static_cast<unsigned int>(playerId) << std::endl;
 }

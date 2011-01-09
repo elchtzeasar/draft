@@ -19,11 +19,11 @@ class RemoteController : public QThread {
   void exit(int status);
   void hostDraft(unsigned int port);
   void connectToDraft(const QString& hostName, unsigned int port);
-  void setPlayerName(QString playerName);
-  void configurationRequest();
+  void setPlayerName(quint8 playerId, QString playerName);
+  void configurationRequest(quint8 playerId);
 
  public slots:
-  void configurationResponse(const QString playerName);
+  void configurationResponse(quint8 playerId, const QString playerName);
   
  private:
   void sendHostDraft();

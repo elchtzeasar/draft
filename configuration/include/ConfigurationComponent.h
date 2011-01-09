@@ -20,11 +20,11 @@ class ConfigurationComponent : public QObject {
 
  public slots:
   void handleExit(int);
-  void configurationRequest();
-  void setPlayerName(QString playerName);
+  void configurationRequest(quint8 playerId);
+  void setPlayerName(quint8 playerId, QString playerName);
 
  signals:
-  void configurationResponse(const QString playerName);
+  void configurationResponse(quint8 playerId, const QString playerName);
 
  private:
   ConfigurationComponent(const ConfigurationComponent&);

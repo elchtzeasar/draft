@@ -25,12 +25,12 @@ StateMachineComponent::StateMachineComponent() :
   stateMachine->setInitialState(chooseClientOrServer);
 }
 
-void StateMachineComponent::start() {
-  stateMachine->start();
-}
-
 StateMachineComponent::~StateMachineComponent() {
   delete clientState;
   delete chooseClientOrServer;
   delete stateMachine;
+}
+
+void StateMachineComponent::start() {
+  stateMachine->start();
 }

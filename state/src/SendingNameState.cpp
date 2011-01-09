@@ -20,7 +20,9 @@ void SendingNameState::onEntry(QEvent* event) {
   assert(event->type() == QEvent::StateMachineSignal &&
 	 "SendingNameState should only be entered with a QEvent::StateMachineSignal");
   QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
-  const QString playerName = signalEvent->arguments().at(0).toString();
+  // TODO: Use the playerId for something!
+  const quint8 playerId = signalEvent->arguments().at(0).toUInt();
+  const QString playerName = signalEvent->arguments().at(1).toString();
 
   AddressHeader* addressHeader = new AddressHeader;
   PlayerNameCfgMessage* playerNameCfg = new PlayerNameCfgMessage(playerName.toStdString().c_str());

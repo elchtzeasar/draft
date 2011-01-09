@@ -2,8 +2,8 @@
 #define STATE_H_
 
 #include <QState>
-#include <QString>
-#include <QVariant>
+
+class QString;
 
 class State : public QState {
  public:
@@ -13,6 +13,10 @@ class State : public QState {
   const QString& getName() const;
 
  protected:
+  QVariant findProperty(const char* name) const;
+  bool findAndSetProperty(const char* name, const QVariant& value);
+
+  State& parent;
   QString name;
   QString nameVariant;
 
