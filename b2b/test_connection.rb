@@ -73,13 +73,6 @@ class Connection < Test::Unit::TestCase
     assert_includes @client.name, @server
   end
   
-  should 'send message from server to client upon connection' do
-    host_and_wait
-    connect_and_wait
-  
-    assert_includes 'This is server speaking...', @client
-  end
-  
   def host_and_wait
     @server.host
 

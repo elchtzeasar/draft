@@ -11,10 +11,8 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   sendingPlayerId(new SendingPlayerIdState(component, this)),
   receivingClientName(new State(component, this, "ReceivingClientName")),
   savingPlayerName(new SavingPlayerNameState(component, this)),
-  requestingName(new State(component, this, "RequestingName")),
-  sendingName(new SendingNameState(component, this)) {
+  waitingForOtherPlayers(new State(component, this, "WaitingForOtherPlayers")) {
 
-  connect(requestingName, SIGNAL(entered()), this, SLOT(sendConfigurationRequest()));
   connect(this, SIGNAL(configurationRequest(quint8)),
 	  component, SIGNAL(configurationRequest(quint8)));
 
@@ -24,24 +22,23 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   // TODO: Make this dependent on the message type:
   receivingClientName->addTransition(
     component, SIGNAL(dataReceived(const AddressedMessage&)), savingPlayerName);
+  // TODO: Make this dependent on the message type:
   savingPlayerName->addTransition(
-    savingPlayerName, SIGNAL(entered()), requestingName);
-  requestingName->addTransition(
-    component, SIGNAL(configurationResponse(quint8, const QString)), sendingName);
+    component, SIGNAL(dataReceived(const AddressedMessage&)), waitingForOtherPlayers);
 
   connect(sendingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
-  connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
+  connect(savingPlayerName, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
 
   setInitialState(sendingPlayerId);
 }
 
 ServerConfiguringState::~ServerConfiguringState() {
+  delete sendingPlayerId;
   delete receivingClientName;
-  delete requestingName;
-  delete sendingName;
   delete savingPlayerName;
+  delete waitingForOtherPlayers;
 }
 
 void ServerConfiguringState::sendConfigurationRequest() {

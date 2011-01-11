@@ -11,7 +11,7 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   savingPlayerId(new SavingPlayerIdState(component, this)),
   requestingName(new State(component, this, "RequestingName")),
   sendingName(new SendingNameState(component, this)),
-  receivingPlayerList(new State(receivingPlayerList, this, "ReceivingPlayerList")) {
+  receivingPlayerName(new State(component, this, "ReceivingPlayerName")) {
 
   connect(savingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
@@ -28,14 +28,17 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
     component, SIGNAL(configurationResponse(quint8, const QString)), sendingName);
 
   sendingName->addTransition(
-    component, SIGNAL(dataReceived(const AddressedMessage&)), receivingPlayerList);
+    component, SIGNAL(dataReceived(const AddressedMessage&)), receivingPlayerName);
 
   setInitialState(receivingPlayerId);
 }
 
 ClientConfiguringState::~ClientConfiguringState() {
-  delete sendingName;
+  delete receivingPlayerId;
+  delete savingPlayerId;
   delete requestingName;
+  delete sendingName;
+  delete receivingPlayerName;
 }
 
 void ClientConfiguringState::sendConfigurationRequest() {
