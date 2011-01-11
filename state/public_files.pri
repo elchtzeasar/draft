@@ -1,1 +1,1 @@
-HEADERS += ../state/include/StateMachineComponent.h
+HEADERS += $${DIR_PREFIX}/state/include/StateMachineComponent.h

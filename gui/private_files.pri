@@ -1,10 +1,10 @@
-HEADERS += ../gui/src/FileMenu.h
-HEADERS += ../gui/src/HostDraftDialog.h
-HEADERS += ../gui/src/ConnectToDraftDialog.h
-HEADERS += ../gui/src/MainWindow.h
+HEADERS += $${DIR_PREFIX}/gui/src/FileMenu.h
+HEADERS += $${DIR_PREFIX}/gui/src/HostDraftDialog.h
+HEADERS += $${DIR_PREFIX}/gui/src/ConnectToDraftDialog.h
+HEADERS += $${DIR_PREFIX}/gui/src/MainWindow.h
 
-SOURCES += ../gui/src/Gui.cpp
-SOURCES += ../gui/src/MainWindow.cpp
-SOURCES += ../gui/src/FileMenu.cpp
-SOURCES += ../gui/src/HostDraftDialog.cpp
-SOURCES += ../gui/src/ConnectToDraftDialog.cpp
+SOURCES += $${DIR_PREFIX}/gui/src/Gui.cpp
+SOURCES += $${DIR_PREFIX}/gui/src/MainWindow.cpp
+SOURCES += $${DIR_PREFIX}/gui/src/FileMenu.cpp
+SOURCES += $${DIR_PREFIX}/gui/src/HostDraftDialog.cpp
+SOURCES += $${DIR_PREFIX}/gui/src/ConnectToDraftDialog.cpp

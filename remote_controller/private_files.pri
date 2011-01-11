@@ -1,1 +1,1 @@
-SOURCES += ../remote_controller/src/RemoteController.cpp
+SOURCES += $${DIR_PREFIX}/remote_controller/src/RemoteController.cpp

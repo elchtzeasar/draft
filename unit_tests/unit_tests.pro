@@ -13,6 +13,8 @@ LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration -lcommon
 
 SOURCES += test_main.cpp
 
+DIR_PREFIX = ..
+
 ! include( ../network/public_files.pri ) {
     error( Couldnt find the network public_files.pri file! )
 }

@@ -1,28 +1,28 @@
-HEADERS += ../state/src/State.h
-HEADERS += ../state/src/SendingNameState.h
-HEADERS += ../state/src/SavingPlayerNameState.h
+HEADERS += $${DIR_PREFIX}/state/src/State.h
+HEADERS += $${DIR_PREFIX}/state/src/SendingNameState.h
+HEADERS += $${DIR_PREFIX}/state/src/SavingPlayerNameState.h
 
-SOURCES += ../state/src/StateMachineComponent.cpp
-SOURCES += ../state/src/State.cpp
-SOURCES += ../state/src/SendingNameState.cpp
-SOURCES += ../state/src/SavingPlayerNameState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/StateMachineComponent.cpp
+SOURCES += $${DIR_PREFIX}/state/src/State.cpp
+SOURCES += $${DIR_PREFIX}/state/src/SendingNameState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/SavingPlayerNameState.cpp
 
 # Client states:
-HEADERS += ../state/src/client/ClientState.h
-HEADERS += ../state/src/client/ClientConfiguringState.h
-HEADERS += ../state/src/client/SavingPlayerIdState.h
+HEADERS += $${DIR_PREFIX}/state/src/client/ClientState.h
+HEADERS += $${DIR_PREFIX}/state/src/client/ClientConfiguringState.h
+HEADERS += $${DIR_PREFIX}/state/src/client/SavingPlayerIdState.h
 
-SOURCES += ../state/src/client/ClientState.cpp
-SOURCES += ../state/src/client/ClientConfiguringState.cpp
-SOURCES += ../state/src/client/SavingPlayerIdState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/client/ClientState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/client/ClientConfiguringState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/client/SavingPlayerIdState.cpp
 
 # Server states:
-HEADERS += ../state/src/server/ServerState.h
-HEADERS += ../state/src/server/ClientStateMachine.h
-HEADERS += ../state/src/server/SendingPlayerIdState.h
-HEADERS += ../state/src/server/ServerConfiguringState.h
+HEADERS += $${DIR_PREFIX}/state/src/server/ServerState.h
+HEADERS += $${DIR_PREFIX}/state/src/server/ClientStateMachine.h
+HEADERS += $${DIR_PREFIX}/state/src/server/SendingPlayerIdState.h
+HEADERS += $${DIR_PREFIX}/state/src/server/ServerConfiguringState.h
 
-SOURCES += ../state/src/server/ServerState.cpp
-SOURCES += ../state/src/server/SendingPlayerIdState.cpp
-SOURCES += ../state/src/server/ClientStateMachine.cpp
-SOURCES += ../state/src/server/ServerConfiguringState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/server/ServerState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/server/SendingPlayerIdState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/server/ClientStateMachine.cpp
+SOURCES += $${DIR_PREFIX}/state/src/server/ServerConfiguringState.cpp

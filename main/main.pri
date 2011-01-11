@@ -20,4 +20,24 @@ SOURCES += ../src/GuiDraftApplication.cpp
 SOURCES += ../src/ConsoleDraftApplication.cpp
 SOURCES += ../main.cpp
 
+DIR_PREFIX = ..
+! include( ../common/public_files.pri ) {
+    error( Couldnt find the common public_files.pri file! )
+}
+! include( ../gui/public_files.pri ) {
+    error( Couldnt find the gui public_files.pri file! )
+}
+! include( ../remote_controller/public_files.pri ) {
+    error( Couldnt find the remote_controller public_files.pri file! )
+}
+! include( ../configuration/public_files.pri ) {
+    error( Couldnt find the configuration public_files.pri file! )
+}
+! include( ../network/public_files.pri ) {
+    error( Couldnt find the network public_files.pri file! )
+}
+! include( ../state/public_files.pri ) {
+    error( Couldnt find the state public_files.pri file! )
+}
+
 LIBS += -L../../libs -lgui -lremote_controller -lconfiguration -lnetwork -lstate -lcommon

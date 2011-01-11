@@ -16,3 +16,5 @@ CONFIG += create_prl debug
 MOC_DIR = mocs
 DESTDIR = ../libs
 OBJECTS_DIR = objs
+
+DIR_PREFIX = ..

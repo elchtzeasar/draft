@@ -1,1 +1,1 @@
-HEADERS += ../gui/include/Gui.h
+HEADERS += $${DIR_PREFIX}/gui/include/Gui.h

@@ -1,5 +1,5 @@
-SOURCES += ../common/src/AddressHeader.cpp
-SOURCES += ../common/src/Message.cpp
-SOURCES += ../common/src/NullMessage.cpp
-SOURCES += ../common/src/PlayerNameCfgMessage.cpp
-SOURCES += ../common/src/AddressedMessage.cpp
+SOURCES += $${DIR_PREFIX}/common/src/AddressHeader.cpp
+SOURCES += $${DIR_PREFIX}/common/src/Message.cpp
+SOURCES += $${DIR_PREFIX}/common/src/NullMessage.cpp
+SOURCES += $${DIR_PREFIX}/common/src/PlayerNameCfgMessage.cpp
+SOURCES += $${DIR_PREFIX}/common/src/AddressedMessage.cpp

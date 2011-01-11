@@ -1,11 +1,11 @@
 INCLUDEPATH += /usr/src/boost_1_44_0
 
-HEADERS += ../configuration/src/ConfigurationLoader.h
-HEADERS += ../configuration/src/ConfigurationLoaderImpl.h
-HEADERS += ../configuration/src/ConfigurationManager.h
-HEADERS += ../configuration/src/ConfigurationManagerImpl.h
+HEADERS += $${DIR_PREFIX}/configuration/src/ConfigurationLoader.h
+HEADERS += $${DIR_PREFIX}/configuration/src/ConfigurationLoaderImpl.h
+HEADERS += $${DIR_PREFIX}/configuration/src/ConfigurationManager.h
+HEADERS += $${DIR_PREFIX}/configuration/src/ConfigurationManagerImpl.h
 
-SOURCES += ../configuration/src/ConfigurationComponent.cpp
-SOURCES += ../configuration/src/ConfigurationComponentFactory.cpp
-SOURCES += ../configuration/src/ConfigurationLoaderImpl.cpp
-SOURCES += ../configuration/src/ConfigurationManagerImpl.cpp
+SOURCES += $${DIR_PREFIX}/configuration/src/ConfigurationComponent.cpp
+SOURCES += $${DIR_PREFIX}/configuration/src/ConfigurationComponentFactory.cpp
+SOURCES += $${DIR_PREFIX}/configuration/src/ConfigurationLoaderImpl.cpp
+SOURCES += $${DIR_PREFIX}/configuration/src/ConfigurationManagerImpl.cpp
