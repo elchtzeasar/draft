@@ -4,17 +4,11 @@
 
 QT += network
 
-HEADERS += include/NetworkComponent.h
-HEADERS += include/NetworkComponentFactory.h
-HEADERS += include/NetworkComponentFactoryImpl.h
+! include( public_files.pri ) {
+    error( Couldnt find the public_files.pri file! )
+}
 
-HEADERS += src/Connection.h
-HEADERS += src/ConnectionImpl.h
-HEADERS += src/ConnectionListener.h
-HEADERS += src/ConnectionListenerImpl.h
-
-SOURCES += src/NetworkComponentFactoryImpl.cpp
-SOURCES += src/NetworkComponent.cpp
-SOURCES += src/ConnectionImpl.cpp
-SOURCES += src/ConnectionListenerImpl.cpp
+! include( private_files.pri ) {
+    error( Couldnt find the private_files.pri file! )
+}
 

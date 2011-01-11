@@ -2,15 +2,11 @@
     error( Couldnt find the common.pri file! )
 }
 
-HEADERS += include/Gui.h
+! include( public_files.pri ) {
+    error( Couldnt find the public_files.pri file! )
+}
 
-HEADERS += src/FileMenu.h
-HEADERS += src/HostDraftDialog.h
-HEADERS += src/ConnectToDraftDialog.h
-HEADERS += src/MainWindow.h
+! include( private_files.pri ) {
+    error( Couldnt find the private_files.pri file! )
+}
 
-SOURCES += src/Gui.cpp
-SOURCES += src/MainWindow.cpp
-SOURCES += src/FileMenu.cpp
-SOURCES += src/HostDraftDialog.cpp
-SOURCES += src/ConnectToDraftDialog.cpp

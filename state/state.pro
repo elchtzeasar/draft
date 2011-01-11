@@ -4,33 +4,10 @@
 
 INCLUDEPATH += src/client src/server
 
-HEADERS += include/StateMachineComponent.h
+! include( public_files.pri ) {
+    error( Couldnt find the public_files.pri file! )
+}
 
-HEADERS += src/State.h
-HEADERS += src/SendingNameState.h
-HEADERS += src/SavingPlayerNameState.h
-
-SOURCES += src/StateMachineComponent.cpp
-SOURCES += src/State.cpp
-SOURCES += src/SendingNameState.cpp
-SOURCES += src/SavingPlayerNameState.cpp
-
-# Client states:
-HEADERS += src/client/ClientState.h
-HEADERS += src/client/ClientConfiguringState.h
-HEADERS += src/client/SavingPlayerIdState.h
-
-SOURCES += src/client/ClientState.cpp
-SOURCES += src/client/ClientConfiguringState.cpp
-SOURCES += src/client/SavingPlayerIdState.cpp
-
-# Server states:
-HEADERS += src/server/ServerState.h
-HEADERS += src/server/ClientStateMachine.h
-HEADERS += src/server/SendingPlayerIdState.h
-HEADERS += src/server/ServerConfiguringState.h
-
-SOURCES += src/server/ServerState.cpp
-SOURCES += src/server/SendingPlayerIdState.cpp
-SOURCES += src/server/ClientStateMachine.cpp
-SOURCES += src/server/ServerConfiguringState.cpp
+! include( private_files.pri ) {
+    error( Couldnt find the private_files.pri file! )
+}
