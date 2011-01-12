@@ -9,25 +9,11 @@ INCLUDEPATH += ../network/include ../network/src network/include
 INCLUDEPATH += ../configuration/include ../configuration/src configuration/include
 
 LIBS += -lgmock -lgtest
-LIBS += -L../libs -lremote_controller -lnetwork -lconfigurationtest -lcommontest
+LIBS += -L../libs -lremote_controller -lnetworktest -lconfigurationtest -lcommontest
 
 SOURCES += test_main.cpp
 
 DIR_PREFIX = ..
-
-! include( ../network/public_files.pri ) {
-    error( Couldnt find the network public_files.pri file! )
-}
-
-! include( ../network/private_files.pri ) {
-    error( Couldnt find the network private_files.pri file! )
-}
-
-HEADERS += network/include/ConnectionMock.h
-HEADERS += network/include/ConnectionListenerMock.h
-HEADERS += network/include/NetworkComponentFactoryMock.h
-
-SOURCES += network/NetworkComponentTest.cpp
 
 ! include( ../remote_controller/public_files.pri ) {
     error( Couldnt find the remote_controller public_files.pri file! )

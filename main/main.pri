@@ -22,10 +22,10 @@ SOURCES += ../main.cpp
 
 DIR_PREFIX = ..
 ! include( ../common/include/files.pri ) {
-    error( Couldnt find the common public_files.pri file! )
+    error( Couldnt find the common/include/files.pri file! )
 }
 ! include( ../configuration/include/files.pri ) {
-    error( Couldnt find the configuration public_files.pri file! )
+    error( Couldnt find the configuration/include/files.pri file! )
 }
 ! include( ../gui/public_files.pri ) {
     error( Couldnt find the gui public_files.pri file! )
@@ -33,8 +33,8 @@ DIR_PREFIX = ..
 ! include( ../remote_controller/public_files.pri ) {
     error( Couldnt find the remote_controller public_files.pri file! )
 }
-! include( ../network/public_files.pri ) {
-    error( Couldnt find the network public_files.pri file! )
+! include( ../network/include/files.pri ) {
+    error( Couldnt find the network/include/files.pri file! )
 }
 ! include( ../state/public_files.pri ) {
     error( Couldnt find the state public_files.pri file! )
