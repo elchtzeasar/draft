@@ -17,6 +17,9 @@ const char* Message::messageNumberToString(quint16 messageNumber) {
   case PLAYER_NAME_CFG:
     return "PlayerNameCfg";
     break;
+  case PLAYER_NAME_CNF:
+    return "PlayerNameCnf";
+    break;
   case PLAYER_ID_CFG:
     return "PlayerIdCfg";
     break;
@@ -59,6 +62,7 @@ std::ostream& operator<<(std::ostream& stream, const Message& message) {
     PRINT_MESSAGE(PLAYER_ID_CFG, NullMessage);
     PRINT_MESSAGE(PLAYER_ID_CNF, NullMessage);
     PRINT_MESSAGE(PLAYER_NAME_CFG, PlayerNameCfgMessage);
+    PRINT_MESSAGE(PLAYER_NAME_CNF, NullMessage);
   default:
     assert(false && "Unkown message number!");
     break;
@@ -74,6 +78,7 @@ QDataStream& operator<<(QDataStream& stream, const Message& message) {
     SERIALIZE_MESSAGE(PLAYER_ID_CFG, NullMessage);
     SERIALIZE_MESSAGE(PLAYER_ID_CNF, NullMessage);
     SERIALIZE_MESSAGE(PLAYER_NAME_CFG, PlayerNameCfgMessage);
+    SERIALIZE_MESSAGE(PLAYER_NAME_CNF, NullMessage);
   default:
     assert(false && "Unkown message number!");
     break;
@@ -89,6 +94,7 @@ QDataStream& operator>>(QDataStream& stream, Message*& message) {
     DESERIALIZE_MESSAGE_PTR(PLAYER_ID_CFG, NullMessage);
     DESERIALIZE_MESSAGE_PTR(PLAYER_ID_CNF, NullMessage);
     DESERIALIZE_MESSAGE_PTR(PLAYER_NAME_CFG, PlayerNameCfgMessage);
+    DESERIALIZE_MESSAGE_PTR(PLAYER_NAME_CNF, NullMessage);
   default:
     assert(false && "Unkown message number!");
     break;
@@ -103,6 +109,7 @@ QDataStream& operator>>(QDataStream& stream, Message& message) {
     DESERIALIZE_MESSAGE(PLAYER_ID_CFG, NullMessage);
     DESERIALIZE_MESSAGE(PLAYER_ID_CNF, NullMessage);
     DESERIALIZE_MESSAGE(PLAYER_NAME_CFG, PlayerNameCfgMessage);
+    DESERIALIZE_MESSAGE(PLAYER_NAME_CNF, NullMessage);
   default:
     assert(false && "Unkown message number!");
     break;

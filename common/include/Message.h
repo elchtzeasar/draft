@@ -10,9 +10,10 @@ class QDataStream;
 
 enum {
   NULL_MESSAGE,
-  PLAYER_NAME_CFG,
   PLAYER_ID_CFG,
   PLAYER_ID_CNF,
+  PLAYER_NAME_CFG,
+  PLAYER_NAME_CNF,
 
   NO_MESSAGE = 0xff
 };

@@ -29,6 +29,6 @@ void SavingPlayerIdState::onEntry(QEvent* event) {
   std::cout << "SavingPlayerIdState: Received player id: " << -1 << std::endl;
 
   AddressHeader* addressHeader = new AddressHeader;
-  NullMessage* playerNameCnf = new NullMessage(PLAYER_ID_CNF);
-  emit sendData(AddressedMessage(addressHeader, playerNameCnf));
+  NullMessage* playerIdCnf = new NullMessage(PLAYER_ID_CNF);
+  emit sendData(AddressedMessage(addressHeader, playerIdCnf));
 }

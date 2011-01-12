@@ -2,7 +2,7 @@
 
 #include "AddressHeader.h"
 #include "AddressedMessage.h"
-#include "Message.h"
+#include "NullMessage.h"
 #include "PlayerNameCfgMessage.h"
 
 #include <QEvent>
@@ -28,6 +28,10 @@ void SavingPlayerNameState::onEntry(QEvent* event) {
   const AddressedMessage& message = qVariant.value<AddressedMessage>();
 
   const PlayerNameCfgMessage& playerNameCfgMessage(message.getMessage().to<PlayerNameCfgMessage>());
+
+  AddressHeader* addressHeader = new AddressHeader;
+  NullMessage* playerNameCnf = new NullMessage(PLAYER_NAME_CNF);
+  emit sendData(AddressedMessage(addressHeader, playerNameCnf));
 
   std::cout << "SavingPlayerNameState: Received player name: " << playerNameCfgMessage.getPlayerName() << std::endl;
 }

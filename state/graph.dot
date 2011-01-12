@@ -42,7 +42,7 @@ digraph G {
 
 	sendingPlayerId -> receivingClientName [label = "received: PlayerIdCnf"];
 	receivingClientName -> savingPlayerName_server [label = "received: PlayerNameCfg"];
-	savingPlayerName_server -> waitingForOtherPlayers [label = "received: PlayerNameCnf"];
+	savingPlayerName_server -> waitingForOtherPlayers;
 	waitingForOtherPlayers -> forwardingPlayerName [label = "playerConnected"];
 	forwardingPlayerName -> waitingForOtherPlayers [label = "received: PlayerNameCnf"];
       }

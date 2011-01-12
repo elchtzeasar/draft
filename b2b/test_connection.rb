@@ -50,27 +50,33 @@ class Connection < Test::Unit::TestCase
   
     assert_state_change 'Server::ClientStateMachine::Configuring', @server
   end
-  
-  should 'change change state to Configuring in client when it successfully connects' do
-    host_and_wait
-    connect_and_wait
-  
-    assert_state_change 'Client::Configuring', @client
-  end
 
   should 'send playerId from server when client connects' do
     host_and_wait
     connect_and_wait
 
-    assert_state_change 'Server::ClientStateMachine::Configuring::SendingPlayerId', @server
+    assert_message_sent 'PlayerIdCfg', @server
   end
 
-  should 'send name from client to server upon connection' do
-    @client.configure_name
+  should 'respond to playerId from client when it is received in server' do
     host_and_wait
     connect_and_wait
 
-    assert_includes @client.name, @server
+    assert_message_sent 'PlayerIdCnf', @client
+  end
+
+  should 'send name from client to server upon connection' do
+    host_and_wait
+    connect_and_wait
+
+    assert_message_sent 'PlayerNameCfg', @client
+  end
+  
+  should 'respond to playerName from server when it is received in client' do
+    host_and_wait
+    connect_and_wait
+
+    assert_message_sent 'PlayerNameCnf', @server
   end
   
   def host_and_wait
