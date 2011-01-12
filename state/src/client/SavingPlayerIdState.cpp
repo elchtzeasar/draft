@@ -25,10 +25,10 @@ void SavingPlayerIdState::onEntry(QEvent* event) {
   assert(qVariant.canConvert<AddressedMessage>() && 
   	 "Must be able to convert argument to AddressedMessage!");
   const AddressedMessage& message = qVariant.value<AddressedMessage>();
+  const quint8 ownPlayerId = message.getHeader().getReceiverPlayerId();
+  const quint8 senderPlayerId = message.getHeader().getSenderPlayerId();
 
-  std::cout << "SavingPlayerIdState: Received player id: " << -1 << std::endl;
-
-  AddressHeader* addressHeader = new AddressHeader;
+  AddressHeader* addressHeader = new AddressHeader(ownPlayerId, senderPlayerId);
   NullMessage* playerIdCnf = new NullMessage(PLAYER_ID_CNF);
   emit sendData(AddressedMessage(addressHeader, playerIdCnf));
 }

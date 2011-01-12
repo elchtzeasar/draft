@@ -31,7 +31,7 @@ void SendingPlayerIdState::onEntry(QEvent* event) {
   findAndSetProperty("playerId", playerIdVariant);
 
   // Send playerId to client:
-  AddressHeader* addressHeader = new AddressHeader;
+  AddressHeader* addressHeader = new AddressHeader(AddressHeader::SERVER_PLAYER_ID, playerId);
   NullMessage* playerNameCfg = new NullMessage(PLAYER_ID_CFG);
   emit sendData(AddressedMessage(addressHeader, playerNameCfg));
 }

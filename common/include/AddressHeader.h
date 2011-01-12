@@ -10,15 +10,23 @@ class QDataStream;
 class AddressHeader {
  public:
   AddressHeader();
+  AddressHeader(quint8 sentFromPlayerId, quint8 sentToPlayerId);
+
   AddressHeader(const AddressHeader& original);
   AddressHeader& operator=(AddressHeader& original);
 
+  quint8 getSenderPlayerId() const;
+  quint8 getReceiverPlayerId() const;
+
+  static const quint8 NO_PLAYER_ID;
+  static const quint8 SERVER_PLAYER_ID;
+
  private:
   quint32 version;
+  quint8 sentFromPlayerId;
+  quint8 sentToPlayerId;
   quint8 reserved1;
   quint8 reserved2;
-  quint8 reserved3;
-  quint8 reserved4;
 
   friend std::ostream& operator<<(std::ostream& stream, const AddressHeader& addressHeader);
   friend QDataStream& operator<<(QDataStream& stream, const AddressHeader& addressHeader);
