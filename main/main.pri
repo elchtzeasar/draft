@@ -30,8 +30,8 @@ DIR_PREFIX = ..
 ! include( ../gui/public_files.pri ) {
     error( Couldnt find the gui public_files.pri file! )
 }
-! include( ../remote_controller/public_files.pri ) {
-    error( Couldnt find the remote_controller public_files.pri file! )
+! include( ../remote_controller/include/files.pri ) {
+    error( Couldnt find the remote_controller/include/files.pri file! )
 }
 ! include( ../network/include/files.pri ) {
     error( Couldnt find the network/include/files.pri file! )

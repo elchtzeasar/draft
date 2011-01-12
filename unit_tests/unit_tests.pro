@@ -9,21 +9,12 @@ INCLUDEPATH += ../network/include ../network/src network/include
 INCLUDEPATH += ../configuration/include ../configuration/src configuration/include
 
 LIBS += -lgmock -lgtest
-LIBS += -L../libs -lremote_controller -lnetworktest -lconfigurationtest -lcommontest
+LIBS += -L../libs -lremote_controllertest -lnetworktest -lconfigurationtest -lcommontest
 
 SOURCES += test_main.cpp
 
 DIR_PREFIX = ..
 
-! include( ../remote_controller/public_files.pri ) {
-    error( Couldnt find the remote_controller public_files.pri file! )
-}
-
-! include( ../remote_controller/private_files.pri ) {
-    error( Couldnt find the remote_controller private_files.pri file! )
-}
-
-SOURCES += remote_controller/RemoteControllerTest.cpp
 
 TARGET = ../bin/unit_tests
 
