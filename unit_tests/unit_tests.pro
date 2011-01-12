@@ -9,7 +9,7 @@ INCLUDEPATH += ../network/include ../network/src network/include
 INCLUDEPATH += ../configuration/include ../configuration/src configuration/include
 
 LIBS += -lgmock -lgtest
-LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration -lcommon
+LIBS += -L../libs -lremote_controller -lnetwork -lconfiguration -lcommontest
 
 SOURCES += test_main.cpp
 
@@ -51,19 +51,6 @@ HEADERS += configuration/include/ConfigurationLoaderMock.h
 HEADERS += configuration/include/ConfigurationManagerMock.h
 SOURCES += configuration/ConfigurationComponentTest.cpp
 SOURCES += configuration/ConfigurationLoaderTest.cpp
-
-! include( ../common/public_files.pri ) {
-    error( Couldnt find the common public_files.pri file! )
-}
-
-! include( ../common/private_files.pri ) {
-    error( Couldnt find the common private_files.pri file! )
-}
-
-SOURCES += common/AddressHeaderTest.cpp
-SOURCES += common/MessageTest.cpp
-SOURCES += common/NullMessageTest.cpp
-SOURCES += common/PlayerNameCfgMessageTest.cpp
 
 TARGET = ../bin/unit_tests
 

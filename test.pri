@@ -2,7 +2,7 @@
 
 # Includes common configuration for all subdirectory .pro files.
 
-INCLUDEPATH += . ../include ../../common/include
+INCLUDEPATH += . ../include ../src ../../common/include
 WARNINGS += -Wall
 
 TEMPLATE = lib

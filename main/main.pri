@@ -21,7 +21,7 @@ SOURCES += ../src/ConsoleDraftApplication.cpp
 SOURCES += ../main.cpp
 
 DIR_PREFIX = ..
-! include( ../common/public_files.pri ) {
+! include( ../common/include/files.pri ) {
     error( Couldnt find the common public_files.pri file! )
 }
 ! include( ../gui/public_files.pri ) {

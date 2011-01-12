@@ -1,12 +1,14 @@
-! include( ../old_common.pri ) {
+TARGET = common
+
+! include( ../../common.pri ) {
     error( Couldnt find the common.pri file! )
 }
 
-! include( public_files.pri ) {
+! include( ../include/files.pri ) {
     error( Couldnt find the public_files.pri file! )
 }
 
-! include( private_files.pri ) {
+! include( ../src/files.pri ) {
     error( Couldnt find the private_files.pri file! )
 }
 
