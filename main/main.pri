@@ -27,8 +27,8 @@ DIR_PREFIX = ..
 ! include( ../configuration/include/files.pri ) {
     error( Couldnt find the configuration/include/files.pri file! )
 }
-! include( ../gui/public_files.pri ) {
-    error( Couldnt find the gui public_files.pri file! )
+! include( ../gui/include/files.pri ) {
+    error( Couldnt find the gui/include/files.pri file! )
 }
 ! include( ../remote_controller/include/files.pri ) {
     error( Couldnt find the remote_controller/include/files.pri file! )
@@ -36,8 +36,8 @@ DIR_PREFIX = ..
 ! include( ../network/include/files.pri ) {
     error( Couldnt find the network/include/files.pri file! )
 }
-! include( ../state/public_files.pri ) {
-    error( Couldnt find the state public_files.pri file! )
+! include( ../state/include/files.pri ) {
+    error( Couldnt find the state/include/files.pri file! )
 }
 
 LIBS += -L../../libs -lgui -lremote_controller -lconfiguration -lnetwork -lstate -lcommon
