@@ -2,11 +2,14 @@
 
 # Includes common configuration for all subdirectory .pro files.
 
-INCLUDEPATH += . ../include ../src ../../common/include
+INCLUDEPATH += . include ../include ../src ../../common/include
 WARNINGS += -Wall
 
+LIBS += -lgmock -lgtest
+
 TEMPLATE = lib
-CONFIG += staticlib
+#CONFIG += staticlib
+QT += testlib
 
 # Make sure qmake tracks dependencies:
 CONFIG += create_prl debug

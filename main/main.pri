@@ -24,14 +24,14 @@ DIR_PREFIX = ..
 ! include( ../common/include/files.pri ) {
     error( Couldnt find the common public_files.pri file! )
 }
+! include( ../configuration/include/files.pri ) {
+    error( Couldnt find the configuration public_files.pri file! )
+}
 ! include( ../gui/public_files.pri ) {
     error( Couldnt find the gui public_files.pri file! )
 }
 ! include( ../remote_controller/public_files.pri ) {
     error( Couldnt find the remote_controller public_files.pri file! )
-}
-! include( ../configuration/public_files.pri ) {
-    error( Couldnt find the configuration public_files.pri file! )
 }
 ! include( ../network/public_files.pri ) {
     error( Couldnt find the network public_files.pri file! )

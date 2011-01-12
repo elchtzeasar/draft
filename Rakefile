@@ -1,7 +1,7 @@
 namespace 'test' do
   desc 'Run unit tests'
   task :unit do
-    Kernel.system('bin/unit_tests')
+    Kernel.system("env LD_LIBRARY_PATH=#{pwd}/libs bin/unit_tests")
   end
 
   desc 'Run systems tests'
