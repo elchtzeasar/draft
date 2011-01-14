@@ -1,16 +1,16 @@
 #include "ConfigurationComponent.h"
 
 #include "ConfigurationLoader.h"
-#include "ConfigurationManager.h"
+#include "PlayerContext.h"
 
 #include <QString>
 
-ConfigurationComponent::ConfigurationComponent(ConfigurationManager* configurationManager, ConfigurationLoader* configurationLoader)
-  : configurationManager(configurationManager), configurationLoader(configurationLoader) {}
+ConfigurationComponent::ConfigurationComponent(PlayerContext* playerContext, ConfigurationLoader* configurationLoader)
+  : playerContext(playerContext), configurationLoader(configurationLoader) {}
 
 ConfigurationComponent::~ConfigurationComponent() {
   delete configurationLoader;
-  delete configurationManager;
+  delete playerContext;
 }
 
 void ConfigurationComponent::handleExit(int) {
@@ -19,12 +19,18 @@ void ConfigurationComponent::handleExit(int) {
 
 void ConfigurationComponent::configurationRequest(quint8 playerId) {
   // TODO: Use the playerId!
-  QString playerName = configurationManager->getPlayerName().c_str();
+  QString playerName = playerContext->getPlayerName().c_str();
 
   emit configurationResponse(playerId, playerName);
 }
 
+#include <iostream>
+void ConfigurationComponent::setOwnPlayerId(quint8 playerId) {
+  // TODO: Use the playerId to index playerContexts!
+  std::cout << "setOwnPlayerId(" << int(playerId) << ')' << std::endl;
+}
+
 void ConfigurationComponent::setPlayerName(quint8 playerId, QString playerName) {
   // TODO: Use the playerId!
-  configurationManager->setPlayerName(playerName.toStdString());
+  playerContext->setPlayerName(playerName.toStdString());
 }

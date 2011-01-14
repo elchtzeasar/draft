@@ -1,6 +1,6 @@
 #include "ConfigurationComponent.h"
 
-#include "ConfigurationManagerMock.h"
+#include "PlayerContextMock.h"
 #include "ConfigurationLoaderMock.h"
 
 #include <gtest/gtest.h>
@@ -24,15 +24,15 @@ using std::ostream;
 class ConfigurationComponentTest : public testing::Test {
 protected:
   ConfigurationComponentTest()
-    :   configurationManager(new NiceMock<ConfigurationManagerMock>),
+    :   playerContext(new NiceMock<PlayerContextMock>),
 	configurationLoader(new ConfigurationLoaderMock),
-	configurationComponent(configurationManager, configurationLoader),
+	configurationComponent(playerContext, configurationLoader),
 	responseSpy(&configurationComponent, SIGNAL(configurationResponse(quint8, const QString&))) {
   }
 
   ~ConfigurationComponentTest() {}
 
-  NiceMock<ConfigurationManagerMock>* configurationManager;
+  NiceMock<PlayerContextMock>* playerContext;
   ConfigurationLoaderMock* configurationLoader;
   ConfigurationComponent configurationComponent;
   QSignalSpy responseSpy;
@@ -44,7 +44,7 @@ static const quint8 PLAYER_ID(15);
 ostream& operator<<(ostream& os, const QString& qString);
 
 TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfigurationResponseWithCorrectPlayerName) {
-  EXPECT_CALL(*configurationManager, getPlayerName()).WillOnce(ReturnRef(PLAYER_NAME));
+  EXPECT_CALL(*playerContext, getPlayerName()).WillOnce(ReturnRef(PLAYER_NAME));
 
   configurationComponent.configurationRequest(PLAYER_ID);
 
@@ -54,7 +54,7 @@ TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfig
 }
 
 TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfigurationResponseWithCorrectPlayerId) {
-  ON_CALL(*configurationManager, getPlayerName()).WillByDefault(ReturnRef(PLAYER_NAME));
+  ON_CALL(*playerContext, getPlayerName()).WillByDefault(ReturnRef(PLAYER_NAME));
 
   configurationComponent.configurationRequest(PLAYER_ID);
 
@@ -65,7 +65,7 @@ TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfig
 
 TEST_F(ConfigurationComponentTest, shouldSetPlayerNameInManagerOnSetPlayerName) {
   QString playerName("player name");
-  EXPECT_CALL(*configurationManager, setPlayerName(testing::StrEq(playerName.toStdString())));
+  EXPECT_CALL(*playerContext, setPlayerName(testing::StrEq(playerName.toStdString())));
 
   configurationComponent.setPlayerName(PLAYER_ID, playerName);
 }

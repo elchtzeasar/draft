@@ -5,7 +5,7 @@
 
 #include <string>
 
-class ConfigurationManager;
+class PlayerContext;
 class ConfigurationLoader;
 
 class QString;
@@ -15,12 +15,13 @@ class ConfigurationComponent : public QObject {
 
  public:
   ConfigurationComponent(
-    ConfigurationManager* configurationManager, ConfigurationLoader* configurationLoader);
+    PlayerContext* playerContext, ConfigurationLoader* configurationLoader);
   ~ConfigurationComponent();
 
  public slots:
   void handleExit(int);
   void configurationRequest(quint8 playerId);
+  void setOwnPlayerId(quint8 playerId);
   void setPlayerName(quint8 playerId, QString playerName);
 
  signals:
@@ -30,7 +31,7 @@ class ConfigurationComponent : public QObject {
   ConfigurationComponent(const ConfigurationComponent&);
   ConfigurationComponent& operator=(ConfigurationComponent&);
 
-  ConfigurationManager* configurationManager;
+  PlayerContext* playerContext;
   ConfigurationLoader* configurationLoader;
 };
 

@@ -33,6 +33,8 @@ class StateMachineComponent : public QObject {
   void sendData(const AddressedMessage&);
   void dataReceived(const AddressedMessage&);
 
+  void setOwnPlayerId(quint8 playerId);
+
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState)
   const QString getActiveState() const {

@@ -1,11 +1,11 @@
-#include "ConfigurationManager.h"
+#include "PlayerContext.h"
 
 #include <gmock/gmock.h>
 
-class ConfigurationManagerMock : public ConfigurationManager {
+class PlayerContextMock : public PlayerContext {
  public:
-  ConfigurationManagerMock() {}
-  virtual ~ConfigurationManagerMock() {}
+  PlayerContextMock() {}
+  virtual ~PlayerContextMock() {}
 
   MOCK_METHOD0(load, void());
   MOCK_CONST_METHOD0(save, void());

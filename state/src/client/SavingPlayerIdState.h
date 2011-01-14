@@ -17,6 +17,7 @@ class SavingPlayerIdState : public State {
   virtual void onEntry(QEvent* event);
   
  signals:
+  void setOwnPlayerId(quint8 playerId);
   void sendData(const AddressedMessage& message);
 
  private:

@@ -1,6 +1,6 @@
 #include "ConfigurationLoaderImpl.h"
 
-#include "ConfigurationManagerMock.h"
+#include "PlayerContextMock.h"
 
 #include <iostream>
 #include <fstream>
@@ -21,14 +21,14 @@ static const std::string PLAYER_NAME("playername");
 
 class ConfigurationLoaderTest : public testing::Test {
 protected:
-  ConfigurationLoaderTest() : configurationLoader(FILENAME, configurationManager) {
+  ConfigurationLoaderTest() : configurationLoader(FILENAME, playerContext) {
     removeXmlFile();
   }
   ~ConfigurationLoaderTest() {
     removeXmlFile();
   }
 
-  ConfigurationManagerMock configurationManager;
+  PlayerContextMock playerContext;
   ConfigurationLoaderImpl configurationLoader;
 
   void writeToXmlFile(const std::string xmlData) {
@@ -46,32 +46,32 @@ protected:
 };
 
 TEST_F(ConfigurationLoaderTest, shouldNotSetNameIfNoXmlFileFound) {
-  EXPECT_CALL(configurationManager, setPlayerName(_)).Times(0);
+  EXPECT_CALL(playerContext, setPlayerName(_)).Times(0);
 
   configurationLoader.load();
 }
 
 TEST_F(ConfigurationLoaderTest, shouldNotSetNameIfNoneFoundInXmlFile) {
   writeToXmlFile("");
-  EXPECT_CALL(configurationManager, setPlayerName(_)).Times(0);
+  EXPECT_CALL(playerContext, setPlayerName(_)).Times(0);
 
   configurationLoader.load();
 }
 
 TEST_F(ConfigurationLoaderTest, shouldSetNameIfFoundInXmlFile) {
   writeToXmlFile("<configuration><player><name>playername</name></player></configuration>");
-  EXPECT_CALL(configurationManager, setPlayerName(PLAYER_NAME));
+  EXPECT_CALL(playerContext, setPlayerName(PLAYER_NAME));
 
   configurationLoader.load();
 }
 
 TEST_F(ConfigurationLoaderTest, shouldSaveConfigurationInXml) {
   writeToXmlFile("");
-  ConfigurationManagerMock configurationManager2;
-  ConfigurationLoaderImpl configurationLoader2(FILENAME, configurationManager2);
+  PlayerContextMock playerContext2;
+  ConfigurationLoaderImpl configurationLoader2(FILENAME, playerContext2);
 
-  EXPECT_CALL(configurationManager, getPlayerName()).WillOnce(ReturnRef(PLAYER_NAME));
-  EXPECT_CALL(configurationManager2, setPlayerName(PLAYER_NAME));
+  EXPECT_CALL(playerContext, getPlayerName()).WillOnce(ReturnRef(PLAYER_NAME));
+  EXPECT_CALL(playerContext2, setPlayerName(PLAYER_NAME));
 
   configurationLoader.save();
   configurationLoader2.load();

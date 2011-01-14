@@ -1,6 +1,6 @@
 #include "ConfigurationLoaderImpl.h"
 
-#include "ConfigurationManager.h"
+#include "PlayerContext.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -16,8 +16,8 @@ using std::string;
 static const char* PLAYER_NAME_PATH = "configuration.player.name";
 
 ConfigurationLoaderImpl::ConfigurationLoaderImpl(
-  const string& filename, ConfigurationManager& configurationManager) :
-  filename(filename), configurationManager(configurationManager) {}
+  const string& filename, PlayerContext& playerContext) :
+  filename(filename), playerContext(playerContext) {}
 
 ConfigurationLoaderImpl::~ConfigurationLoaderImpl() {}
 
@@ -30,7 +30,7 @@ void ConfigurationLoaderImpl::load() {
 
     playerName = pt.get<std::string>(PLAYER_NAME_PATH, "");
     if (playerName.length() > 0)
-      configurationManager.setPlayerName(playerName);
+      playerContext.setPlayerName(playerName);
   } catch (boost::property_tree::xml_parser::xml_parser_error& e) {
     cerr << "ERROR: Got an error from xml_parser: " << e.what() << " with file: " << filename << endl;
   }
@@ -39,7 +39,7 @@ void ConfigurationLoaderImpl::load() {
 void ConfigurationLoaderImpl::save() const {
   ptree pt;
   
-  pt.put(PLAYER_NAME_PATH, configurationManager.getPlayerName());
+  pt.put(PLAYER_NAME_PATH, playerContext.getPlayerName());
   
   write_xml(filename, pt);
 }

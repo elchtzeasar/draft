@@ -15,6 +15,8 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
 
   connect(savingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
+  connect(savingPlayerId, SIGNAL(setOwnPlayerId(quint8)),
+	  component, SIGNAL(setOwnPlayerId(quint8)) );
   connect(requestingName, SIGNAL(entered()), this, SLOT(sendConfigurationRequest()));
   connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );

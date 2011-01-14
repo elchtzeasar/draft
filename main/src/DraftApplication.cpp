@@ -67,6 +67,8 @@ void DraftApplication::connectSlotsToSignals() {
   // StateMachine -> ConfigurationComponent
   connect( stateMachineComponent, SIGNAL(configurationRequest(quint8)),
 	   configurationComponent, SLOT(configurationRequest(quint8)) );
+  connect( stateMachineComponent, SIGNAL(setOwnPlayerId(quint8)),
+	   configurationComponent, SLOT(setOwnPlayerId(quint8)) );
 
   // StateMachine -> NetworkComponent
   connect( stateMachineComponent, SIGNAL(sendData(const AddressedMessage&)),

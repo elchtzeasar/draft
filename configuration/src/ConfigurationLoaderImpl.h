@@ -3,12 +3,12 @@
 
 #include "ConfigurationLoader.h"
 
-class ConfigurationManager;
+class PlayerContext;
 
 class ConfigurationLoaderImpl : public ConfigurationLoader {
  public:
   ConfigurationLoaderImpl(
-    const std::string& filename, ConfigurationManager& configurationManager);
+    const std::string& filename, PlayerContext& playerContext);
   virtual ~ConfigurationLoaderImpl();
 
   virtual void load();
@@ -19,7 +19,7 @@ class ConfigurationLoaderImpl : public ConfigurationLoader {
   ConfigurationLoaderImpl& operator=(ConfigurationLoaderImpl&);
 
   const std::string filename;
-  ConfigurationManager& configurationManager;
+  PlayerContext& playerContext;
 };
 
 #endif // CONFIGURATION_LOADER_IMPL_H_
