@@ -4,6 +4,8 @@
 #include "SendingNameState.h"
 #include "SavingPlayerNameState.h"
 
+#include <QVariant>
+
 class AddressedMessage;
 
 ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent, const char* name) :
@@ -42,6 +44,5 @@ ServerConfiguringState::~ServerConfiguringState() {
 }
 
 void ServerConfiguringState::sendConfigurationRequest() {
-  // TODO: Use real playerId here!
-  emit configurationRequest(0);
+  emit configurationRequest(findProperty("playerId").value<quint8>());
 }

@@ -28,6 +28,7 @@ void SavingPlayerIdState::onEntry(QEvent* event) {
   const quint8 ownPlayerId = message.getHeader().getReceiverPlayerId();
   const quint8 senderPlayerId = message.getHeader().getSenderPlayerId();
 
+  findAndSetProperty("playerId", ownPlayerId);
   emit setOwnPlayerId(ownPlayerId);
 
   AddressHeader* addressHeader = new AddressHeader(ownPlayerId, senderPlayerId);

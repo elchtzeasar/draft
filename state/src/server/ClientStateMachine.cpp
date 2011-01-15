@@ -6,7 +6,7 @@
 
 ClientStateMachine::ClientStateMachine(QObject* component, State* parent, const char* name) :
   State(component, parent, name, false),
-  playerId(0xff),
+  playerId(AddressHeader::NO_PLAYER_ID),
   configuring(new ServerConfiguringState(component, this, "Configuring")) {
 
   setProperty("playerId", playerId);

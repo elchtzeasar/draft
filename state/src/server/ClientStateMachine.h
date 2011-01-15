@@ -3,6 +3,8 @@
 
 #include "State.h"
 
+#include "AddressHeader.h"
+
 class ClientStateMachine : public State {
  public:
   ClientStateMachine(QObject* component, State* parent, const char* name);

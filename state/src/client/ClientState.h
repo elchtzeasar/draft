@@ -4,6 +4,7 @@
 #include "State.h"
 
 #include <QObject>
+#include <QVariant>
 
 class ClientState : public State {
   Q_OBJECT
@@ -16,6 +17,7 @@ class ClientState : public State {
   ClientState(const ClientState&);
   ClientState& operator=(ClientState&);
 
+  QVariant playerId;
   State* waitingForConnection;
   State* configuring;
 };
