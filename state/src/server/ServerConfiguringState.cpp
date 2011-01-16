@@ -1,5 +1,7 @@
 #include "ServerConfiguringState.h"
 
+#include "Message.h"
+#include "ReceivedMessageTransition.h"
 #include "SendingPlayerIdState.h"
 #include "SendingNameState.h"
 #include "SavingPlayerNameState.h"
@@ -18,15 +20,11 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   connect(this, SIGNAL(configurationRequest(quint8)),
 	  component, SIGNAL(configurationRequest(quint8)));
 
-  // TODO: Make this dependent on the message type:
-  sendingPlayerId->addTransition(
-    component, SIGNAL(dataReceived(const AddressedMessage&)), receivingClientName);
-  // TODO: Make this dependent on the message type:
-  receivingClientName->addTransition(
-    component, SIGNAL(dataReceived(const AddressedMessage&)), savingPlayerName);
-  // TODO: Make this dependent on the message type:
-  savingPlayerName->addTransition(
-    component, SIGNAL(dataReceived(const AddressedMessage&)), waitingForOtherPlayers);
+  new ReceivedMessageTransition(
+    component, sendingPlayerId, receivingClientName, PLAYER_ID_CNF);
+  new ReceivedMessageTransition(
+    component, receivingClientName, savingPlayerName, PLAYER_NAME_CFG);
+  savingPlayerName->addTransition(waitingForOtherPlayers);
 
   connect(sendingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );

@@ -1,11 +1,13 @@
 HEADERS += $${DIR_PREFIX}/state/src/State.h
 HEADERS += $${DIR_PREFIX}/state/src/SendingNameState.h
 HEADERS += $${DIR_PREFIX}/state/src/SavingPlayerNameState.h
+HEADERS += $${DIR_PREFIX}/state/src/ReceivedMessageTransition.h
 
 SOURCES += $${DIR_PREFIX}/state/src/StateMachineComponent.cpp
 SOURCES += $${DIR_PREFIX}/state/src/State.cpp
 SOURCES += $${DIR_PREFIX}/state/src/SendingNameState.cpp
 SOURCES += $${DIR_PREFIX}/state/src/SavingPlayerNameState.cpp
+SOURCES += $${DIR_PREFIX}/state/src/ReceivedMessageTransition.cpp
 
 # Client states:
 HEADERS += $${DIR_PREFIX}/state/src/client/ClientState.h

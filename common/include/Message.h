@@ -25,6 +25,7 @@ class Message {
 
   virtual Message* clone() = 0;
 
+  quint16 getMessageNumber() const;
   template<typename T>
   const T& to() const {
     assert(T::messageNumberIsAllowed(messageNumber) && "Casting message to wrong type!");

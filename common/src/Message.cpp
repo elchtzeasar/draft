@@ -9,6 +9,10 @@
 
 Message::Message(quint16 messageNumber) : messageNumber(messageNumber), unused(0) {}
 
+quint16 Message::getMessageNumber() const {
+  return messageNumber;
+}
+
 const char* Message::messageNumberToString(quint16 messageNumber) {
   switch (messageNumber) {
   case NULL_MESSAGE:

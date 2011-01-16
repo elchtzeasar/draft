@@ -1,5 +1,7 @@
 #include "ClientConfiguringState.h"
 
+#include "Message.h"
+#include "ReceivedMessageTransition.h"
 #include "SavingPlayerIdState.h"
 #include "SendingNameState.h"
 
@@ -25,14 +27,13 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   connect(this, SIGNAL(configurationRequest(quint8)),
 	  component, SIGNAL(configurationRequest(quint8)));
 
-  receivingPlayerId->addTransition(
-    component, SIGNAL(dataReceived(const AddressedMessage&)), savingPlayerId);
+  new ReceivedMessageTransition(
+    component, receivingPlayerId, savingPlayerId, PLAYER_ID_CFG);
   savingPlayerId->addTransition(requestingName);
   requestingName->addTransition(
     component, SIGNAL(configurationResponse(quint8, const QString)), sendingName);
 
-  sendingName->addTransition(
-    component, SIGNAL(dataReceived(const AddressedMessage&)), receivingPlayerName);
+  sendingName->addTransition(receivingPlayerName);
 
   setInitialState(receivingPlayerId);
 }
