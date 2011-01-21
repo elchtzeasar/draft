@@ -2,6 +2,7 @@
 
 #include "PlayerContextMock.h"
 #include "ConfigurationLoaderMock.h"
+#include "ConfigurationManagerMock.h"
 
 #include <gtest/gtest.h>
 
@@ -21,56 +22,62 @@ using testing::_;
 using std::string;
 using std::ostream;
 
+ostream& operator<<(ostream& os, const QString& qString);
+
+static const std::string PLAYER_NAME = "Player Name";
+static const quint8 PLAYER_ID(15);
+
 class ConfigurationComponentTest : public testing::Test {
 protected:
   ConfigurationComponentTest()
-    :   playerContext(new NiceMock<PlayerContextMock>),
+    :   configurationManager(new NiceMock<ConfigurationManagerMock>),
 	configurationLoader(new ConfigurationLoaderMock),
-	configurationComponent(playerContext, configurationLoader),
+	configurationComponent(configurationManager, configurationLoader),
 	responseSpy(&configurationComponent, SIGNAL(configurationResponse(quint8, const QString&))) {
+    ON_CALL(*configurationManager, getPlayerContext(PLAYER_ID)).
+      WillByDefault(ReturnRef(playerContext));
+    ON_CALL(playerContext, getPlayerName()).WillByDefault(ReturnRef(PLAYER_NAME));
   }
 
   ~ConfigurationComponentTest() {}
 
-  NiceMock<PlayerContextMock>* playerContext;
+  NiceMock<PlayerContextMock> playerContext;
+  NiceMock<ConfigurationManagerMock>* configurationManager;
   ConfigurationLoaderMock* configurationLoader;
   ConfigurationComponent configurationComponent;
   QSignalSpy responseSpy;
 };
 
-static const std::string PLAYER_NAME = "Player Name";
-static const quint8 PLAYER_ID(15);
+TEST_F(ConfigurationComponentTest, shouldRequestPlayerContextFromPlayerManagerWhenConfigurationRequestReceived) {
+  EXPECT_CALL(*configurationManager, getPlayerContext(PLAYER_ID)).
+    WillOnce(ReturnRef(playerContext));
 
-ostream& operator<<(ostream& os, const QString& qString);
+  configurationComponent.configurationRequest(PLAYER_ID);
+}
 
-TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfigurationResponseWithCorrectPlayerName) {
-  EXPECT_CALL(*playerContext, getPlayerName()).WillOnce(ReturnRef(PLAYER_NAME));
-
+TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithCorrectConfigurationResponse) {
   configurationComponent.configurationRequest(PLAYER_ID);
 
   ASSERT_EQ(1, responseSpy.count());
   QList<QVariant> arguments = responseSpy.takeFirst();
   ASSERT_EQ(PLAYER_NAME, arguments.at(1).toString().toStdString());
-}
-
-TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfigurationResponseWithCorrectPlayerId) {
-  ON_CALL(*playerContext, getPlayerName()).WillByDefault(ReturnRef(PLAYER_NAME));
-
-  configurationComponent.configurationRequest(PLAYER_ID);
-
-  ASSERT_EQ(1, responseSpy.count());
-  QList<QVariant> arguments = responseSpy.takeFirst();
   ASSERT_EQ(PLAYER_ID, arguments.at(0).toUInt());
 }
 
-TEST_F(ConfigurationComponentTest, shouldSetPlayerNameInManagerOnSetPlayerName) {
+TEST_F(ConfigurationComponentTest, shouldUpdateOwnPlayerIdInManagerUponSetOwnPlayerId) {
+  EXPECT_CALL(*configurationManager, setOwnPlayerId(PLAYER_ID));
+
+  configurationComponent.setOwnPlayerId(PLAYER_ID);
+}
+
+TEST_F(ConfigurationComponentTest, shouldSetPlayerContextInManagerOnSetPlayerName) {
   QString playerName("player name");
-  EXPECT_CALL(*playerContext, setPlayerName(testing::StrEq(playerName.toStdString())));
+  EXPECT_CALL(*configurationManager, setPlayerContext(PLAYER_ID, testing::StrEq(playerName.toStdString())));
 
   configurationComponent.setPlayerName(PLAYER_ID, playerName);
 }
 
-TEST_F(ConfigurationComponentTest, shouldDeallocateSaveConfigurationUponExit) {
+TEST_F(ConfigurationComponentTest, shouldSaveConfigurationUponExit) {
   EXPECT_CALL(*configurationLoader, save()).WillOnce(Return());
 
   configurationComponent.handleExit(0);

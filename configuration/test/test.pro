@@ -16,3 +16,4 @@ HEADERS += include/ConfigurationLoaderMock.h
 HEADERS += include/PlayerContextMock.h
 SOURCES += ConfigurationComponentTest.cpp
 SOURCES += ConfigurationLoaderTest.cpp
+SOURCES += ConfigurationManagerTest.cpp

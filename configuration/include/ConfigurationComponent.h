@@ -7,6 +7,7 @@
 
 class PlayerContext;
 class ConfigurationLoader;
+class ConfigurationManager;
 
 class QString;
 
@@ -15,7 +16,7 @@ class ConfigurationComponent : public QObject {
 
  public:
   ConfigurationComponent(
-    PlayerContext* playerContext, ConfigurationLoader* configurationLoader);
+    ConfigurationManager* configurationManager, ConfigurationLoader* configurationLoader);
   ~ConfigurationComponent();
 
  public slots:
@@ -31,7 +32,7 @@ class ConfigurationComponent : public QObject {
   ConfigurationComponent(const ConfigurationComponent&);
   ConfigurationComponent& operator=(ConfigurationComponent&);
 
-  PlayerContext* playerContext;
+  ConfigurationManager* configurationManager;
   ConfigurationLoader* configurationLoader;
 };
 

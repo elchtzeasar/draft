@@ -2,11 +2,13 @@
 
 #include "ConfigurationComponent.h"
 #include "ConfigurationLoaderImpl.h"
+#include "ConfigurationManagerImpl.h"
 #include "PlayerContextImpl.h"
 
 ConfigurationComponent* ConfigurationComponentFactory::createComponent() {
-  PlayerContext* manager = new PlayerContextImpl();
-  ConfigurationLoader* loader = new ConfigurationLoaderImpl("configuration.xml", *manager);
+  ConfigurationManager* manager = new ConfigurationManagerImpl();
+  PlayerContext* playerContext = new PlayerContextImpl();
+  ConfigurationLoader* loader = new ConfigurationLoaderImpl("configuration.xml", *playerContext);
 
   loader->load();
 
