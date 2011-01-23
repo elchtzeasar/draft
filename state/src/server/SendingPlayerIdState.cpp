@@ -3,6 +3,7 @@
 #include "AddressHeader.h"
 #include "AddressedMessage.h"
 #include "NullMessage.h"
+#include "PlayerId.h"
 #include "PlayerIdCfgMessage.h"
 
 #include <QEvent>
@@ -25,13 +26,13 @@ void SendingPlayerIdState::onEntry(QEvent* event) {
   const QVariant& playerIdVariant(signalEvent->arguments().at(0));
   assert(playerIdVariant.canConvert<quint8>() && 
   	 "Must be able to convert argument to quint8!");
-  const quint8 playerId = playerIdVariant.value<quint8>();
+  const PlayerId& playerId(playerIdVariant.value<PlayerId>());
 
   // Set playerId in "root" State (currently ClientStateMachine):
   findAndSetProperty("playerId", playerIdVariant);
 
   // Send playerId to client:
-  AddressHeader* addressHeader = new AddressHeader(AddressHeader::SERVER_PLAYER_ID, playerId);
+  AddressHeader* addressHeader = new AddressHeader(PlayerId::SERVER, playerId);
   NullMessage* playerNameCfg = new NullMessage(PLAYER_ID_CFG);
   emit sendData(AddressedMessage(addressHeader, playerNameCfg));
 }

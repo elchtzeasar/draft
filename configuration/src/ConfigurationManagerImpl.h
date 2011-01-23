@@ -8,7 +8,7 @@
 class PlayerContext;
 class PlayerContextFactory;
 
-typedef std::map<quint8, PlayerContext*> PlayerContextMap;
+typedef std::map<PlayerId, PlayerContext*> PlayerContextMap;
 
 class ConfigurationManagerImpl : public ConfigurationManager {
  public:
@@ -16,9 +16,9 @@ class ConfigurationManagerImpl : public ConfigurationManager {
 			   PlayerContextFactory* playerContextFactory);
   virtual ~ConfigurationManagerImpl();
 
-  void setOwnPlayerId(quint8 playerId);
-  void setPlayerContext(quint8 playerId, const std::string& playerName);
-  const PlayerContext& getPlayerContext(quint8 playerId) const;
+  void setOwnPlayerId(const PlayerId& playerId);
+  void setPlayerContext(const PlayerId& playerId, const std::string& playerName);
+  const PlayerContext& getPlayerContext(const PlayerId& playerId) const;
 
  private:
   ConfigurationManagerImpl(const ConfigurationManagerImpl&);

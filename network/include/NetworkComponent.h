@@ -7,6 +7,7 @@ class Connection;
 class ConnectionListener;
 class NetworkComponentFactory;
 
+class PlayerId;
 class AddressedMessage;
 
 class NetworkComponent : public QObject {
@@ -23,7 +24,7 @@ class NetworkComponent : public QObject {
 
  signals:
   void connectedToDraft();
-  void clientConnected(quint8 playerId);
+  void clientConnected(const PlayerId& playerId);
 
   void sendData(const AddressedMessage& message);
   void dataReceived(const AddressedMessage& message);

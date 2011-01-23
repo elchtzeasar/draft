@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+class PlayerId;
+
 class RemoteController : public QThread {
   Q_OBJECT
 
@@ -19,11 +21,11 @@ class RemoteController : public QThread {
   void exit(int status);
   void hostDraft(unsigned int port);
   void connectToDraft(const QString& hostName, unsigned int port);
-  void setPlayerName(quint8 playerId, QString playerName);
-  void configurationRequest(quint8 playerId);
+  void setPlayerName(const PlayerId& playerId, QString playerName);
+  void configurationRequest(const PlayerId& playerId);
 
  public slots:
-  void configurationResponse(quint8 playerId, const QString playerName);
+  void configurationResponse(const PlayerId& playerId, const QString playerName);
   
  private:
   void sendHostDraft();

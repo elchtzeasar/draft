@@ -1,6 +1,7 @@
 #include "ClientConfiguringState.h"
 
 #include "Message.h"
+#include "PlayerId.h"
 #include "ReceivedMessageTransition.h"
 #include "SavingPlayerIdState.h"
 #include "SendingNameState.h"
@@ -19,19 +20,19 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
 
   connect(savingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
-  connect(savingPlayerId, SIGNAL(setOwnPlayerId(quint8)),
-	  component, SIGNAL(setOwnPlayerId(quint8)) );
+  connect(savingPlayerId, SIGNAL(setOwnPlayerId(const PlayerId&)),
+	  component, SIGNAL(setOwnPlayerId(const PlayerId&)) );
   connect(requestingName, SIGNAL(entered()), this, SLOT(sendConfigurationRequest()));
   connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
-  connect(this, SIGNAL(configurationRequest(quint8)),
-	  component, SIGNAL(configurationRequest(quint8)));
+  connect(this, SIGNAL(configurationRequest(const PlayerId&)),
+	  component, SIGNAL(configurationRequest(const PlayerId&)));
 
   new ReceivedMessageTransition(
     component, receivingPlayerId, savingPlayerId, PLAYER_ID_CFG);
   savingPlayerId->addTransition(requestingName);
   requestingName->addTransition(
-    component, SIGNAL(configurationResponse(quint8, const QString)), sendingName);
+    component, SIGNAL(configurationResponse(const PlayerId&, const QString)), sendingName);
 
   sendingName->addTransition(receivingPlayerName);
 
@@ -47,5 +48,5 @@ ClientConfiguringState::~ClientConfiguringState() {
 }
 
 void ClientConfiguringState::sendConfigurationRequest() {
-  emit configurationRequest(findProperty("playerId").value<quint8>());
+  emit configurationRequest(findProperty("playerId").value<PlayerId>());
 }

@@ -2,6 +2,7 @@
 
 #include "Connection.h"
 #include "NetworkComponentFactory.h"
+#include "PlayerId.h"
 
 #include <iostream>
 

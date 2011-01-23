@@ -10,9 +10,9 @@ class ConfigurationManagerMock : public ConfigurationManager {
   ConfigurationManagerMock() {}
   virtual ~ConfigurationManagerMock() {}
 
-  MOCK_METHOD1(setOwnPlayerId, void(quint8 playerId));
-  MOCK_METHOD2(setPlayerContext, void(quint8 playerId, const std::string& playerName));
-  MOCK_CONST_METHOD1(getPlayerContext, const PlayerContext&(quint8 playerId));
+  MOCK_METHOD1(setOwnPlayerId, void(const PlayerId& playerId));
+  MOCK_METHOD2(setPlayerContext, void(const PlayerId& playerId, const std::string& playerName));
+  MOCK_CONST_METHOD1(getPlayerContext, const PlayerContext&(const PlayerId& playerId));
 };
 
 #endif // CONFIGURATION_MANAGER_MOCK_H_

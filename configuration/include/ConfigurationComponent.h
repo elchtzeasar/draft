@@ -5,9 +5,10 @@
 
 #include <string>
 
-class PlayerContext;
 class ConfigurationLoader;
 class ConfigurationManager;
+class PlayerContext;
+class PlayerId;
 
 class QString;
 
@@ -21,12 +22,12 @@ class ConfigurationComponent : public QObject {
 
  public slots:
   void handleExit(int);
-  void configurationRequest(quint8 playerId);
-  void setOwnPlayerId(quint8 playerId);
-  void setPlayerName(quint8 playerId, QString playerName);
+  void configurationRequest(const PlayerId& playerId);
+  void setOwnPlayerId(const PlayerId& playerId);
+  void setPlayerName(const PlayerId& playerId, QString playerName);
 
  signals:
-  void configurationResponse(quint8 playerId, const QString playerName);
+  void configurationResponse(const PlayerId& playerId, const QString playerName);
 
  private:
   ConfigurationComponent(const ConfigurationComponent&);

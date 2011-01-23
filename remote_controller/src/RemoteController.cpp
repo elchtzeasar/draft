@@ -1,6 +1,6 @@
 #include "RemoteController.h"
 
-#include "AddressHeader.h"
+#include "PlayerId.h"
 
 #include <QString>
 
@@ -41,7 +41,7 @@ void RemoteController::run() {
   }
 }
 
-void RemoteController::configurationResponse(quint8 playerId, const QString playerName) {
+void RemoteController::configurationResponse(const PlayerId& playerId, const QString playerName) {
   outputStream << "Player name: " << playerName.toStdString() << endl;
 }
 
@@ -63,9 +63,9 @@ void RemoteController::setPlayerName() {
   inputStream >> stdPlayerName;
 
   QString playerName(stdPlayerName.c_str());
-  emit setPlayerName(AddressHeader::OWN_PLAYER_ID, playerName);
+  emit setPlayerName(PlayerId::OWN, playerName);
 }
 
 void RemoteController::getPlayerName() {
-  emit configurationRequest(AddressHeader::OWN_PLAYER_ID);
+  emit configurationRequest(PlayerId::OWN);
 }

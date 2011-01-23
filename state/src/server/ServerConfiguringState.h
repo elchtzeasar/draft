@@ -5,6 +5,8 @@
 
 #include <QObject>
 
+class PlayerId;
+
 class ServerConfiguringState : public State {
   Q_OBJECT
 
@@ -13,7 +15,7 @@ class ServerConfiguringState : public State {
   virtual ~ServerConfiguringState();
 
  signals:
-  void configurationRequest(quint8 playerId);
+  void configurationRequest(const PlayerId& playerId);
 
  private slots:
   void sendConfigurationRequest();

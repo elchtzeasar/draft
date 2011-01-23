@@ -10,7 +10,7 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
-ConnectionImpl::ConnectionImpl(quint8 playerId, QTcpSocket* tcpSocket) :
+ConnectionImpl::ConnectionImpl(const PlayerId& playerId, QTcpSocket* tcpSocket) :
   playerId(playerId), tcpSocket(tcpSocket) {
 
   connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readIncommingData()));
@@ -31,7 +31,7 @@ void ConnectionImpl::disconnectFromHost() {
   tcpSocket->disconnectFromHost();
 }
 
-quint8 ConnectionImpl::getPlayerId() const {
+const PlayerId& ConnectionImpl::getPlayerId() const {
   return playerId;
 }
 

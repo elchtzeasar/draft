@@ -10,12 +10,13 @@ static quint32 VERSION_NUMBER(1);
 
 AddressHeader::AddressHeader() :
   version(VERSION_NUMBER),
-  sentFromPlayerId(NO_PLAYER_ID),
-  sentToPlayerId(NO_PLAYER_ID),
+  sentFromPlayerId(PlayerId::NONE),
+  sentToPlayerId(PlayerId::NONE),
   reserved1(0),
   reserved2(0) {}
 
-AddressHeader::AddressHeader(quint8 sentFromPlayerId, quint8 sentToPlayerId) :
+AddressHeader::AddressHeader(const PlayerId& sentFromPlayerId,
+			     const PlayerId& sentToPlayerId) :
   version(VERSION_NUMBER),
   sentFromPlayerId(sentFromPlayerId),
   sentToPlayerId(sentToPlayerId),
@@ -39,23 +40,19 @@ AddressHeader& AddressHeader::operator=(AddressHeader& original) {
   return *this;
 }
 
-quint8 AddressHeader::getSenderPlayerId() const {
+const PlayerId& AddressHeader::getSenderPlayerId() const {
   return sentFromPlayerId;
 }
 
-quint8 AddressHeader::getReceiverPlayerId() const {
+const PlayerId& AddressHeader::getReceiverPlayerId() const {
   return sentToPlayerId;
 }
-
-const quint8 AddressHeader::NO_PLAYER_ID(0xff);
-const quint8 AddressHeader::SERVER_PLAYER_ID(0xfe);
-const quint8 AddressHeader::OWN_PLAYER_ID(0xfd);
 
 ostream& operator<<(ostream& stream, const AddressHeader& addressHeader) {
   stream << "AddressHeader { "
 	 << "version=" << addressHeader.version << ", "
-	 << "sentFromPlayerId=" << static_cast<unsigned int>(addressHeader.sentFromPlayerId) << ", "
-	 << "sentToPlayerId=" << static_cast<unsigned int>(addressHeader.sentToPlayerId) << " }";
+	 << "sentFromPlayerId=" << addressHeader.sentFromPlayerId << ", "
+	 << "sentToPlayerId=" << addressHeader.sentToPlayerId << " }";
   return stream;
 }
 

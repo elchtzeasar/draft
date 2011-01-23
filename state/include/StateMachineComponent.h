@@ -11,6 +11,7 @@ class State;
 class ClientState;
 class ServerState;
 class AddressedMessage;
+class PlayerId;
 
 class StateMachineComponent : public QObject {
   Q_OBJECT
@@ -23,17 +24,17 @@ class StateMachineComponent : public QObject {
 
  signals:
   void hostDraft(unsigned int);
-  void clientConnected(quint8 playerId);
+  void clientConnected(const PlayerId& playerId);
 
   void connectToDraft(const QString&, unsigned int);
   void connectedToDraft();
-  void configurationRequest(quint8 playerId);
-  void configurationResponse(quint8 playerId, const QString);
+  void configurationRequest(const PlayerId& playerId);
+  void configurationResponse(const PlayerId& playerId, const QString);
 
   void sendData(const AddressedMessage&);
   void dataReceived(const AddressedMessage&);
 
-  void setOwnPlayerId(quint8 playerId);
+  void setOwnPlayerId(const PlayerId& playerId);
 
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState)

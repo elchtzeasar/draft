@@ -1,8 +1,8 @@
 #include "ConfigurationManagerImpl.h"
 
-#include "AddressHeader.h"
 #include "PlayerContext.h"
 #include "PlayerContextFactory.h"
+#include "PlayerId.h"
 
 #include <cassert>
 
@@ -10,7 +10,7 @@ using std::map;
 
 ConfigurationManagerImpl::ConfigurationManagerImpl(PlayerContext* ownPlayerContext, PlayerContextFactory* playerContextFactory) :
   playerContextFactory(playerContextFactory) {
-  playerContexts[AddressHeader::OWN_PLAYER_ID] = ownPlayerContext;
+  playerContexts[PlayerId::OWN] = ownPlayerContext;
 }
 
 ConfigurationManagerImpl::~ConfigurationManagerImpl() {
@@ -19,7 +19,7 @@ ConfigurationManagerImpl::~ConfigurationManagerImpl() {
        ++it) {
     // TODO: The following assumes that the own player id is set, otherwise the own
     //       player context will not be deleted:
-    if (it->first != AddressHeader::OWN_PLAYER_ID) {
+    if (it->first != PlayerId::OWN) {
       delete it->second;
     }
     it->second = NULL;
@@ -28,12 +28,12 @@ ConfigurationManagerImpl::~ConfigurationManagerImpl() {
   delete playerContextFactory;
 }
 
-void ConfigurationManagerImpl::setOwnPlayerId(quint8 playerId) {
-  PlayerContext* ownPlayerContext = playerContexts[AddressHeader::OWN_PLAYER_ID];
+void ConfigurationManagerImpl::setOwnPlayerId(const PlayerId& playerId) {
+  PlayerContext* ownPlayerContext = playerContexts[PlayerId::OWN];
   playerContexts[playerId] = ownPlayerContext;
 }
 
-void ConfigurationManagerImpl::setPlayerContext(quint8 playerId, const std::string& playerName) {
+void ConfigurationManagerImpl::setPlayerContext(const PlayerId& playerId, const std::string& playerName) {
   PlayerContextMap::const_iterator it(playerContexts.find(playerId));
   PlayerContext* playerContext(NULL);
   if (it == playerContexts.end())
@@ -46,7 +46,7 @@ void ConfigurationManagerImpl::setPlayerContext(quint8 playerId, const std::stri
 }
 
 #include <iostream>
-const PlayerContext& ConfigurationManagerImpl::getPlayerContext(quint8 playerId) const {
+const PlayerContext& ConfigurationManagerImpl::getPlayerContext(const PlayerId& playerId) const {
   PlayerContextMap::const_iterator it(playerContexts.find(playerId));
 
   assert(it != playerContexts.end() && "Tried to find a playerId that does not exist!");

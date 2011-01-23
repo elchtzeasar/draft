@@ -1,11 +1,11 @@
 #include "ClientState.h"
 
-#include "AddressHeader.h"
 #include "ClientConfiguringState.h"
+#include "PlayerId.h"
 
 ClientState::ClientState(QObject* component, State* parent, const char* name) :
   State(component, parent, name, false),
-  playerId(AddressHeader::NO_PLAYER_ID),
+  playerId(qVariantFromValue(PlayerId::NONE)),
   waitingForConnection(new State(component, this, "WaitingForConnection")),
   configuring(new ClientConfiguringState(component, this, "Configuring")) {
 

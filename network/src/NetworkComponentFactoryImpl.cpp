@@ -15,14 +15,14 @@ NetworkComponent* NetworkComponentFactoryImpl::createComponent() {
   networkComponent = new NetworkComponent(*this, connectionListener);
 
   // ConnectionListener -> NetworkComponent
-  QObject::connect( connectionListener, SIGNAL(clientConnected(quint8)),
-		    networkComponent, SIGNAL(clientConnected(quint8)) );
+  QObject::connect( connectionListener, SIGNAL(clientConnected(const PlayerId&)),
+		    networkComponent, SIGNAL(clientConnected(const PlayerId&)) );
 
   return networkComponent;
 }
 
 Connection* NetworkComponentFactoryImpl::createConnection(QTcpSocket* tcpSocket) {
-  Connection* connection = new ConnectionImpl(nextPlayerId++, tcpSocket);
+  Connection* connection = new ConnectionImpl(PlayerId(nextPlayerId++), tcpSocket);
 
   // NetworkComponent -> Connection
   QObject::connect( networkComponent, SIGNAL(sendData(const AddressedMessage&)),

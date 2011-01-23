@@ -4,6 +4,7 @@
 #include <QObject>
 
 class Connection;
+class PlayerId;
 
 class ConnectionListener : public QObject {
   Q_OBJECT
@@ -14,7 +15,7 @@ class ConnectionListener : public QObject {
   virtual void listen(unsigned int port) = 0;
 
  signals:
-  void clientConnected(quint8 playerId);
+  void clientConnected(const PlayerId& playerId);
 
  protected slots:
   virtual void acceptConnection() = 0;

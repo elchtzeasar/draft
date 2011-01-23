@@ -1,6 +1,7 @@
 #include "ConfigurationComponent.h"
 
 #include "PlayerContextMock.h"
+#include "PlayerId.h"
 #include "ConfigurationLoaderMock.h"
 #include "ConfigurationManagerMock.h"
 
@@ -25,7 +26,7 @@ using std::ostream;
 ostream& operator<<(ostream& os, const QString& qString);
 
 static const std::string PLAYER_NAME = "Player Name";
-static const quint8 PLAYER_ID(15);
+static const PlayerId PLAYER_ID(15);
 
 class ConfigurationComponentTest : public testing::Test {
 protected:
@@ -33,10 +34,12 @@ protected:
     :   configurationManager(new NiceMock<ConfigurationManagerMock>),
 	configurationLoader(new ConfigurationLoaderMock),
 	configurationComponent(configurationManager, configurationLoader),
-	responseSpy(&configurationComponent, SIGNAL(configurationResponse(quint8, const QString&))) {
+	responseSpy(&configurationComponent, SIGNAL(configurationResponse(const PlayerId&, const QString&))) {
     ON_CALL(*configurationManager, getPlayerContext(PLAYER_ID)).
       WillByDefault(ReturnRef(playerContext));
     ON_CALL(playerContext, getPlayerName()).WillByDefault(ReturnRef(PLAYER_NAME));
+
+    qRegisterMetaType<PlayerId>("PlayerId");
   }
 
   ~ConfigurationComponentTest() {}
@@ -61,7 +64,7 @@ TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithCorrec
   ASSERT_EQ(1, responseSpy.count());
   QList<QVariant> arguments = responseSpy.takeFirst();
   ASSERT_EQ(PLAYER_NAME, arguments.at(1).toString().toStdString());
-  ASSERT_EQ(PLAYER_ID, arguments.at(0).toUInt());
+  ASSERT_EQ(PLAYER_ID, arguments.at(0).value<PlayerId>());
 }
 
 TEST_F(ConfigurationComponentTest, shouldUpdateOwnPlayerIdInManagerUponSetOwnPlayerId) {

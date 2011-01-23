@@ -1,8 +1,8 @@
 #include "ConfigurationManagerImpl.h"
 
-#include "AddressHeader.h"
 #include "PlayerContextFactoryMock.h"
 #include "PlayerContextMock.h"
+#include "PlayerId.h"
 
 #include <gtest/gtest.h>
 
@@ -43,7 +43,7 @@ TEST_F(ConfigurationManagerTest, shouldCreatePlayerContextOnSetPlayerContextIfNo
 TEST_F(ConfigurationManagerTest, shouldNotCreatePlayerContextOnSetPlayerContextIfPlayerAllreadyExists) {
   EXPECT_CALL(*playerContextFactory, createPlayerContext()).Times(0);
 
-  configurationManager.setPlayerContext(AddressHeader::OWN_PLAYER_ID, PLAYER_NAME);
+  configurationManager.setPlayerContext(PlayerId::OWN, PLAYER_NAME);
 }
 
 TEST_F(ConfigurationManagerTest, shouldSetCorrectParametersInNewPlayerContextOnSetPlayerContext) {
@@ -56,7 +56,7 @@ TEST_F(ConfigurationManagerTest, shouldSetCorrectParametersInNewPlayerContextOnS
 
 TEST_F(ConfigurationManagerTest, shouldReturnOwnPlayerContextWhenPlayerIdIsOwnPlayerId) {
   ASSERT_EQ(*ownPlayerContext,
-	    configurationManager.getPlayerContext(AddressHeader::OWN_PLAYER_ID));
+	    configurationManager.getPlayerContext(PlayerId::OWN));
 }
 
 TEST_F(ConfigurationManagerTest, shouldReturnCorrectPlayerContextWhenFetchingWithPlayerId) {

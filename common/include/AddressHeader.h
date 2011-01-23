@@ -1,6 +1,8 @@
 #ifndef ADDRESS_HEADER_H_
 #define ADDRESS_HEADER_H_
 
+#include "PlayerId.h"
+
 #include <QtGlobal>
 
 #include <iostream>
@@ -10,22 +12,18 @@ class QDataStream;
 class AddressHeader {
  public:
   AddressHeader();
-  AddressHeader(quint8 sentFromPlayerId, quint8 sentToPlayerId);
+  AddressHeader(const PlayerId& sentFromPlayerId, const PlayerId& sentToPlayerId);
 
   AddressHeader(const AddressHeader& original);
   AddressHeader& operator=(AddressHeader& original);
 
-  quint8 getSenderPlayerId() const;
-  quint8 getReceiverPlayerId() const;
-
-  static const quint8 NO_PLAYER_ID;
-  static const quint8 SERVER_PLAYER_ID;
-  static const quint8 OWN_PLAYER_ID;
+  const PlayerId& getSenderPlayerId() const;
+  const PlayerId& getReceiverPlayerId() const;
 
  private:
   quint32 version;
-  quint8 sentFromPlayerId;
-  quint8 sentToPlayerId;
+  PlayerId sentFromPlayerId;
+  PlayerId sentToPlayerId;
   quint8 reserved1;
   quint8 reserved2;
 

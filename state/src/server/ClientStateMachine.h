@@ -3,7 +3,7 @@
 
 #include "State.h"
 
-#include "AddressHeader.h"
+#include "PlayerId.h"
 
 class ClientStateMachine : public State {
  public:
@@ -14,7 +14,7 @@ class ClientStateMachine : public State {
   ClientStateMachine(const ClientStateMachine&);
   ClientStateMachine& operator=(ClientStateMachine&);
 
-  quint8 playerId;
+  PlayerId playerId;
   State* configuring;
 };
 #endif // CLIENT_STATE_MACHINE_H_
