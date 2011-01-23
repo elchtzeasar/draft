@@ -29,6 +29,7 @@ class ClientConfiguringState : public State {
   State* requestingName;
   State* sendingName;
   State* receivingPlayerName;
+  State* savingPlayerName;
 };
 
 #endif // CLIENT_CONFIGURATION_STATE_H_

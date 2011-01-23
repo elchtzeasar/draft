@@ -22,8 +22,6 @@ class SavingPlayerNameState : public State {
  private:
   SavingPlayerNameState(const SavingPlayerNameState&);
   SavingPlayerNameState& operator=(SavingPlayerNameState&);
-
-  const State* nextState;
 };
 
 #endif // SAVING_PLAYER_NAME_STATE_H_

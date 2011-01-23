@@ -17,7 +17,7 @@ digraph G {
       requestingName_client -> sendingName_client [label = "configurationResponse"];
       sendingName_client -> receivingPlayerName;
       receivingPlayerName -> savingPlayerName_client [label = "received: PlayerNameCfg"];
-      savingPlayerName_client -> receivingPlayerName [label = "received: PlayerNameCnf"];
+      savingPlayerName_client -> receivingPlayerName;
     }
 
     receivingPlayerName -> TBI_client [label = "received: startDraft"];

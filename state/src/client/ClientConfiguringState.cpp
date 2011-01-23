@@ -4,6 +4,7 @@
 #include "PlayerId.h"
 #include "ReceivedMessageTransition.h"
 #include "SavingPlayerIdState.h"
+#include "SavingPlayerNameState.h"
 #include "SendingNameState.h"
 
 #include <QVariant>
@@ -16,15 +17,19 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   savingPlayerId(new SavingPlayerIdState(component, this)),
   requestingName(new State(component, this, "RequestingName")),
   sendingName(new SendingNameState(component, this)),
-  receivingPlayerName(new State(component, this, "ReceivingPlayerName")) {
+  receivingPlayerName(new State(component, this, "ReceivingPlayerName")),
+  savingPlayerName(new SavingPlayerNameState(component, this)) {
 
   connect(savingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
+  connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
+	  component, SIGNAL(sendData(const AddressedMessage&)) );
+  connect(savingPlayerName, SIGNAL(sendData(const AddressedMessage&)),
+	  component, SIGNAL(sendData(const AddressedMessage&)) );
+
   connect(savingPlayerId, SIGNAL(setOwnPlayerId(const PlayerId&)),
 	  component, SIGNAL(setOwnPlayerId(const PlayerId&)) );
   connect(requestingName, SIGNAL(entered()), this, SLOT(sendConfigurationRequest()));
-  connect(sendingName, SIGNAL(sendData(const AddressedMessage&)),
-	  component, SIGNAL(sendData(const AddressedMessage&)) );
   connect(this, SIGNAL(configurationRequest(const PlayerId&)),
 	  component, SIGNAL(configurationRequest(const PlayerId&)));
 
@@ -36,6 +41,11 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
 
   sendingName->addTransition(receivingPlayerName);
 
+  new ReceivedMessageTransition(
+    component, savingPlayerName, receivingPlayerName, PLAYER_ID_CFG);
+
+  savingPlayerName->addTransition(receivingPlayerName);
+
   setInitialState(receivingPlayerId);
 }
 
@@ -45,6 +55,7 @@ ClientConfiguringState::~ClientConfiguringState() {
   delete requestingName;
   delete sendingName;
   delete receivingPlayerName;
+  delete savingPlayerName;
 }
 
 void ClientConfiguringState::sendConfigurationRequest() {
