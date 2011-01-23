@@ -20,6 +20,7 @@ class AddressHeader {
 
   static const quint8 NO_PLAYER_ID;
   static const quint8 SERVER_PLAYER_ID;
+  static const quint8 OWN_PLAYER_ID;
 
  private:
   quint32 version;

@@ -6,8 +6,6 @@ require 'b2b/test_helper'
 
 class Connection < Test::Unit::TestCase
   def setup
-    Dir.mkdir('/tmp/b2b') unless FileTest.exists?('/tmp/b2b')
-
     @server = DraftApp.new("#{app_name}-server")
     @client = DraftApp.new("#{app_name}-client")
   end

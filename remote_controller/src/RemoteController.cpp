@@ -1,5 +1,7 @@
 #include "RemoteController.h"
 
+#include "AddressHeader.h"
+
 #include <QString>
 
 #include <string>
@@ -59,12 +61,11 @@ void RemoteController::exitCommand() {
 void RemoteController::setPlayerName() {
   string stdPlayerName;
   inputStream >> stdPlayerName;
-  // TODO (peter): Use real player id:s here!
+
   QString playerName(stdPlayerName.c_str());
-  emit setPlayerName(0, playerName);
+  emit setPlayerName(AddressHeader::OWN_PLAYER_ID, playerName);
 }
 
 void RemoteController::getPlayerName() {
-  // TODO (peter): Use real player id:s here!
-  emit configurationRequest(0);
+  emit configurationRequest(AddressHeader::OWN_PLAYER_ID);
 }

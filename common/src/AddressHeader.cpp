@@ -49,6 +49,7 @@ quint8 AddressHeader::getReceiverPlayerId() const {
 
 const quint8 AddressHeader::NO_PLAYER_ID(0xff);
 const quint8 AddressHeader::SERVER_PLAYER_ID(0xfe);
+const quint8 AddressHeader::OWN_PLAYER_ID(0xfd);
 
 ostream& operator<<(ostream& stream, const AddressHeader& addressHeader) {
   stream << "AddressHeader { "

@@ -1,6 +1,11 @@
+#ifndef PLAYER_CONTEXT_MOCK
+#define PLAYER_CONTEXT_MOCK
+
 #include "PlayerContext.h"
 
 #include <gmock/gmock.h>
+
+#include <iostream>
 
 class PlayerContextMock : public PlayerContext {
  public:
@@ -12,3 +17,8 @@ class PlayerContextMock : public PlayerContext {
   MOCK_CONST_METHOD0(getPlayerName, const std::string&());
   MOCK_METHOD1(setPlayerName, void(const std::string& playerName));
 };
+
+bool operator==(const PlayerContext& lhs, const PlayerContext& rhs);
+std::ostream& operator<<(std::ostream& stream, const PlayerContext& playerContext);
+
+#endif // PLAYER_CONTEXT_MOCK

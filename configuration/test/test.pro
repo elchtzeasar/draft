@@ -14,6 +14,9 @@ TARGET = configurationtest
 
 HEADERS += include/ConfigurationLoaderMock.h
 HEADERS += include/PlayerContextMock.h
+HEADERS += include/PlayerContextFactoryMock.h
+SOURCES += src/PlayerContextMock.cpp
+
 SOURCES += ConfigurationComponentTest.cpp
 SOURCES += ConfigurationLoaderTest.cpp
 SOURCES += ConfigurationManagerTest.cpp

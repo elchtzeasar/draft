@@ -29,8 +29,9 @@ void ConfigurationLoaderImpl::load() {
     read_xml(filename, pt);
 
     playerName = pt.get<std::string>(PLAYER_NAME_PATH, "");
-    if (playerName.length() > 0)
+    if (playerName.length() > 0) {
       playerContext.setPlayerName(playerName);
+    }
   } catch (boost::property_tree::xml_parser::xml_parser_error& e) {
     cerr << "ERROR: Got an error from xml_parser: " << e.what() << " with file: " << filename << endl;
   }
