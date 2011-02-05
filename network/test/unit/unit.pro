@@ -1,4 +1,4 @@
-TARGET = networktest
+TARGET = networkunittest
 
 QT += network
 

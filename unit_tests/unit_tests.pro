@@ -5,7 +5,7 @@ CONFIG += link_prl
 
 LIBS += -L/usr/local/include/glog -lglog
 LIBS += -lgmock -lgtest
-LIBS += -L../libs -lremote_controllertest -lnetworktest -lconfigurationtest -lcommontest
+LIBS += -L../libs -lremote_controllerunittest -lnetworkunittest -lconfigurationunittest -lcommonunittest
 
 SOURCES += test_main.cpp
 

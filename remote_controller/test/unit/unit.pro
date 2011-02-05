@@ -1,4 +1,4 @@
-TARGET = remote_controllertest
+TARGET = remote_controllerunittest
 
 ! include( ../../../test.pri ) {
     error( Couldnt find the test.pri file! )

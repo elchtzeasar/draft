@@ -1,4 +1,4 @@
-TARGET = commontest
+TARGET = commonunittest
 
 ! include( ../../../test.pri ) {
     error( Couldnt find the test.pri file! )
