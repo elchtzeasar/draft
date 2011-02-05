@@ -20,7 +20,7 @@ SOURCES += ../src/GuiDraftApplication.cpp
 SOURCES += ../src/ConsoleDraftApplication.cpp
 SOURCES += ../main.cpp
 
-DIR_PREFIX = ..
+DIR_PREFIX = ../..
 ! include( ../common/include/files.pri ) {
     error( Couldnt find the common/include/files.pri file! )
 }

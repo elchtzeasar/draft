@@ -2,7 +2,13 @@
 
 # Includes common configuration for all subdirectory .pro files.
 
-INCLUDEPATH += . include ../include ../src ../../common/include
+# Include test .h-files:
+INCLUDEPATH += . ../include
+# Include 'real' .h-files:
+INCLUDEPATH += ../../include ../../src
+# Include common .h-files:
+INCLUDEPATH += ../../../common/include
+
 WARNINGS += -Wall
 
 LIBS += -lgmock -lgtest
@@ -16,8 +22,24 @@ CONFIG += create_prl debug
 
 # The following keeps the generated files at least somewhat separate 
 # from the source files.
-MOC_DIR = ../mocs
-DESTDIR = ../../libs
-OBJECTS_DIR = ../objs
+MOC_DIR = ../../mocs
+DESTDIR = ../../../libs
+OBJECTS_DIR = ../../objs
 
-DIR_PREFIX = ../..
+DIR_PREFIX = ../../..
+
+! include( ../../include/files.pri ) {
+    error( Couldnt find the public files.pri file! )
+}
+
+! include( ../../src/files.pri ) {
+    error( Couldnt find the private files.pri file! )
+}
+
+! include( ../include/files.pri ) {
+    warning( Couldnt find the public test files.pri file! )
+}
+
+! include( ../src/files.pri ) {
+    warning( Couldnt find the private test files.pri file! )
+}
