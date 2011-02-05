@@ -4,6 +4,11 @@ namespace 'test' do
     Kernel.system("env LD_LIBRARY_PATH=#{pwd}/libs bin/unit_tests")
   end
 
+  desc 'Run component tests'
+  task :component do
+    Kernel.system("env LD_LIBRARY_PATH=#{pwd}/libs bin/component_tests")
+  end
+
   desc 'Run systems tests'
   task :system do
     require 'rake/runtest'
@@ -16,7 +21,7 @@ namespace 'test' do
 end
 
 desc 'Run unit and system tests'
-task :test => ['test:unit', 'test:system']
+task :test => ['test:unit', 'test:component', 'test:system']
 
 namespace 'statemachine' do
   desc 'Generate state machine graph'

@@ -5,3 +5,4 @@ SUBDIRS = gui remote_controller common network configuration state
 CONFIG += ordered staticlib debug
 SUBDIRS += main
 SUBDIRS += unit_tests
+SUBDIRS += component_tests
