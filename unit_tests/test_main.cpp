@@ -29,12 +29,14 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <glog/logging.h>
 
-#include <iostream>
 #include <exception>
 
 GTEST_API_ int main(int argc, char **argv) {
-  std::cout << "Running main() from unit_tests/test_main.cpp\n";
+  google::InitGoogleLogging(argv[0]);
+
+  LOG(INFO) << "Running main() from unit_tests/test_main.cpp";
 
   testing::GTEST_FLAG(throw_on_failure) = false;
   testing::InitGoogleMock(&argc, argv);
@@ -42,16 +44,16 @@ GTEST_API_ int main(int argc, char **argv) {
   try {
     return RUN_ALL_TESTS();
   } catch (std::exception& e) {
-    std::cout << "Exception raised: " << e.what() << std::endl;
+    LOG(FATAL) << "Exception raised: " << e.what();
     throw;
   } catch (const char* e) {
-    std::cout << "Exception raised: " << e << std::endl;
+    LOG(FATAL) << "Exception raised: " << e;
     throw;
   } catch (int e) {
-    std::cout << "Exception raised: nr " << e << std::endl;
+    LOG(FATAL) << "Exception raised: nr " << e;
     throw;
   } catch (...) {
-    std::cout << "Caught unhandled exception" << std::endl;
+    LOG(FATAL) << "Caught unhandled exception";
     throw;
   }
 }

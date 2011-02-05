@@ -12,8 +12,6 @@
 #include <QString>
 #include <QVariant>
 
-#include <iostream>
-
 using testing::NiceMock;
 using testing::Return;
 using testing::ReturnRef;

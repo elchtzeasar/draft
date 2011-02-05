@@ -2,7 +2,6 @@
 
 #include "PlayerContextMock.h"
 
-#include <iostream>
 #include <fstream>
 #include <cstdio>
 #include <string>

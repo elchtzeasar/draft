@@ -5,12 +5,10 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <iostream>
+#include <glog/logging.h>
 
 using boost::property_tree::ptree;
 
-using std::cerr;
-using std::endl;
 using std::string;
 
 static const char* PLAYER_NAME_PATH = "configuration.player.name";
@@ -33,7 +31,7 @@ void ConfigurationLoaderImpl::load() {
       playerContext.setPlayerName(playerName);
     }
   } catch (boost::property_tree::xml_parser::xml_parser_error& e) {
-    cerr << "ERROR: Got an error from xml_parser: " << e.what() << " with file: " << filename << endl;
+    LOG(ERROR) << "ERROR: Got an error from xml_parser: " << e.what() << " with file: " << filename;
   }
 }
 

@@ -5,8 +5,6 @@
 #include <QState>
 #include <QStateMachine>
 
-#include <iostream>
-
 class State;
 class ClientState;
 class ServerState;
@@ -37,15 +35,10 @@ class StateMachineComponent : public QObject {
   void setOwnPlayerId(const PlayerId& playerId);
 
  private:
-  Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState)
-  const QString getActiveState() const {
-    return activeState;
-  }
-  void setActiveState(QString newState) {
-    std::cout << "StateMachineComponent: STATE CHANGE " << activeState.toStdString().c_str()
-	      << " -> " << newState.toStdString().c_str() << std::endl;
-    activeState = newState;
-  }
+  Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState);
+
+  const QString getActiveState() const;
+  void setActiveState(QString newState);
 
   QStateMachine* stateMachine;
   State* chooseClientOrServer;

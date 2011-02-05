@@ -4,10 +4,7 @@
 #include "NetworkComponentFactory.h"
 #include "PlayerId.h"
 
-#include <iostream>
-
-using std::cerr;
-using std::endl;
+#include <glog/logging.h>
 
 ConnectionListenerImpl::ConnectionListenerImpl(NetworkComponentFactory& componentFactory) :
   componentFactory(componentFactory) {
@@ -20,7 +17,7 @@ ConnectionListenerImpl::~ConnectionListenerImpl() {
 
 void ConnectionListenerImpl::listen(unsigned int port) {
   if (!tcpServer.listen(QHostAddress::Any, port)) {
-    cerr << "Unable to start the server: " << tcpServer.errorString().toStdString() << endl;
+    LOG(ERROR) << "Unable to start the server: " << tcpServer.errorString().toStdString();
     return;
   }
 }

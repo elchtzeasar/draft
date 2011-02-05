@@ -45,7 +45,6 @@ void ConfigurationManagerImpl::setPlayerContext(const PlayerId& playerId, const 
   playerContexts[playerId] = playerContext;
 }
 
-#include <iostream>
 const PlayerContext& ConfigurationManagerImpl::getPlayerContext(const PlayerId& playerId) const {
   PlayerContextMap::const_iterator it(playerContexts.find(playerId));
 

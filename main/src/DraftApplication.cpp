@@ -8,10 +8,8 @@
 
 #include <QObject>
 
-#include <iostream>
+#include <glog/logging.h>
 
-using std::cerr;
-using std::endl;
 DraftApplication::DraftApplication(QObject& ui) :
   ui(ui),
   configurationComponent(configurationComponentFactory.createComponent()),
@@ -30,7 +28,7 @@ void DraftApplication::connect (const QObject * sender,
 				const char * method,
 				Qt::ConnectionType type) {
   if (!QObject::connect(sender, signal, receiver, method, type)) {
-    cerr << "DraftApplication: Failed to connect signal " << signal << " to slot " << method << '!' << endl;
+    LOG(ERROR) << "DraftApplication: Failed to connect signal " << signal << " to slot " << method << '!';
   }
 }
 

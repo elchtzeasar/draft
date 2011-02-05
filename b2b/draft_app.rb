@@ -7,7 +7,7 @@ require 'rainbow'
 class DraftApp
   def initialize(name)
     @name = name
-    @app = Kernel.open("|bin/console_draft > #{filename} 2>&1", 'w')
+    @app = Kernel.open("|GLOG_logtostderr=1 bin/console_draft > #{filename} 2>&1", 'w')
     @file = File.open(filename, File::RDONLY | File::CREAT | File::TRUNC)
   end
 

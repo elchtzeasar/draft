@@ -8,8 +8,9 @@
 #include <QEvent>
 #include <QStateMachine>
 
+#include <glog/logging.h>
+
 #include <cassert>
-#include <iostream>
 
 SavingPlayerNameState::SavingPlayerNameState(QObject* component, State* parent) : 
   State(component, parent, "SavingPlayerName") {
@@ -33,5 +34,5 @@ void SavingPlayerNameState::onEntry(QEvent* event) {
   NullMessage* playerNameCnf = new NullMessage(PLAYER_NAME_CNF);
   emit sendData(AddressedMessage(addressHeader, playerNameCnf));
 
-  std::cout << "SavingPlayerNameState: Received player name: " << playerNameCfgMessage.getPlayerName() << std::endl;
+  LOG(INFO) << "SavingPlayerNameState: Received player name: " << playerNameCfgMessage.getPlayerName();
 }

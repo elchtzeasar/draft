@@ -10,7 +10,6 @@
 #include <QStateMachine>
 
 #include <cassert>
-#include <iostream>
 
 SendingPlayerIdState::SendingPlayerIdState(QObject* component, State* parent) : 
   State(component, parent, "SendingPlayerId") {

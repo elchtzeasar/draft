@@ -4,11 +4,7 @@
 
 #include <QTcpSocket>
 
-#include <iostream>
-
-using std::cerr;
-using std::cout;
-using std::endl;
+#include <glog/logging.h>
 
 ConnectionImpl::ConnectionImpl(const PlayerId& playerId, QTcpSocket* tcpSocket) :
   playerId(playerId), tcpSocket(tcpSocket) {
@@ -41,7 +37,7 @@ void ConnectionImpl::handleSendData(const AddressedMessage& message) {
 
   out << message;
 
-  cout << "ConnectionImpl: Message sent: " << message << endl;
+  LOG(INFO) << "ConnectionImpl: Message sent: " << message;
 }
 
 void ConnectionImpl::readIncommingData() {
@@ -52,7 +48,7 @@ void ConnectionImpl::readIncommingData() {
     AddressedMessage message;
     in >> message;
 
-    cout << "ConnectionImpl: Received message: " << message << endl;
+    LOG(INFO) << "ConnectionImpl: Received message: " << message;
 
     emit dataReceived(message);
   }
@@ -61,20 +57,20 @@ void ConnectionImpl::readIncommingData() {
 void ConnectionImpl::socketError(QAbstractSocket::SocketError socketError) {
   switch (socketError) {
   case QAbstractSocket::RemoteHostClosedError:
-    cerr << "The remote host closed" << endl;
+    LOG(ERROR) << "The remote host closed";
     break;
   case QAbstractSocket::HostNotFoundError:
-    cerr << "The host was not found. Please check the "
+    LOG(ERROR) << "The host was not found. Please check the "
 	 << "host name and port settings.";
     break;
   case QAbstractSocket::ConnectionRefusedError:
-    cerr << "The connection was refused by the peer. "
+    LOG(ERROR) << "The connection was refused by the peer. "
 	 << "Make sure the fortune server is running, "
 	 << "and check that the host name and port "
 	 << "settings are correct.";
     break;
   default:
-    cerr << "The following error occurred: "
+    LOG(ERROR) << "The following error occurred: "
 	 << tcpSocket->errorString().toStdString();
   }
 }

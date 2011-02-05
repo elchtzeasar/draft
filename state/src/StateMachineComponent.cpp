@@ -7,6 +7,8 @@
 
 #include <QSignalTransition>
 
+#include <glog/logging.h>
+
 StateMachineComponent::StateMachineComponent() : 
   stateMachine(new QStateMachine(this)),
   chooseClientOrServer(new State(this, static_cast<State*>(0), "ChooseClientOrServer")),
@@ -33,4 +35,14 @@ StateMachineComponent::~StateMachineComponent() {
 
 void StateMachineComponent::start() {
   stateMachine->start();
+}
+
+const QString StateMachineComponent::getActiveState() const {
+  return activeState;
+}
+
+void StateMachineComponent::setActiveState(QString newState) {
+  LOG(INFO) << "StateMachineComponent: STATE CHANGE " << activeState.toStdString().c_str()
+	    << " -> " << newState.toStdString().c_str();
+  activeState = newState;
 }

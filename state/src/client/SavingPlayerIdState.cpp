@@ -8,7 +8,6 @@
 #include <QStateMachine>
 
 #include <cassert>
-#include <iostream>
 
 SavingPlayerIdState::SavingPlayerIdState(QObject* component, State* parent) : 
   State(component, parent, "SavingPlayerId") {
