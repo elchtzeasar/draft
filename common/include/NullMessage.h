@@ -11,11 +11,13 @@ class NullMessage : public Message {
   static bool messageNumberIsAllowed(quint16 messageNumber);
 
  private:
+  friend bool operator==(const NullMessage& lhs, const NullMessage& rhs);
   friend std::ostream& operator<<(std::ostream& stream, const NullMessage& message);
   friend QDataStream& operator<<(QDataStream& stream, const NullMessage& message);
   friend QDataStream& operator>>(QDataStream& stream, NullMessage& message);
 };
 
+bool operator==(const NullMessage& lhs, const NullMessage& rhs);
 std::ostream& operator<<(std::ostream& stream, const NullMessage& message);
 QDataStream& operator<<(QDataStream& stream, const NullMessage& message);
 QDataStream& operator>>(QDataStream& stream, NullMessage& message);

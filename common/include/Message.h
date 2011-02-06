@@ -46,6 +46,8 @@ class Message {
   friend QDataStream& operator>>(QDataStream& stream, Message& message);
 };
 
+bool operator==(const Message& lhs, const Message& rhs);
+
 std::ostream& operator<<(std::ostream& stream, const Message& message);
 QDataStream& operator<<(QDataStream& stream, const Message& message);
 QDataStream& operator>>(QDataStream& stream, Message*& message);

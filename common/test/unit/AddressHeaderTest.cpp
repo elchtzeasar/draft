@@ -10,18 +10,12 @@
 
 #include <gtest/gtest.h>
 
-bool operator==(const AddressHeader& lhs, const AddressHeader& rhs);
-
 using std::stringstream;
 class AddressHeaderTest : public testing::Test {
 };
 
 static const PlayerId SENT_FROM_PLAYER(1);
 static const PlayerId SENT_TO_PLAYER(3);
-
-bool operator==(const AddressHeader& lhs, const AddressHeader& rhs) {
-  return memcmp(&lhs, &rhs, sizeof(AddressHeader)) == 0;
-}
 
 TEST_F(AddressHeaderTest, shouldPrintHeaderCorrectly) {
   stringstream serializedStream, expectedString;

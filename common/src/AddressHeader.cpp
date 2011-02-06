@@ -48,6 +48,11 @@ const PlayerId& AddressHeader::getReceiverPlayerId() const {
   return sentToPlayerId;
 }
 
+bool operator==(const AddressHeader& lhs, const AddressHeader& rhs) {
+  return lhs.getSenderPlayerId() == rhs.getSenderPlayerId() &&
+    lhs.getReceiverPlayerId() == rhs.getReceiverPlayerId();
+}
+
 ostream& operator<<(ostream& stream, const AddressHeader& addressHeader) {
   stream << "AddressHeader { "
 	 << "version=" << addressHeader.version << ", "

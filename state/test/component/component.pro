@@ -4,4 +4,4 @@ TARGET = statecomponenttest
     error( Couldnt find the test.pri file! )
 }
 
-SOURCES += StateComponentSinglePlayerConnectionTest.cpp
+SOURCES += StateMachineComponentClientTest.cpp

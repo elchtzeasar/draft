@@ -1,6 +1,7 @@
 #include "NullMessage.h"
 
 #include <QDataStream>
+#include <glog/logging.h>
 
 #include <cassert>
 
@@ -19,6 +20,10 @@ bool NullMessage::messageNumberIsAllowed(quint16 messageNumber) {
          PLAYER_ID_CFG == messageNumber ||
          PLAYER_ID_CNF == messageNumber ||
          PLAYER_NAME_CNF == messageNumber;
+}
+
+bool operator==(const NullMessage& lhs, const NullMessage& rhs) {
+  return lhs.messageNumber == rhs.messageNumber;
 }
 
 std::ostream& operator<<(std::ostream& stream, const NullMessage& message) {

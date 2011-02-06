@@ -9,8 +9,6 @@
 
 #include <gtest/gtest.h>
 
-bool operator==(const PlayerNameCfgMessage& lhs, const PlayerNameCfgMessage& rhs);
-
 using std::stringstream;
 class PlayerNameCfgMessageTest : public testing::Test {
 protected:
@@ -18,11 +16,6 @@ protected:
 };
 
 const char* PlayerNameCfgMessageTest::PLAYER_NAME("PLAYER NAME");
-
-bool operator==(const PlayerNameCfgMessage& lhs, const PlayerNameCfgMessage& rhs) {
-  const bool messageMatches = memcmp((Message*)&lhs, (Message*)&rhs, sizeof(Message)) == 0;
-  return messageMatches && strcmp(lhs.playerName, rhs.playerName) == 0;
-}
 
 TEST_F(PlayerNameCfgMessageTest, shouldPrintMessageCorrectly) {
   stringstream s;

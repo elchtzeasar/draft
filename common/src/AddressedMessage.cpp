@@ -19,8 +19,11 @@ AddressedMessage::AddressedMessage(const AddressedMessage& original) :
   header(new AddressHeader(*original.header)),
   message(original.message->clone()) {}
 
-AddressedMessage& AddressedMessage::operator=(AddressedMessage& original) {
-  assert(false && "No copying!");
+AddressedMessage& AddressedMessage::operator=(const AddressedMessage& original) {
+  header = new AddressHeader(*original.header);
+  message = original.message->clone();
+
+  return *this;
 }
 
 AddressedMessage::~AddressedMessage() {
@@ -34,6 +37,10 @@ const AddressHeader& AddressedMessage::getHeader() const {
 
 const Message& AddressedMessage::getMessage() const {
   return *message;
+}
+
+bool operator==(const AddressedMessage& lhs, const AddressedMessage& rhs) {
+  return lhs.getHeader() == rhs.getHeader() && lhs.getMessage() == rhs.getMessage();
 }
 
 std::ostream& operator<<(std::ostream& stream, const AddressedMessage& addressedMessage) {

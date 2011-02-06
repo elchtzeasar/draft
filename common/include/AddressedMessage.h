@@ -16,7 +16,7 @@ class AddressedMessage {
   AddressedMessage(AddressHeader* header, Message* message);
 
   AddressedMessage(const AddressedMessage& original);
-  AddressedMessage& operator=(AddressedMessage& original);
+  AddressedMessage& operator=(const AddressedMessage& original);
 
   ~AddressedMessage();
 
@@ -33,6 +33,8 @@ class AddressedMessage {
 };
 
 Q_DECLARE_METATYPE(AddressedMessage);
+
+bool operator==(const AddressedMessage& lhs, const AddressedMessage& rhs);
 
 std::ostream& operator<<(std::ostream& stream, const AddressedMessage& addressedMessage);
 QDataStream& operator<<(QDataStream& stream, const AddressedMessage& addressedMessage);

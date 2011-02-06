@@ -33,27 +33,51 @@
 
 #include <exception>
 
+#include <QCoreApplication>
+#include <QThread>
+
+QCoreApplication* app;
+
+class TestThread : public QThread {
+public:
+  TestThread(int& argc, char**& argv) : argc(argc), argv(argv) {}
+
+protected:
+  void run() {
+    testing::GTEST_FLAG(throw_on_failure) = false;
+    testing::InitGoogleMock(&argc, argv);
+    testing::InitGoogleTest(&argc, argv);
+
+    try {
+      app->exit(RUN_ALL_TESTS());
+    } catch (std::exception& e) {
+      LOG(FATAL) << "Exception raised: " << e.what();
+      throw;
+    } catch (const char* e) {
+      LOG(FATAL) << "Exception raised: " << e;
+      throw;
+    } catch (int e) {
+      LOG(FATAL) << "Exception raised: nr " << e;
+      throw;
+    } catch (...) {
+      LOG(FATAL) << "Caught unhandled exception";
+      throw;
+    }
+  }
+
+private:
+  int& argc;
+  char**& argv;
+};
+
 GTEST_API_ int main(int argc, char **argv) {
   google::InitGoogleLogging(argv[0]);
 
   LOG(INFO) << "Running main() from unit_tests/test_main.cpp";
 
-  testing::GTEST_FLAG(throw_on_failure) = false;
-  testing::InitGoogleMock(&argc, argv);
-  testing::InitGoogleTest(&argc, argv);
-  try {
-    return RUN_ALL_TESTS();
-  } catch (std::exception& e) {
-    LOG(FATAL) << "Exception raised: " << e.what();
-    throw;
-  } catch (const char* e) {
-    LOG(FATAL) << "Exception raised: " << e;
-    throw;
-  } catch (int e) {
-    LOG(FATAL) << "Exception raised: nr " << e;
-    throw;
-  } catch (...) {
-    LOG(FATAL) << "Caught unhandled exception";
-    throw;
-  }
+  app = new QCoreApplication(argc, argv);
+  TestThread* thread = new TestThread(argc, argv);
+  thread->start();
+
+  return app->exec();
 }

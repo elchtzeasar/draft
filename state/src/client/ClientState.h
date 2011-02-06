@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QVariant>
 
+#include <glog/logging.h>
+
 class ClientState : public State {
   Q_OBJECT
 

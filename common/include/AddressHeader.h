@@ -32,6 +32,7 @@ class AddressHeader {
   friend QDataStream& operator>>(QDataStream& stream, AddressHeader& addressHeader);
 };
 
+bool operator==(const AddressHeader& lhs, const AddressHeader& rhs);
 std::ostream& operator<<(std::ostream& stream, const AddressHeader& addressHeader);
 QDataStream& operator<<(QDataStream& stream, const AddressHeader& addressHeader);
 QDataStream& operator>>(QDataStream& stream, AddressHeader& addressHeader);

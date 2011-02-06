@@ -1,6 +1,7 @@
 #include "PlayerNameCfgMessage.h"
 
 #include <QDataStream>
+#include <glog/logging.h>
 
 #include <cstring>
 #include <cstdlib>
@@ -26,6 +27,10 @@ bool PlayerNameCfgMessage::messageNumberIsAllowed(quint16 messageNumber) {
 
 const char* PlayerNameCfgMessage::getPlayerName() const {
   return playerName;
+}
+
+bool operator==(const PlayerNameCfgMessage& lhs, const PlayerNameCfgMessage& rhs) {
+  return strcmp(lhs.playerName, rhs.playerName) == 0;
 }
 
 std::ostream& operator<<(std::ostream& stream, const PlayerNameCfgMessage& message) {

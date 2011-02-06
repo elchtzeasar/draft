@@ -3,7 +3,7 @@
 # Includes common configuration for all subdirectory .pro files.
 
 # Include test .h-files:
-INCLUDEPATH += . ../include
+INCLUDEPATH += . ../include ../../../common/test/include
 # Include 'real' .h-files:
 INCLUDEPATH += ../../include ../../src
 # Include common .h-files:
@@ -29,11 +29,11 @@ OBJECTS_DIR = ../../objs
 DIR_PREFIX = ../../..
 
 ! include( ../../include/files.pri ) {
-    error( Couldnt find the public files.pri file! )
+    error( Couldnt find the public 'real' files.pri file! )
 }
 
 ! include( ../../src/files.pri ) {
-    error( Couldnt find the private files.pri file! )
+    error( Couldnt find the private 'real' files.pri file! )
 }
 
 ! include( ../include/files.pri ) {

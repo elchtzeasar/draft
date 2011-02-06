@@ -4,6 +4,7 @@
 #include "PlayerNameCfgMessage.h"
 
 #include <QDataStream>
+#include <glog/logging.h>
 
 #include <cassert>
 
@@ -73,6 +74,23 @@ std::ostream& operator<<(std::ostream& stream, const Message& message) {
   }
   stream << " }";
   return stream;
+}
+
+bool operator==(const Message& lhs, const Message& rhs) {
+  if (lhs.getMessageNumber() == rhs.getMessageNumber()) {
+    switch (lhs.getMessageNumber()) {
+    case NULL_MESSAGE:
+    case PLAYER_ID_CNF:
+    case PLAYER_NAME_CNF:
+    case PLAYER_ID_CFG:
+      return static_cast<const NullMessage&>(lhs) ==
+	static_cast<const NullMessage&>(rhs);
+    case PLAYER_NAME_CFG:
+      return static_cast<const PlayerNameCfgMessage&>(lhs) ==
+	static_cast<const PlayerNameCfgMessage&>(rhs);
+    }
+  }
+  return false;
 }
 
 QDataStream& operator<<(QDataStream& stream, const Message& message) {

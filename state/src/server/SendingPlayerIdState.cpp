@@ -4,7 +4,6 @@
 #include "AddressedMessage.h"
 #include "NullMessage.h"
 #include "PlayerId.h"
-#include "PlayerIdCfgMessage.h"
 
 #include <QEvent>
 #include <QStateMachine>

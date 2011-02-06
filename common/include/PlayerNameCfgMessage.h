@@ -22,11 +22,13 @@ class PlayerNameCfgMessage : public Message {
   PlayerNameCfgMessage(const PlayerNameCfgMessage&);
   PlayerNameCfgMessage& operator=(PlayerNameCfgMessage&);
 
+  friend bool operator==(const PlayerNameCfgMessage& lhs, const PlayerNameCfgMessage& rhs);
   friend std::ostream& operator<<(std::ostream& stream, const PlayerNameCfgMessage& message);
   friend QDataStream& operator<<(QDataStream& stream, const PlayerNameCfgMessage& message);
   friend QDataStream& operator>>(QDataStream& stream, PlayerNameCfgMessage& message);
 };
 
+bool operator==(const PlayerNameCfgMessage& lhs, const PlayerNameCfgMessage& rhs);
 std::ostream& operator<<(std::ostream& stream, const PlayerNameCfgMessage& message);
 QDataStream& operator<<(QDataStream& stream, const PlayerNameCfgMessage& message);
 QDataStream& operator>>(QDataStream& stream, PlayerNameCfgMessage& message);

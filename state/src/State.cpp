@@ -14,6 +14,9 @@ State::State(QObject* component, State* parent, const char* name, bool assignNam
 
   if (assignName)
     assignProperty(component, "activeState", this->name);
+
+  connect( this, SIGNAL(entered()),
+	   component, SIGNAL(stateChanged()) );
 }
 
 const QString& State::getName() const {

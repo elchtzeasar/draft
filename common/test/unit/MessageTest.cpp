@@ -9,15 +9,9 @@
 
 #include <gtest/gtest.h>
 
-bool operator==(const Message& lhs, const Message& rhs);
-
 using std::stringstream;
 class MessageTest : public testing::Test {
 };
-
-bool operator==(const Message& lhs, const Message& rhs) {
-  return memcmp(&lhs, &rhs, sizeof(Message)) == 0;
-}
 
 TEST_F(MessageTest, shouldPrintMessageCorrectly) {
   stringstream s;
