@@ -34,7 +34,7 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
 	  component, SIGNAL(configurationRequest(const PlayerId&)));
 
   new ReceivedMessageTransition(
-    component, receivingPlayerId, savingPlayerId, PLAYER_ID_CFG);
+    component, receivingPlayerId, savingPlayerId, MessageNumber::PLAYER_ID_CFG);
   savingPlayerId->addTransition(requestingName);
   requestingName->addTransition(
     component, SIGNAL(configurationResponse(const PlayerId&, const QString)), sendingName);
@@ -42,7 +42,7 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   sendingName->addTransition(receivingPlayerName);
 
   new ReceivedMessageTransition(
-    component, savingPlayerName, receivingPlayerName, PLAYER_ID_CFG);
+    component, savingPlayerName, receivingPlayerName, MessageNumber::PLAYER_ID_CFG);
 
   savingPlayerName->addTransition(receivingPlayerName);
 

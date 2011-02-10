@@ -31,6 +31,6 @@ void SendingPlayerIdState::onEntry(QEvent* event) {
 
   // Send playerId to client:
   AddressHeader* addressHeader = new AddressHeader(PlayerId::SERVER, playerId);
-  NullMessage* playerNameCfg = new NullMessage(PLAYER_ID_CFG);
+  NullMessage* playerNameCfg = new NullMessage(MessageNumber::PLAYER_ID_CFG);
   emit sendData(AddressedMessage(addressHeader, playerNameCfg));
 }

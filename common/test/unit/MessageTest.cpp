@@ -11,25 +11,31 @@
 
 using std::stringstream;
 class MessageTest : public testing::Test {
+protected:
+  MessageTest() : 
+    byteArray(),
+    writeStream(&byteArray, QIODevice::WriteOnly),
+    readStream(&byteArray, QIODevice::ReadOnly) {}
+
+  QByteArray byteArray;
+  QDataStream writeStream;
+  QDataStream readStream;
 };
 
 TEST_F(MessageTest, shouldPrintMessageCorrectly) {
   stringstream s;
-  NullMessage nullMessage(NULL_MESSAGE);
+  NullMessage nullMessage(MessageNumber::NULL_MESSAGE);
   Message& message(nullMessage);
   s << message;
 
-  ASSERT_EQ("Message { messageNumber=0 => NullMessage { NullMessage } }", s.str());
+  ASSERT_EQ("Message { messageNumber=NullMessage => NullMessage { NullMessage } }", s.str());
 }
 
 TEST_F(MessageTest, shouldGetACopyOfMessageAfterSerializingThenDeserializingWithReferences) {
-  NullMessage nullMessage1(NULL_MESSAGE), nullMessage2(NULL_MESSAGE);
+  NullMessage nullMessage1(MessageNumber::NULL_MESSAGE), nullMessage2(MessageNumber::NULL_MESSAGE);
 
   Message& message1(nullMessage1);
   Message& message2(nullMessage2);
-  QByteArray byteArray;
-  QDataStream writeStream(&byteArray, QIODevice::WriteOnly);
-  QDataStream readStream(&byteArray, QIODevice::ReadOnly);
 
   writeStream << message1;
   readStream >> message2;
@@ -38,13 +44,10 @@ TEST_F(MessageTest, shouldGetACopyOfMessageAfterSerializingThenDeserializingWith
 }
 
 TEST_F(MessageTest, shouldGetACopyOfMessageAfterSerializingThenDeserializingWithPointers) {
-  NullMessage nullMessage1(NULL_MESSAGE);
+  NullMessage nullMessage1(MessageNumber::NULL_MESSAGE);
 
   Message& message1(nullMessage1);
   Message* message2;
-  QByteArray byteArray;
-  QDataStream writeStream(&byteArray, QIODevice::WriteOnly);
-  QDataStream readStream(&byteArray, QIODevice::ReadOnly);
 
   writeStream << message1;
   readStream >> message2;

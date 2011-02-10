@@ -14,14 +14,14 @@ class NullMessageTest : public testing::Test {
 
 TEST_F(NullMessageTest, shouldPrintMessageCorrectly) {
   stringstream s;
-  NullMessage nullMessage(NULL_MESSAGE);
+  NullMessage nullMessage(MessageNumber::NULL_MESSAGE);
   s << nullMessage;
 
   ASSERT_EQ("NullMessage { NullMessage }", s.str());
 }
 
 TEST_F(NullMessageTest, shouldGetACopyOfNullMessageAfterSerializingThenDeserializing) {
-  NullMessage nullMessage1(NULL_MESSAGE), nullMessage2(NULL_MESSAGE);
+  NullMessage nullMessage1(MessageNumber::NULL_MESSAGE), nullMessage2(MessageNumber::NULL_MESSAGE);
 
   Message& message1(nullMessage1);
   Message& message2(nullMessage2);

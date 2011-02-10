@@ -22,9 +22,9 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
 	  component, SIGNAL(configurationRequest(const PlayerId&)));
 
   new ReceivedMessageTransition(
-    component, sendingPlayerId, receivingClientName, PLAYER_ID_CNF);
+    component, sendingPlayerId, receivingClientName, MessageNumber::PLAYER_ID_CNF);
   new ReceivedMessageTransition(
-    component, receivingClientName, savingPlayerName, PLAYER_NAME_CFG);
+    component, receivingClientName, savingPlayerName, MessageNumber::PLAYER_NAME_CFG);
   savingPlayerName->addTransition(waitingForOtherPlayers);
 
   connect(sendingPlayerId, SIGNAL(sendData(const AddressedMessage&)),

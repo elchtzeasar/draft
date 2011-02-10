@@ -16,10 +16,10 @@ Message* NullMessage::clone() {
 }
 
 bool NullMessage::messageNumberIsAllowed(const MessageNumber& messageNumber) {
-  return NULL_MESSAGE == messageNumber ||
-         PLAYER_ID_CFG == messageNumber ||
-         PLAYER_ID_CNF == messageNumber ||
-         PLAYER_NAME_CNF == messageNumber;
+  return MessageNumber::NULL_MESSAGE == messageNumber ||
+         MessageNumber::PLAYER_ID_CFG == messageNumber ||
+         MessageNumber::PLAYER_ID_CNF == messageNumber ||
+         MessageNumber::PLAYER_NAME_CNF == messageNumber;
 }
 
 bool operator==(const NullMessage& lhs, const NullMessage& rhs) {

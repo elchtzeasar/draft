@@ -31,6 +31,6 @@ void SavingPlayerIdState::onEntry(QEvent* event) {
   emit setOwnPlayerId(ownPlayerId);
 
   AddressHeader* addressHeader = new AddressHeader(ownPlayerId, senderPlayerId);
-  NullMessage* playerIdCnf = new NullMessage(PLAYER_ID_CNF);
+  NullMessage* playerIdCnf = new NullMessage(MessageNumber::PLAYER_ID_CNF);
   emit sendData(AddressedMessage(addressHeader, playerIdCnf));
 }

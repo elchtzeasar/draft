@@ -14,8 +14,11 @@ class MessageNumber {
 
   static const MessageNumber NO_MESSAGE;
 
+  MessageNumber();
   MessageNumber(quint16 number, const char* name);
- 
+
+  operator int() const { return number; }
+
  protected:
   quint16 number;
   const char* name;

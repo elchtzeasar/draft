@@ -15,62 +15,52 @@ MessageNumber Message::getMessageNumber() const {
 }
 
 const char* Message::messageNumberToString(const MessageNumber& messageNumber) {
-  switch (messageNumber) {
-  case NULL_MESSAGE:
+  if (messageNumber == MessageNumber::NULL_MESSAGE) {
     return "NullMessage";
-    break;
-  case PLAYER_NAME_CFG:
+  } else if (messageNumber == MessageNumber::PLAYER_NAME_CFG) {
     return "PlayerNameCfg";
-    break;
-  case PLAYER_NAME_CNF:
+  } else if (messageNumber == MessageNumber::PLAYER_NAME_CNF) {
     return "PlayerNameCnf";
-    break;
-  case PLAYER_ID_CFG:
+  } else if (messageNumber == MessageNumber::PLAYER_ID_CFG) {
     return "PlayerIdCfg";
-    break;
-  case PLAYER_ID_CNF:
+  } else if (messageNumber == MessageNumber::PLAYER_ID_CNF) {
     return "PlayerIdCnf";
-    break;
-  case NO_MESSAGE:
+  } else if (messageNumber == MessageNumber::NO_MESSAGE) {
     return "NO_MESSAGE";
-    break;
-  default:
+  } else {
     return "UnkownMessage";
   }
 }
 
 #define PRINT_MESSAGE(expectedMessageNumber, class)     \
-  case expectedMessageNumber:                           \
+  if (message.messageNumber == expectedMessageNumber) {	\
     stream << static_cast<const class&>(message);       \
-    break;
+  }
 
 #define SERIALIZE_MESSAGE(expectedMessageNumber, class) \
-  case expectedMessageNumber:		                \
+  if (message.messageNumber == expectedMessageNumber) {	\
     stream << dynamic_cast<const class&>(message);      \
-    break;		                                \
+  }
  
 #define DESERIALIZE_MESSAGE_PTR(expectedMessageNumber, class) \
-  case expectedMessageNumber:                                 \
+  if (messageNumber == expectedMessageNumber) {      \
     message = new class(expectedMessageNumber);               \
     stream >> *dynamic_cast<class*>(message);                 \
-    break;
+  }
 
 #define DESERIALIZE_MESSAGE(expectedMessageNumber, class) \
-  case expectedMessageNumber:                             \
+  if (message.messageNumber == expectedMessageNumber) {	  \
     stream >> static_cast<class&>(message);               \
-    break;
+  }
 
 std::ostream& operator<<(std::ostream& stream, const Message& message) {
   stream << "Message { messageNumber=" << message.messageNumber << " => ";
-  switch (message.messageNumber) {
-    PRINT_MESSAGE(NULL_MESSAGE, NullMessage);
-    PRINT_MESSAGE(PLAYER_ID_CFG, NullMessage);
-    PRINT_MESSAGE(PLAYER_ID_CNF, NullMessage);
-    PRINT_MESSAGE(PLAYER_NAME_CFG, PlayerNameCfgMessage);
-    PRINT_MESSAGE(PLAYER_NAME_CNF, NullMessage);
-  default:
+  PRINT_MESSAGE(MessageNumber::NULL_MESSAGE, NullMessage) else
+  PRINT_MESSAGE(MessageNumber::PLAYER_ID_CFG, NullMessage) else
+  PRINT_MESSAGE(MessageNumber::PLAYER_ID_CNF, NullMessage) else
+  PRINT_MESSAGE(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
+  PRINT_MESSAGE(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
     assert(false && "Unkown message number!");
-    break;
   }
   stream << " }";
   return stream;
@@ -78,17 +68,16 @@ std::ostream& operator<<(std::ostream& stream, const Message& message) {
 
 bool operator==(const Message& lhs, const Message& rhs) {
   if (lhs.getMessageNumber() == rhs.getMessageNumber()) {
-    switch (lhs.getMessageNumber()) {
-    case NULL_MESSAGE:
-    case PLAYER_ID_CNF:
-    case PLAYER_NAME_CNF:
-    case PLAYER_ID_CFG:
+    if (lhs.getMessageNumber() == MessageNumber::NULL_MESSAGE ||
+	lhs.getMessageNumber() == MessageNumber::PLAYER_ID_CNF ||
+	lhs.getMessageNumber() == MessageNumber::PLAYER_NAME_CNF ||
+	lhs.getMessageNumber() == MessageNumber::PLAYER_ID_CFG) {
       return static_cast<const NullMessage&>(lhs) ==
 	static_cast<const NullMessage&>(rhs);
-    case PLAYER_NAME_CFG:
+    } else if(lhs.getMessageNumber() == MessageNumber::PLAYER_NAME_CFG) {
       return static_cast<const PlayerNameCfgMessage&>(lhs) ==
 	static_cast<const PlayerNameCfgMessage&>(rhs);
-    default:
+    } else {
       assert(false && "Received message with unknown MessageNumber");
     }
   }
@@ -97,46 +86,41 @@ bool operator==(const Message& lhs, const Message& rhs) {
 
 QDataStream& operator<<(QDataStream& stream, const Message& message) {
   stream << message.messageNumber;
-  switch (message.messageNumber) {
-    SERIALIZE_MESSAGE(NULL_MESSAGE, NullMessage);
-    SERIALIZE_MESSAGE(PLAYER_ID_CFG, NullMessage);
-    SERIALIZE_MESSAGE(PLAYER_ID_CNF, NullMessage);
-    SERIALIZE_MESSAGE(PLAYER_NAME_CFG, PlayerNameCfgMessage);
-    SERIALIZE_MESSAGE(PLAYER_NAME_CNF, NullMessage);
-  default:
+
+  SERIALIZE_MESSAGE(MessageNumber::NULL_MESSAGE, NullMessage) else
+  SERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CFG, NullMessage) else
+  SERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CNF, NullMessage) else
+  SERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
+  SERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
     assert(false && "Unkown message number!");
-    break;
   }
   return stream;
 }
 
 QDataStream& operator>>(QDataStream& stream, Message*& message) {
-  MessageNumber messageNumber(NO_MESSAGE);
+  MessageNumber messageNumber;
   stream >> messageNumber;
-  switch (messageNumber) {
-    DESERIALIZE_MESSAGE_PTR(NULL_MESSAGE, NullMessage);
-    DESERIALIZE_MESSAGE_PTR(PLAYER_ID_CFG, NullMessage);
-    DESERIALIZE_MESSAGE_PTR(PLAYER_ID_CNF, NullMessage);
-    DESERIALIZE_MESSAGE_PTR(PLAYER_NAME_CFG, PlayerNameCfgMessage);
-    DESERIALIZE_MESSAGE_PTR(PLAYER_NAME_CNF, NullMessage);
-  default:
+
+  DESERIALIZE_MESSAGE_PTR(MessageNumber::NULL_MESSAGE, NullMessage) else
+  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_ID_CFG, NullMessage) else
+  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_ID_CNF, NullMessage) else
+  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
+  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
+    LOG(ERROR) << "MessageNumber=" << messageNumber;
     assert(false && "Unkown message number!");
-    break;
   }
   return stream;
 }
 
 QDataStream& operator>>(QDataStream& stream, Message& message) {
   stream >> message.messageNumber;
-  switch (message.messageNumber) {
-    DESERIALIZE_MESSAGE(NULL_MESSAGE, NullMessage);
-    DESERIALIZE_MESSAGE(PLAYER_ID_CFG, NullMessage);
-    DESERIALIZE_MESSAGE(PLAYER_ID_CNF, NullMessage);
-    DESERIALIZE_MESSAGE(PLAYER_NAME_CFG, PlayerNameCfgMessage);
-    DESERIALIZE_MESSAGE(PLAYER_NAME_CNF, NullMessage);
-  default:
+
+  DESERIALIZE_MESSAGE(MessageNumber::NULL_MESSAGE, NullMessage) else
+  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CFG, NullMessage) else
+  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CNF, NullMessage) else
+  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
+  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
     assert(false && "Unkown message number!");
-    break;
   }
   return stream;
 }

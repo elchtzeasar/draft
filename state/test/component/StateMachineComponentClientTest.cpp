@@ -67,7 +67,7 @@ StateMachineComponentClientTest::StateMachineComponentClientTest() :
   playerId(5),
   stateMachineComponentWrapper(playerId, stateMachineComponent, messageRouter),
   addressedPlayerIdCfg(new AddressHeader(PlayerId::SERVER, playerId),
-		       new NullMessage(PLAYER_ID_CFG)) {
+		       new NullMessage(MessageNumber::PLAYER_ID_CFG)) {
   messageRouter.registerReceiver(playerId, stateMachineComponentWrapper);
   qRegisterMetaType<AddressedMessage>("AddressedMessage");
   qRegisterMetaType<PlayerId>("PlayerId");
@@ -76,7 +76,7 @@ StateMachineComponentClientTest::StateMachineComponentClientTest() :
 
 TEST_F(StateMachineComponentClientTest, shouldSendPlayerIdCnfWhenConnectedToDraftAndPlayerIdCfgReceived) {
   AddressedMessage expectedPlayerIdCnf(new AddressHeader(playerId, PlayerId::SERVER),
-				       new NullMessage(PLAYER_ID_CNF));
+				       new NullMessage(MessageNumber::PLAYER_ID_CNF));
 
   startComponentAndWait();
   connectToDraftAndWait();
