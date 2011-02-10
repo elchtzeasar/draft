@@ -37,8 +37,8 @@ bool ReceivedMessageTransition::eventTest(QEvent* event) {
     return true;
   } else {
     LOG(ERROR) << "ReceivedMessageTransition::eventTest(): "
-	 << "recevied wrong message number: " << int(message.getMessage().getMessageNumber())
-	 << ", expected: " << int(expectedMessageNumber);
+	 << "recevied wrong message number: " << message.getMessage().getMessageNumber()
+	 << ", expected: " << expectedMessageNumber;
   return false;
   }
 

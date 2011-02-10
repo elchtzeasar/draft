@@ -42,7 +42,7 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   sendingName->addTransition(receivingPlayerName);
 
   new ReceivedMessageTransition(
-    component, savingPlayerName, receivingPlayerName, MessageNumber::PLAYER_ID_CFG);
+    component, receivingPlayerName, savingPlayerName, MessageNumber::PLAYER_NAME_CFG);
 
   savingPlayerName->addTransition(receivingPlayerName);
 

@@ -30,9 +30,12 @@ void SavingPlayerNameState::onEntry(QEvent* event) {
 
   const PlayerNameCfgMessage& playerNameCfgMessage(message.getMessage().to<PlayerNameCfgMessage>());
 
-  AddressHeader* addressHeader = new AddressHeader;
+  const PlayerId& ownPlayerId(message.getHeader().getReceiverPlayerId());
+  const PlayerId& senderPlayerId(message.getHeader().getSenderPlayerId());
+  AddressHeader* addressHeader = new AddressHeader(ownPlayerId, senderPlayerId);
   NullMessage* playerNameCnf = new NullMessage(MessageNumber::PLAYER_NAME_CNF);
+
   emit sendData(AddressedMessage(addressHeader, playerNameCnf));
 
-  LOG(INFO) << "SavingPlayerNameState: Received player name: " << playerNameCfgMessage.getPlayerName();
+  LOG(INFO) << "Received player name: " << playerNameCfgMessage.getPlayerName();
 }
