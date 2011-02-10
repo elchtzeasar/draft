@@ -5,10 +5,10 @@
 
 class NullMessage : public Message {
  public:
-  NullMessage(quint16 messageNumber);
+  NullMessage(const MessageNumber& messageNumber);
 
   virtual Message* clone();
-  static bool messageNumberIsAllowed(quint16 messageNumber);
+  static bool messageNumberIsAllowed(const MessageNumber& messageNumber);
 
  private:
   friend bool operator==(const NullMessage& lhs, const NullMessage& rhs);

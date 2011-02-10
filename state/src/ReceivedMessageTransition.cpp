@@ -11,7 +11,7 @@
 ReceivedMessageTransition::ReceivedMessageTransition(QObject* sender,
 						     QState* sourceState,
 						     QState* targetState,
-						     quint16 expectedMessageNumber)
+						     const MessageNumber& expectedMessageNumber)
   : QSignalTransition(sender, SIGNAL(dataReceived(const AddressedMessage&)), sourceState),
     expectedMessageNumber(expectedMessageNumber)
 {

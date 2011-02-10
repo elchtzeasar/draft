@@ -8,13 +8,13 @@
 
 #include <cassert>
 
-Message::Message(quint16 messageNumber) : messageNumber(messageNumber), unused(0) {}
+Message::Message(MessageNumber messageNumber) : messageNumber(messageNumber), unused(0) {}
 
-quint16 Message::getMessageNumber() const {
+MessageNumber Message::getMessageNumber() const {
   return messageNumber;
 }
 
-const char* Message::messageNumberToString(quint16 messageNumber) {
+const char* Message::messageNumberToString(const MessageNumber& messageNumber) {
   switch (messageNumber) {
   case NULL_MESSAGE:
     return "NullMessage";
@@ -88,6 +88,8 @@ bool operator==(const Message& lhs, const Message& rhs) {
     case PLAYER_NAME_CFG:
       return static_cast<const PlayerNameCfgMessage&>(lhs) ==
 	static_cast<const PlayerNameCfgMessage&>(rhs);
+    default:
+      assert(false && "Received message with unknown MessageNumber");
     }
   }
   return false;
@@ -109,7 +111,7 @@ QDataStream& operator<<(QDataStream& stream, const Message& message) {
 }
 
 QDataStream& operator>>(QDataStream& stream, Message*& message) {
-  quint16 messageNumber(0);
+  MessageNumber messageNumber(NO_MESSAGE);
   stream >> messageNumber;
   switch (messageNumber) {
     DESERIALIZE_MESSAGE_PTR(NULL_MESSAGE, NullMessage);

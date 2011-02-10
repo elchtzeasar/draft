@@ -6,7 +6,7 @@
 #include <cstring>
 #include <cstdlib>
 
-PlayerNameCfgMessage::PlayerNameCfgMessage(quint16 messageNumber) :
+PlayerNameCfgMessage::PlayerNameCfgMessage(const MessageNumber& messageNumber) :
   Message(messageNumber), unused(0), playerName(const_cast<char*>("default message")) {
   assert(messageNumberIsAllowed(messageNumber) && "Message number must be allowed!");
 }
@@ -21,7 +21,7 @@ Message* PlayerNameCfgMessage::clone() {
   return new PlayerNameCfgMessage(playerName);
 }
 
-bool PlayerNameCfgMessage::messageNumberIsAllowed(quint16 messageNumber) {
+bool PlayerNameCfgMessage::messageNumberIsAllowed(const MessageNumber& messageNumber) {
   return PLAYER_NAME_CFG == messageNumber;
 }
 

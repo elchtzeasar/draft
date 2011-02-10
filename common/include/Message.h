@@ -1,6 +1,8 @@
 #ifndef MESSAGE_H_
 #define MESSAGE_H_
 
+#include "MessageNumber.h"
+
 #include <QtGlobal>
 
 #include <iostream>
@@ -8,24 +10,14 @@
 
 class QDataStream;
 
-enum {
-  NULL_MESSAGE,
-  PLAYER_ID_CFG,
-  PLAYER_ID_CNF,
-  PLAYER_NAME_CFG,
-  PLAYER_NAME_CNF,
-
-  NO_MESSAGE = 0xff
-};
-
 class Message {
  public:
-  Message(quint16 messageNumber);
+  Message(MessageNumber messageNumber);
   virtual ~Message() {}
 
   virtual Message* clone() = 0;
 
-  quint16 getMessageNumber() const;
+  MessageNumber getMessageNumber() const;
   template<typename T>
   const T& to() const {
     assert(T::messageNumberIsAllowed(messageNumber) && "Casting message to wrong type!");
@@ -33,10 +25,10 @@ class Message {
   }
 
   // TODO: The message numbers should be a class containing a toString function instead:
-  static const char* messageNumberToString(quint16 messageNumber);
+  static const char* messageNumberToString(const MessageNumber& messageNumber);
 
  protected:
-  quint16 messageNumber;
+  MessageNumber messageNumber;
   // The following is needed to fill the class up to an even amount of 32 bits:
   const quint16 unused;
 

@@ -7,7 +7,7 @@
 
 using std::ostream;
 
-NullMessage::NullMessage(quint16 messageNumber) : Message(messageNumber) {
+NullMessage::NullMessage(const MessageNumber& messageNumber) : Message(messageNumber) {
   assert(messageNumberIsAllowed(messageNumber) && "Message number must be allowed!");
 }
 
@@ -15,7 +15,7 @@ Message* NullMessage::clone() {
   return new NullMessage(messageNumber);
 }
 
-bool NullMessage::messageNumberIsAllowed(quint16 messageNumber) {
+bool NullMessage::messageNumberIsAllowed(const MessageNumber& messageNumber) {
   return NULL_MESSAGE == messageNumber ||
          PLAYER_ID_CFG == messageNumber ||
          PLAYER_ID_CNF == messageNumber ||
