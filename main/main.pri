@@ -12,12 +12,8 @@ OBJECTS_DIR = ../objs
 MOC_DIR = ../mocs
 
 HEADERS += ../src/DraftApplication.h
-HEADERS += ../src/GuiDraftApplication.h
-HEADERS += ../src/ConsoleDraftApplication.h
 
 SOURCES += ../src/DraftApplication.cpp
-SOURCES += ../src/GuiDraftApplication.cpp
-SOURCES += ../src/ConsoleDraftApplication.cpp
 SOURCES += ../main.cpp
 
 DIR_PREFIX = ../..

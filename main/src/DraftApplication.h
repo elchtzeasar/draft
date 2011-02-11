@@ -1,43 +1,32 @@
 #ifndef DRAFT_APPLICATION_H_
 #define DRAFT_APPLICATION_H_
 
-#include "ConfigurationComponentFactory.h"
-#include "NetworkComponentFactoryImpl.h"
-
+#include <QCoreApplication>
 #include <Qt>
 #include <QObject>
-
-class ConfigurationComponent;
-class NetworkComponent;
-class StateMachineComponent;
-
 
 class DraftApplication : public QObject {
   Q_OBJECT
 
  public:
-  DraftApplication(QObject& ui);
+  DraftApplication(QCoreApplication& application,
+		   QObject& ui,
+		   QObject& configurationComponent,
+		   QObject& networkComponent,
+		   QObject& stateMachineComponent);
+
   virtual ~DraftApplication();
   void connectSlotsToSignals();
-  virtual int exec() = 0;
 
- public slots:
-  virtual void exit(int status) = 0;
-  virtual void start();
-
+  public slots:
+  void handleExit(int);
  protected:
-  void connect ( const QObject * sender,
-		 const char * signal,
-		 const QObject * receiver,
-		 const char * method,
-		 Qt::ConnectionType type = Qt::AutoConnection );
 
+  QCoreApplication& application;
   QObject& ui;
-  ConfigurationComponentFactory configurationComponentFactory;
-  ConfigurationComponent* configurationComponent;
-  NetworkComponentFactoryImpl networkComponentFactory;
-  NetworkComponent* networkComponent;
-  StateMachineComponent* stateMachineComponent;
+  QObject& configurationComponent;
+  QObject& networkComponent;
+  QObject& stateMachineComponent;
 };
 
 

@@ -65,7 +65,7 @@ void ConnectionImpl::socketError(QAbstractSocket::SocketError socketError) {
     break;
   case QAbstractSocket::ConnectionRefusedError:
     LOG(ERROR) << "The connection was refused by the peer. "
-	 << "Make sure the fortune server is running, "
+	 << "Make sure there is a server running, "
 	 << "and check that the host name and port "
 	 << "settings are correct.";
     break;
