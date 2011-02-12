@@ -24,9 +24,7 @@ NetworkComponent* NetworkComponentFactoryImpl::createComponent() {
 Connection* NetworkComponentFactoryImpl::createConnection(QTcpSocket* tcpSocket) {
   Connection* connection = new ConnectionImpl(PlayerId(nextPlayerId++), tcpSocket);
 
-  // NetworkComponent -> Connection
-  QObject::connect( networkComponent, SIGNAL(sendData(const AddressedMessage&)),
-		    connection, SLOT(handleSendData(const AddressedMessage&)) );
+  networkComponent->addConnection(*connection);
 
   // Connection -> NetworkComponent
   QObject::connect( connection, SIGNAL(connectedToDraft()),

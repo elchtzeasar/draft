@@ -31,7 +31,7 @@ const PlayerId& ConnectionImpl::getPlayerId() const {
   return playerId;
 }
 
-void ConnectionImpl::handleSendData(const AddressedMessage& message) {
+void ConnectionImpl::sendData(const AddressedMessage& message) const {
   QDataStream out(tcpSocket);
   out.setVersion(QDataStream::Qt_4_0);
 

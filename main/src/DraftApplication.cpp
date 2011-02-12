@@ -66,7 +66,7 @@ void DraftApplication::connectSlotsToSignals() {
 
   // StateMachine -> NetworkComponent
   connect( &stateMachineComponent, SIGNAL(sendData(const AddressedMessage&)),
-	   &networkComponent, SIGNAL(sendData(const AddressedMessage&)) );
+	   &networkComponent, SLOT(handleSendData(const AddressedMessage&)) );
 
   // ConfigurationComponent -> StateMachine
   connect( &configurationComponent, SIGNAL(configurationResponse(const PlayerId&, const QString)),

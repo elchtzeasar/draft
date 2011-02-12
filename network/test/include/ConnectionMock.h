@@ -15,9 +15,7 @@ class ConnectionMock : public Connection {
   MOCK_METHOD2(connectToHost, void(const QString& server, unsigned int port));
   MOCK_METHOD0(disconnectFromHost, void());
   MOCK_CONST_METHOD0(getPlayerId, const PlayerId&());
-
- public slots:
-  MOCK_METHOD1(handleSendData, void(const AddressedMessage& message));
+  MOCK_CONST_METHOD1(sendData, void(const AddressedMessage& message));
 
  protected slots:
   MOCK_METHOD0(readIncommingData, void());

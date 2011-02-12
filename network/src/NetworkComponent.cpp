@@ -10,12 +10,16 @@ using std::string;
 NetworkComponent::NetworkComponent(NetworkComponentFactory& componentFactory,
 				   ConnectionListener* connectionListener) 
   : componentFactory(componentFactory),
-    connectionListener(connectionListener) {}
+    connectionListener(connectionListener),
+    connection(NULL) {}
 
 NetworkComponent::~NetworkComponent() {
   delete connectionListener;
 }
 
+void NetworkComponent::addConnection(const Connection& connection) {
+  this->connection = &connection;
+}
 void NetworkComponent::handleHostDraft(unsigned int port) {
   connectionListener->listen(port);
 }
@@ -25,3 +29,6 @@ void NetworkComponent::handleConnectToDraft(const QString& hostName, unsigned in
   connection->connectToHost(hostName, port);
 }
 
+void NetworkComponent::handleSendData(const AddressedMessage& message) {
+  connection->sendData(message);
+}

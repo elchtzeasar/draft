@@ -17,7 +17,7 @@ class ConnectionImpl : public Connection {
   const PlayerId& getPlayerId() const;
 
  public slots:
-  virtual void handleSendData(const AddressedMessage& message);
+  virtual void sendData(const AddressedMessage& message) const;
 
  protected slots:
   void readIncommingData();
