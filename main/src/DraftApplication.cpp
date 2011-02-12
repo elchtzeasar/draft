@@ -37,14 +37,14 @@ void DraftApplication::connectSlotsToSignals() {
 
   // UI -> ConfigurationComponent:
   connect( &ui, SIGNAL(setPlayerName(const PlayerId&, QString)),
-	   &configurationComponent, SLOT(setPlayerName(const PlayerId&, QString)) );
+	   &configurationComponent, SLOT(handleSetPlayerName(const PlayerId&, QString)) );
   connect( &ui, SIGNAL(configurationRequest(const PlayerId&)),
-	   &configurationComponent, SLOT(configurationRequest(const PlayerId&)) );
+	   &configurationComponent, SLOT(handleConfigurationRequest(const PlayerId&)) );
   connect( &ui, SIGNAL(exit(int)),
 	   &configurationComponent, SLOT(handleExit(int)) );
   // UI <- ConfigurationComponent:
   connect( &configurationComponent, SIGNAL(configurationResponse(const PlayerId&, const QString)),
-	   &ui, SLOT(configurationResponse(const PlayerId&, const QString)) );
+	   &ui, SLOT(handleConfigurationResponse(const PlayerId&, const QString)) );
 
   // UI -> DraftApplication:
 //connect( &application, SIGNAL(aboutToQuit()),
@@ -60,9 +60,9 @@ void DraftApplication::connectSlotsToSignals() {
 
   // StateMachine -> ConfigurationComponent
   connect( &stateMachineComponent, SIGNAL(configurationRequest(const PlayerId&)),
-	   &configurationComponent, SLOT(configurationRequest(const PlayerId&)) );
+	   &configurationComponent, SLOT(handleConfigurationRequest(const PlayerId&)) );
   connect( &stateMachineComponent, SIGNAL(setOwnPlayerId(const PlayerId&)),
-	   &configurationComponent, SLOT(setOwnPlayerId(const PlayerId&)) );
+	   &configurationComponent, SLOT(handleSetOwnPlayerId(const PlayerId&)) );
 
   // StateMachine -> NetworkComponent
   connect( &stateMachineComponent, SIGNAL(sendData(const AddressedMessage&)),

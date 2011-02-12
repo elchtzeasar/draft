@@ -19,17 +19,17 @@ void ConfigurationComponent::handleExit(int) {
   configurationLoader->save();
 }
 
-void ConfigurationComponent::configurationRequest(const PlayerId& playerId) {
+void ConfigurationComponent::handleConfigurationRequest(const PlayerId& playerId) {
   const PlayerContext& playerContext = configurationManager->getPlayerContext(playerId);
   const QString playerName(playerContext.getPlayerName().c_str());
 
   emit configurationResponse(playerId, playerName);
 }
 
-void ConfigurationComponent::setOwnPlayerId(const PlayerId& playerId) {
+void ConfigurationComponent::handleSetOwnPlayerId(const PlayerId& playerId) {
   configurationManager->setOwnPlayerId(playerId);
 }
 
-void ConfigurationComponent::setPlayerName(const PlayerId& playerId, QString playerName) {
+void ConfigurationComponent::handleSetPlayerName(const PlayerId& playerId, QString playerName) {
   configurationManager->setPlayerContext(playerId, playerName.toStdString());
 }

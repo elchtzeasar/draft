@@ -53,11 +53,11 @@ TEST_F(ConfigurationComponentTest, shouldRequestPlayerContextFromPlayerManagerWh
   EXPECT_CALL(*configurationManager, getPlayerContext(PLAYER_ID)).
     WillOnce(ReturnRef(playerContext));
 
-  configurationComponent.configurationRequest(PLAYER_ID);
+  configurationComponent.handleConfigurationRequest(PLAYER_ID);
 }
 
 TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithCorrectConfigurationResponse) {
-  configurationComponent.configurationRequest(PLAYER_ID);
+  configurationComponent.handleConfigurationRequest(PLAYER_ID);
 
   ASSERT_EQ(1, responseSpy.count());
   QList<QVariant> arguments = responseSpy.takeFirst();
@@ -68,14 +68,14 @@ TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithCorrec
 TEST_F(ConfigurationComponentTest, shouldUpdateOwnPlayerIdInManagerUponSetOwnPlayerId) {
   EXPECT_CALL(*configurationManager, setOwnPlayerId(PLAYER_ID));
 
-  configurationComponent.setOwnPlayerId(PLAYER_ID);
+  configurationComponent.handleSetOwnPlayerId(PLAYER_ID);
 }
 
 TEST_F(ConfigurationComponentTest, shouldSetPlayerContextInManagerOnSetPlayerName) {
   QString playerName("player name");
   EXPECT_CALL(*configurationManager, setPlayerContext(PLAYER_ID, testing::StrEq(playerName.toStdString())));
 
-  configurationComponent.setPlayerName(PLAYER_ID, playerName);
+  configurationComponent.handleSetPlayerName(PLAYER_ID, playerName);
 }
 
 TEST_F(ConfigurationComponentTest, shouldSaveConfigurationUponExit) {

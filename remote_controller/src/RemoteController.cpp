@@ -41,7 +41,8 @@ void RemoteController::run() {
   }
 }
 
-void RemoteController::configurationResponse(const PlayerId& playerId, const QString playerName) {
+void RemoteController::handleConfigurationResponse(const PlayerId& playerId,
+						   const QString playerName) {
   outputStream << "Player name: " << playerName.toStdString() << endl;
 }
 

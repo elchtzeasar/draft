@@ -22,9 +22,9 @@ class ConfigurationComponent : public QObject {
 
  public slots:
   void handleExit(int);
-  void configurationRequest(const PlayerId& playerId);
-  void setOwnPlayerId(const PlayerId& playerId);
-  void setPlayerName(const PlayerId& playerId, QString playerName);
+  void handleConfigurationRequest(const PlayerId& playerId);
+  void handleSetOwnPlayerId(const PlayerId& playerId);
+  void handleSetPlayerName(const PlayerId& playerId, QString playerName);
 
  signals:
   void configurationResponse(const PlayerId& playerId, const QString playerName);
