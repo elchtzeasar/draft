@@ -2,6 +2,7 @@
     error( Couldnt find the test_main.pri file! )
 }
 
+LIBS += -lcommoncomponenttest
 LIBS += -lstatecomponenttest
 LIBS += -lcommon -lstate
 

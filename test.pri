@@ -37,9 +37,9 @@ DIR_PREFIX = ../../..
 }
 
 ! include( ../include/files.pri ) {
-    warning( Couldnt find the public test files.pri file! )
+    warning( Couldnt find the test/include/files.pri file! )
 }
 
 ! include( ../src/files.pri ) {
-    warning( Couldnt find the private test files.pri file! )
+    warning( Couldnt find the test/src/files.pri file! )
 }
