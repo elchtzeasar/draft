@@ -1,0 +1,25 @@
+sudo apt-get install libqt4-dev
+
+wget http://googlemock.googlecode.com/files/gmock-1.5.0.tar.gz
+tar -xzvf gmock-1.5.0.tar.gz 
+cd gmock-1.5.0/
+./configure && make 
+sudo make install
+
+wget http://google-glog.googlecode.com/files/glog-0.3.1-1.tar.gz
+tar -xzvf glog-0.3.1-1.tar.gz 
+cd glog-0.3.1/
+make && sudo make install
+make
+
+wget http://sourceforge.net/projects/boost/files/boost/1.44.0/boost_1_44_0.tar.gz/download
+mv download boost.tgz
+tar -xzvf boost.tgz 
+sudo mv boost_1_44_0/ /usr/src/
+
+gem install rainbow
+gem install shoulda
+
+qmake draft.pro -o Makefile
+
+rm bin/* ; make && rake test
