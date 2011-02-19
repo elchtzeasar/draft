@@ -11,9 +11,6 @@ INCLUDEPATH += ../../state/include
 OBJECTS_DIR = ../objs
 MOC_DIR = ../mocs
 
-HEADERS += ../src/DraftApplication.h
-
-SOURCES += ../src/DraftApplication.cpp
 SOURCES += ../main.cpp
 
 DIR_PREFIX = ../..
