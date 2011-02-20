@@ -1,15 +1,16 @@
 #include "ConfigurationComponentStub.h"
 
 #include <sstream>
+#include <glog/logging.h>
 
 using std::ostringstream;
+using std::string;
 
 ConfigurationComponentStub::ConfigurationComponentStub() : ownPlayerId(PlayerId::NONE) {}
 
-void ConfigurationComponentStub::handleExit(int) {
-}
+ConfigurationComponentStub::~ConfigurationComponentStub() {}
 
-void ConfigurationComponentStub::handleConfigurationRequest(const PlayerId& playerId) {
+string ConfigurationComponentStub::getPlayerName(const PlayerId& playerId) const {
   ostringstream s;
 
   if (playerId == ownPlayerId) {
@@ -17,7 +18,19 @@ void ConfigurationComponentStub::handleConfigurationRequest(const PlayerId& play
   } else {
     s << "Player #" << playerId;
   }
-  sendConfigurationResponse(playerId, s.str().c_str());
+
+  return s.str();
+}
+ 
+void ConfigurationComponentStub::sendConfigurationResponse(const PlayerId& playerId, const QString playerName) {
+  emit configurationResponse(playerId, playerName);
+}
+
+void ConfigurationComponentStub::handleExit(int) {
+}
+
+void ConfigurationComponentStub::handleConfigurationRequest(const PlayerId& playerId) {
+  sendConfigurationResponse(playerId, getPlayerName(playerId).c_str());
 }
 
 void ConfigurationComponentStub::handleSetOwnPlayerId(const PlayerId& playerId) {
@@ -25,8 +38,5 @@ void ConfigurationComponentStub::handleSetOwnPlayerId(const PlayerId& playerId) 
 }
 
 void ConfigurationComponentStub::handleSetPlayerName(const PlayerId& playerId, QString playerName) {
-}
- 
-void ConfigurationComponentStub::sendConfigurationResponse(const PlayerId& playerId, const QString playerName) {
-  emit configurationResponse(playerId, playerName);
+  LOG(WARNING) << "handleSetPlayerName(" << playerId << ", " << playerName.toStdString() << ") called, not doing anything...";
 }

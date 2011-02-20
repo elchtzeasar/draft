@@ -15,6 +15,7 @@ class NetworkComponentStub : public QObject {
   Q_OBJECT
 
  public:
+  ~NetworkComponentStub();
   void sendConnectedToDraft();
   void sendClientConnected(const PlayerId& playerId);
   void sendDataReceived(const AddressedMessage& message);

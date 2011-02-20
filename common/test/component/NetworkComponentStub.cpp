@@ -1,10 +1,14 @@
 #include "NetworkComponentStub.h"
 
+#include <QString>
 #include <QTest>
+#include <glog/logging.h>
 #include <algorithm>
 
 using std::find;
 using std::vector;
+
+NetworkComponentStub::~NetworkComponentStub() {}
 
 void NetworkComponentStub::sendConnectedToDraft() {
   emit connectedToDraft();
@@ -19,9 +23,14 @@ void NetworkComponentStub::sendDataReceived(const AddressedMessage& message) {
 }
 
 void NetworkComponentStub::handleHostDraft(unsigned int port) {
+  LOG(WARNING) << "handleHostDraft(" << port 
+	       << ") called, not doing anything...";
 }
 
 void NetworkComponentStub::handleConnectToDraft(const QString& hostName, unsigned int port) {
+  LOG(WARNING) << "handleConnectToDraftDraft(" << hostName.toStdString()
+	       << ", " << port 
+	       << ") called, not doing anything...";
 }
 
 void NetworkComponentStub::handleSendData(const AddressedMessage& message) {

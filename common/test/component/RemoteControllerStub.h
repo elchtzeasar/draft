@@ -10,7 +10,7 @@ class RemoteControllerStub : public QObject {
   Q_OBJECT
 
  public:
-  virtual ~RemoteControllerStub() {}
+  virtual ~RemoteControllerStub();
 
   void run();
   

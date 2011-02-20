@@ -1,5 +1,12 @@
 #include "RemoteControllerStub.h"
 
+#include "PlayerId.h"
+
+#include <QString>
+#include <glog/logging.h>
+
+RemoteControllerStub::~RemoteControllerStub() {}
+
 void RemoteControllerStub::run() {
 }
   
@@ -25,4 +32,6 @@ void RemoteControllerStub::sendConfigurationRequest(const PlayerId& playerId) {
 
 
 void RemoteControllerStub::handleConfigurationResponse(const PlayerId& playerId, const QString playerName) {
+  LOG(WARNING) << "handleConfigurationResponse(" << playerId << ", " << playerName.toStdString() 
+	       << ") called, not doing anything...";
 }

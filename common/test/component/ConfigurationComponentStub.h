@@ -5,13 +5,17 @@
 
 #include <QObject>
 #include <QString>
+#include <string>
 
 class ConfigurationComponentStub : public QObject {
   Q_OBJECT
 
  public:
   ConfigurationComponentStub();
+  virtual ~ConfigurationComponentStub();
   void sendConfigurationResponse(const PlayerId& playerId, const QString playerName);
+
+  std::string getPlayerName(const PlayerId& playerId) const;
 
  public slots:
   void handleExit(int);
