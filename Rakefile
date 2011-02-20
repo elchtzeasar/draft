@@ -37,20 +37,44 @@ namespace 'statemachine' do
   end
 end
 
+namespace 'clean' do
+  desc 'remove mocs'
+  task :moc do
+    puts 'Removing moc files'
+    `find . -name moc_* | xargs rm`
+  end
+
+  desc 'remote object (.o) files'
+  task :object do
+    puts 'Removing .o files'
+    `find . -name *.o | xargs rm`
+  end
+
+  desc 'remove binary files'
+  task :binaries do
+    puts 'Removing binaries'
+    `rm bin/*`
+  end
+
+  desc 'remove library files'
+  task :library do
+    puts 'Removing libs'
+    `rm libs/*`
+  end
+
+  desc 'make clean'
+  task :make do
+    puts 'make clean...'
+    `make clean`
+  end
+
+  desc 'remove Makefiles'
+  task :makefiles do
+    puts 'Removing Makefiles'
+    puts `find . -name Makefile | xargs rm`
+  end
+end
+
 desc 'Clean all generated files'
-task :clean do
-  puts 'Removing moc files'
-  `find . -name moc_* | xargs rm`
-
-  puts 'Removing .o files'
-  `find . -name *.o | xargs rm`
-
-  puts 'Removing binaries'
-  `rm bin/*`
-
-  puts 'Removing libs'
-  `rm libs/*`
-
-  puts 'make clean...'
-  `make clean`
+task :clean => ['clean:moc', 'clean:object', 'clean:binaries', 'clean:library', 'clean:make', 'clean:makefiles'] do
 end
