@@ -5,4 +5,5 @@ TARGET = statecomponenttest
 }
 
 INCLUDEPATH += ../../../common/test/component
+
 SOURCES += StateMachineComponentClientTest.cpp

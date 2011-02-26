@@ -8,7 +8,9 @@ TARGET = commoncomponenttest
 HEADERS += ConfigurationComponentStub.h
 HEADERS += NetworkComponentStub.h
 HEADERS += RemoteControllerStub.h
+HEADERS += StateChangeWaiter.h
 
 SOURCES += ConfigurationComponentStub.cpp
 SOURCES += NetworkComponentStub.cpp
 SOURCES += RemoteControllerStub.cpp
+SOURCES += StateChangeWaiter.cpp
