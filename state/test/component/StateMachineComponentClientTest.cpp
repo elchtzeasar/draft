@@ -68,17 +68,17 @@ StateMachineComponentClientTest::StateMachineComponentClientTest() :
 void StateMachineComponentClientTest::startComponentAndWait() {
   stateMachineComponent.start();
 
-  ASSERT_TRUE(stateChangeWaiter.wait());
+  ASSERT_TRUE(stateChangeWaiter.wait("ChooseClientOrServer"));
 }
 
 void StateMachineComponentClientTest::connectToDraftAndWait() {
   remoteController.sendConnectToDraft(SOME_STRING, DONT_CARE);
 
-  ASSERT_TRUE(stateChangeWaiter.wait());
+  ASSERT_TRUE(stateChangeWaiter.wait("Client::WaitingForConnection"));
 
   networkComponent.sendConnectedToDraft();
 
-  ASSERT_TRUE(stateChangeWaiter.wait());
+  ASSERT_TRUE(stateChangeWaiter.wait("Client::Configuring::ReceivingPlayerId"));
 }
 
 void StateMachineComponentClientTest::sendPlayerIdAndWait() {
@@ -88,7 +88,7 @@ void StateMachineComponentClientTest::sendPlayerIdAndWait() {
 
   networkComponent.sendDataReceived(addressedPlayerIdCfg);
 
-  ASSERT_TRUE(stateChangeWaiter.wait());
+  ASSERT_TRUE(stateChangeWaiter.wait("Client::Configuring::SavingPlayerId"));
 }
 
 void StateMachineComponentClientTest::sendPlayerNameAndWait() {
@@ -97,7 +97,7 @@ void StateMachineComponentClientTest::sendPlayerNameAndWait() {
 
   networkComponent.sendDataReceived(playerNameCfg);
 
-  ASSERT_TRUE(stateChangeWaiter.wait());
+  ASSERT_TRUE(stateChangeWaiter.wait("Client::Configuring::SavingPlayerName"));
 }
 
 TEST_F(StateMachineComponentClientTest, shouldSendPlayerIdCnfWhenConnectedToDraftAndPlayerIdCfgReceived) {

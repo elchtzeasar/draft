@@ -2,6 +2,7 @@
 #define STATE_CHANGE_WAITER_H_
 
 #include <QObject>
+#include <vector>
 
 class StateChangeWaiter : public QObject {
   Q_OBJECT
@@ -9,13 +10,15 @@ class StateChangeWaiter : public QObject {
  public:
   StateChangeWaiter(const QObject& stateMachineComponent);
   virtual ~StateChangeWaiter();
-  bool wait();
+  bool wait(const QString& stateName);
 
  private slots:
-  void handleStateChanged();
+  void handleStateChanged(const QString& stateName);
 
  private:
-  bool stateChanged;
+  bool stateEntered(const QString& stateName);
+
+  std::vector<QString> enteredStates;
 };
 
 #endif

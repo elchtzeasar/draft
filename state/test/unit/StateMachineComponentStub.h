@@ -1,4 +1,5 @@
 #include <QObject>
+#include <QString>
 
 class StateMachineComponentStub : public QObject {
   Q_OBJECT
@@ -8,7 +9,7 @@ class StateMachineComponentStub : public QObject {
   virtual ~StateMachineComponentStub();
 
  signals:
-  void stateChanged();
+  void stateChanged(const QString& stateName);
 
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState);

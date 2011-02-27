@@ -45,4 +45,6 @@ void StateMachineComponent::setActiveState(QString newState) {
   LOG(INFO) << "StateMachineComponent: STATE CHANGE " << activeState.toStdString().c_str()
 	    << " -> " << newState.toStdString().c_str();
   activeState = newState;
+
+  emit stateChanged(activeState);
 }

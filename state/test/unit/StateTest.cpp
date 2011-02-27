@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSignalSpy>
 #include <QStateMachine>
+#include <QTest>
 #include <QVariant>
 #include <string>
 #include <sstream>
@@ -26,18 +27,17 @@ protected:
     State parent;
     State* state;
     QStateMachine* stateMachine;
-    QSignalSpy stateChangedSpy;
     static const char* NAME;
     static const char* PARENT_NAME;
     static const char* PROPERTY_NAME;
     static const QVariant PROPERTY_VALUE;
+    static const int MAX_WAIT;
 };
 
 StateTest::StateTest() :
     parent(&component, NULL, PARENT_NAME, false),
     state(NULL),
-    stateMachine(NULL),
-    stateChangedSpy(&component, SIGNAL(stateChanged())) {
+    stateMachine(NULL) {
 }
 
 StateTest::~StateTest() {
@@ -117,29 +117,12 @@ TEST_F(StateTest, shouldSetPropertyInSelfOnFindAndSetPropertyWhenStateHasPropert
               state->findProperty(PROPERTY_NAME).toInt());
 }
 
-#include <QTest>
-TEST_F(StateTest, shouldEmitStateChangedWhenStateEntered) {
-    createStateWithoutParent();
-
-    addStateToStateMachine();
-
-    const int MAX_WAIT = 1000;
-    for (int waits = 0; waits < MAX_WAIT; ++waits) {
-        QTest::qWait(1);
-        if (stateChangedSpy.count() > 0)
-            break;
-    }
-
-    ASSERT_EQ(1, stateChangedSpy.count());
-}
-
 TEST_F(StateTest, shouldSetNameInComponentWhenStateEntered) {
     const string expectedActiveState(NAME);
     createStateWithoutParent();
 
     addStateToStateMachine();
 
-    const int MAX_WAIT = 100;
     for (int waits = 0; waits < MAX_WAIT; ++waits) {
         QTest::qWait(1);
         if (component.property("activeState").toString().toStdString() == expectedActiveState)
@@ -154,3 +137,4 @@ const char* StateTest::NAME("[state name]");
 const char* StateTest::PARENT_NAME("[parent name]");
 const char* StateTest::PROPERTY_NAME("[property name]");
 const QVariant StateTest::PROPERTY_VALUE(101);
+const int StateTest::MAX_WAIT=100;

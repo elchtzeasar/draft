@@ -34,7 +34,7 @@ class StateMachineComponent : public QObject {
 
   void setOwnPlayerId(const PlayerId& playerId);
 
-  void stateChanged();
+  void stateChanged(const QString& stateName);
 
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState);
