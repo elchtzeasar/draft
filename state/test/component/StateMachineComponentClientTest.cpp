@@ -47,8 +47,6 @@ class StateMachineComponentClientTest : public testing::Test {
 
   StateChangeWaiter stateChangeWaiter;
 
-  const AddressedMessage addressedPlayerIdCfg;
-
   void startComponentAndWait();
   void connectToDraftAndWait();
   void sendPlayerIdAndWait();
@@ -60,9 +58,7 @@ StateMachineComponentClientTest::StateMachineComponentClientTest() :
   application(QCoreApplication::instance()),
   draftApplication(*application, remoteController, configurationComponent,
 		   networkComponent, stateMachineComponent),
-  stateChangeWaiter(stateMachineComponent),
-  addressedPlayerIdCfg(new AddressHeader(PlayerId::SERVER, ownPlayerId),
-		       new NullMessage(MessageNumber::PLAYER_ID_CFG)) {
+  stateChangeWaiter(stateMachineComponent) {
     qRegisterMetaType<AddressedMessage>("AddressedMessage");
     qRegisterMetaType<PlayerId>("PlayerId");
 
@@ -86,6 +82,10 @@ void StateMachineComponentClientTest::connectToDraftAndWait() {
 }
 
 void StateMachineComponentClientTest::sendPlayerIdAndWait() {
+  const AddressedMessage addressedPlayerIdCfg(
+      new AddressHeader(PlayerId::SERVER, ownPlayerId),
+      new NullMessage(MessageNumber::PLAYER_ID_CFG));
+
   networkComponent.sendDataReceived(addressedPlayerIdCfg);
 
   ASSERT_TRUE(stateChangeWaiter.wait());

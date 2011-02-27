@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = component
+SUBDIRS = unit component

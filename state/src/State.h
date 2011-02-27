@@ -7,22 +7,21 @@ class QString;
 
 class State : public QState {
  public:
-  State(QObject* component, State* parent, const char* name, bool assignName = true);
+  State(QObject* stateMachineComponent, State* parent, const char* name, bool assignName = true);
   virtual ~State() {}
 
   const QString& getName() const;
 
- protected:
   QVariant findProperty(const char* name) const;
   bool findAndSetProperty(const char* name, const QVariant& value);
-
-  State& parent;
-  QString name;
-  QString nameVariant;
 
  private:
   State(const State&);
   State& operator=(State&);
+
+  State& parent;
+  QString name;
+  QString nameVariant;
 };
 
 #endif // STATE_H_

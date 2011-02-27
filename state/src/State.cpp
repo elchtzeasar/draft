@@ -3,7 +3,7 @@
 #include <QString>
 #include <QVariant>
 
-State::State(QObject* component, State* parent, const char* name, bool assignName) :
+State::State(QObject* stateMachineComponent, State* parent, const char* name, bool assignName) :
     QState(parent),
     parent(*parent),
     name(name),
@@ -13,10 +13,10 @@ State::State(QObject* component, State* parent, const char* name, bool assignNam
   }
 
   if (assignName)
-    assignProperty(component, "activeState", this->name);
+    assignProperty(stateMachineComponent, "activeState", this->name);
 
   connect( this, SIGNAL(entered()),
-	   component, SIGNAL(stateChanged()) );
+	   stateMachineComponent, SIGNAL(stateChanged()) );
 }
 
 const QString& State::getName() const {
