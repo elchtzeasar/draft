@@ -111,25 +111,25 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerIdCnfWhenConnectedToDraf
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerIdCnf));
 }
 
-//TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCfgWhenConnectedToDraftAndPlayerIdCfgReceived) {
-//  AddressedMessage expectedPlayerNameCfg(new AddressHeader(ownPlayerId, PlayerId::SERVER),
-//					 new PlayerNameCfgMessage(configurationComponent.getPlayerName(ownPlayerId).c_str()));
-//
-//  startComponentAndWait();
-//  connectToDraftAndWait();
-//  sendPlayerIdAndWait();
-//
-//  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCfg));
-//}
-//
-//TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDraftAndPlayerNameCfgReceived) {
-//  AddressedMessage expectedPlayerNameCnf(new AddressHeader(ownPlayerId, otherPlayerId),
-//					 new NullMessage(MessageNumber::PLAYER_NAME_CNF));
-//
-//  startComponentAndWait();
-//  connectToDraftAndWait();
-//  sendPlayerIdAndWait();
-//  sendPlayerNameAndWait();
-//
-//  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCnf));
-//}
+TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCfgWhenConnectedToDraftAndPlayerIdCfgReceived) {
+  AddressedMessage expectedPlayerNameCfg(new AddressHeader(ownPlayerId, PlayerId::SERVER),
+                                         new PlayerNameCfgMessage(configurationComponent.getPlayerName(ownPlayerId).c_str()));
+  startComponentAndWait();
+  connectToDraftAndWait();
+  sendPlayerIdAndWait();
+
+  LOG(INFO) << "Expected message: " << expectedPlayerNameCfg;
+  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCfg));
+}
+ 
+TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDraftAndPlayerNameCfgReceived) {
+  AddressedMessage expectedPlayerNameCnf(new AddressHeader(ownPlayerId, otherPlayerId),
+                                         new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+
+  startComponentAndWait();
+  connectToDraftAndWait();
+  sendPlayerIdAndWait();
+  sendPlayerNameAndWait();
+
+  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCnf));
+}

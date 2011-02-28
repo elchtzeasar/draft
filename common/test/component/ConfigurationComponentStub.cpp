@@ -13,11 +13,7 @@ ConfigurationComponentStub::~ConfigurationComponentStub() {}
 string ConfigurationComponentStub::getPlayerName(const PlayerId& playerId) const {
   ostringstream s;
 
-  if (playerId == ownPlayerId) {
-    s << "Own player";
-  } else {
-    s << "Player #" << playerId;
-  }
+  s << "Player #" << playerId;
 
   return s.str();
 }
