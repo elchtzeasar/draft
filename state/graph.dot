@@ -48,7 +48,7 @@ digraph G {
       }
     } 
 
-    listeningForConnections -> sendingPlayerId [style=dotted];
+    listeningForConnections -> sendingPlayerId [style=dotted, label = "clientConnected"];
     waitingForOtherPlayers -> TBI_server [label = "startDraft"];
   }
 

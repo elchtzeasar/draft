@@ -1,16 +1,20 @@
 sudo apt-get install libqt4-dev
 
+# Does not seem to work currently:
+wget http://google-gflags.googlecode.com/files/gflags-1.5.tar.gz
+tar -xzvf gflags-1.5.tar.gz
+cd gflags-1.5/
+./configure && make && sudo make install
+
 wget http://googlemock.googlecode.com/files/gmock-1.5.0.tar.gz
 tar -xzvf gmock-1.5.0.tar.gz 
 cd gmock-1.5.0/
-./configure && make 
-sudo make install
+./configure && make  &&sudo make install
 
 wget http://google-glog.googlecode.com/files/glog-0.3.1-1.tar.gz
 tar -xzvf glog-0.3.1-1.tar.gz 
 cd glog-0.3.1/
-make && sudo make install
-make
+./configure && make && sudo make install
 
 sudo emacs /etc/ld.so.conf
 # add: /usr/local/lib

@@ -7,3 +7,4 @@ TARGET = statecomponenttest
 INCLUDEPATH += ../../../common/test/component
 
 SOURCES += StateMachineComponentClientTest.cpp
+SOURCES += StateMachineComponentServerTest.cpp

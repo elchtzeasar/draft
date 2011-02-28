@@ -1,5 +1,7 @@
 #include "NetworkComponentStub.h"
 
+#include "vlog.h"
+
 #include <QString>
 #include <QTest>
 #include <glog/logging.h>
@@ -34,9 +36,8 @@ void NetworkComponentStub::handleConnectToDraft(const QString& hostName, unsigne
 }
 
 void NetworkComponentStub::handleSendData(const AddressedMessage& message) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "handleSendData(" << message << ')';
   messages.push_back(message);
-
-  messageReceived = true;
 }
 
 bool NetworkComponentStub::waitForSendData(const AddressedMessage& message) {
@@ -47,7 +48,7 @@ bool NetworkComponentStub::waitForSendData(const AddressedMessage& message) {
   while (waits < MAX_WAITS && !messageFound) {
     ++waits;
     // Wait until a message has been received
-    for (; waits < MAX_WAITS && !messageReceived; ++waits)
+    for (; waits < MAX_WAITS; ++waits)
       QTest::qWait(1);
 
     vector<AddressedMessage>::iterator it =
@@ -56,7 +57,6 @@ bool NetworkComponentStub::waitForSendData(const AddressedMessage& message) {
     messageFound = (it != messages.end());
   }
 
-  messageReceived = false;
   return messageFound;
 }
 

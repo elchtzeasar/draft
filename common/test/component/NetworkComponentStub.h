@@ -32,7 +32,6 @@ class NetworkComponentStub : public QObject {
   void dataReceived(const AddressedMessage& message);
 
  private:
-  bool messageReceived;
   std::vector<AddressedMessage> messages;
 };
 
