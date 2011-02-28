@@ -15,6 +15,7 @@ CONFIG += create_prl debug
 # from the source files.
 MOC_DIR = ../mocs
 DESTDIR = ../../libs
+QMAKE_RPATH = $DESTDIR
 OBJECTS_DIR = ../objs
 
 DIR_PREFIX = ../..

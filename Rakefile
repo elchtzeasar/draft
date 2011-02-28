@@ -5,12 +5,12 @@ success = true
 namespace 'test' do
   desc 'Run unit tests'
   task :unit do
-    success = success && Kernel.system("env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:#{pwd}/libs bin/unit_tests")
+    success = success && Kernel.system("bin/unit_tests")
   end
 
   desc 'Run component tests'
   task :component do
-    success = success && Kernel.system("env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:#{pwd}/libs bin/component_tests")
+    success = success && Kernel.system("bin/component_tests")
   end
 
   desc 'Run systems tests'
