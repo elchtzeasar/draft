@@ -15,7 +15,7 @@ digraph G {
       receivingPlayerId -> savingPlayerId [label = "received: PlayerIdCfg"];
       savingPlayerId -> requestingName_client;
       requestingName_client -> sendingName_client [label = "configurationResponse"];
-      sendingName_client -> receivingPlayerName;
+      sendingName_client -> receivingPlayerName [label = "received PlayerNameCnf"];
       receivingPlayerName -> savingPlayerName_client [label = "received: PlayerNameCfg"];
       savingPlayerName_client -> receivingPlayerName;
     }

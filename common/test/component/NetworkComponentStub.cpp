@@ -1,5 +1,6 @@
 #include "NetworkComponentStub.h"
 
+#include "PlayerId.h"
 #include "vlog.h"
 
 #include <QString>
@@ -17,10 +18,12 @@ void NetworkComponentStub::sendConnectedToDraft() {
 }
 
 void NetworkComponentStub::sendClientConnected(const PlayerId& playerId) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendClientConnected(" << playerId << ')';
   emit clientConnected(playerId);
 }
 
 void NetworkComponentStub::sendDataReceived(const AddressedMessage& message) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendDataReceived(" << message << ')';
   emit dataReceived(message);
 }
 

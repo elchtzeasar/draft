@@ -1,6 +1,7 @@
 #include "RemoteControllerStub.h"
 
 #include "PlayerId.h"
+#include "vlog.h"
 
 #include <QString>
 #include <glog/logging.h>
@@ -15,18 +16,24 @@ void RemoteControllerStub::sendExit(int status) {
 }
 
 void RemoteControllerStub::sendHostDraft(unsigned int port) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendHostDraft(port=" << port << ')';
   emit hostDraft(port);
 }
 
 void RemoteControllerStub::sendConnectToDraft(const QString& hostName, unsigned int port) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendHostDraft(hostName=" << hostName.toStdString() << ", "
+                              << "port=" << port << ')';
   emit connectToDraft(hostName, port);
 }
 
 void RemoteControllerStub::sendSetPlayerName(const PlayerId& playerId, QString playerName) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendHostDraft(playerId=" << playerId << ", "
+                              << "playerName=" << playerName.toStdString() << ')';
   emit setPlayerName(playerId, playerName);
 }
 
 void RemoteControllerStub::sendConfigurationRequest(const PlayerId& playerId) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendHostDraft(playerId=" << playerId << ')';
   emit configurationRequest(playerId);
 }
 

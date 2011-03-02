@@ -1,5 +1,7 @@
 #include "ConfigurationComponentStub.h"
 
+#include "vlog.h"
+
 #include <sstream>
 #include <glog/logging.h>
 
@@ -19,6 +21,8 @@ string ConfigurationComponentStub::getPlayerName(const PlayerId& playerId) const
 }
  
 void ConfigurationComponentStub::sendConfigurationResponse(const PlayerId& playerId, const QString playerName) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendConfigurationResponse(playerId=" << playerId
+                              << ", playerName=" << playerName.toStdString() << ')';
   emit configurationResponse(playerId, playerName);
 }
 

@@ -26,7 +26,7 @@ class RemoteController : public QThread {
 
  public slots:
   void handleConfigurationResponse(const PlayerId& playerId, const QString playerName);
-  
+
  private:
   void sendHostDraft();
   void connectToDraft();

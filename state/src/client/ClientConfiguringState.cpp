@@ -36,10 +36,12 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   new ReceivedMessageTransition(
     component, receivingPlayerId, savingPlayerId, MessageNumber::PLAYER_ID_CFG);
   savingPlayerId->addTransition(requestingName);
+
   requestingName->addTransition(
     component, SIGNAL(configurationResponse(const PlayerId&, const QString)), sendingName);
 
-  sendingName->addTransition(receivingPlayerName);
+  new ReceivedMessageTransition(
+    component, sendingName, receivingPlayerName, MessageNumber::PLAYER_NAME_CNF);
 
   new ReceivedMessageTransition(
     component, receivingPlayerName, savingPlayerName, MessageNumber::PLAYER_NAME_CFG);

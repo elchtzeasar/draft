@@ -50,6 +50,7 @@ class StateMachineComponentClientTest : public testing::Test {
   void startComponentAndWait();
   void connectToDraftAndWait();
   void sendPlayerIdAndWait();
+  void confirmPlayerNameAndWait();
   void sendPlayerNameAndWait();
 };
 
@@ -91,6 +92,15 @@ void StateMachineComponentClientTest::sendPlayerIdAndWait() {
   ASSERT_TRUE(stateChangeWaiter.wait("Client::Configuring::SavingPlayerId"));
 }
 
+void StateMachineComponentClientTest::confirmPlayerNameAndWait() {
+  const AddressedMessage playerNameCnf(new AddressHeader(PlayerId::SERVER, ownPlayerId),
+				       new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+
+  networkComponent.sendDataReceived(playerNameCnf);
+
+  ASSERT_TRUE(stateChangeWaiter.wait("Client::Configuring::ReceivingPlayerName"));
+}
+
 void StateMachineComponentClientTest::sendPlayerNameAndWait() {
   const AddressedMessage playerNameCfg(new AddressHeader(otherPlayerId, ownPlayerId),
 				       new PlayerNameCfgMessage("Other player"));
@@ -117,6 +127,7 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCfgWhenConnectedToDr
   startComponentAndWait();
   connectToDraftAndWait();
   sendPlayerIdAndWait();
+  confirmPlayerNameAndWait();
 
   LOG(INFO) << "Expected message: " << expectedPlayerNameCfg;
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCfg));
@@ -129,6 +140,7 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDr
   startComponentAndWait();
   connectToDraftAndWait();
   sendPlayerIdAndWait();
+  confirmPlayerNameAndWait();
   sendPlayerNameAndWait();
 
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCnf));
