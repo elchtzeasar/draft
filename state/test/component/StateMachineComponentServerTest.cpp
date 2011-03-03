@@ -16,6 +16,7 @@
 #include <gtest/gtest.h>
 
 #include <QCoreApplication>
+#include <QSignalSpy>
 #include <string>
 #include <sstream>
 
@@ -35,7 +36,9 @@ class StateMachineComponentServerTest : public testing::Test {
   StateMachineComponentServerTest();
 
  protected:
-  const PlayerId playerId;
+  static const PlayerId PLAYER_ID;
+  static const char* PLAYER_NAME;
+
   QCoreApplication* application;
   RemoteControllerStub remoteController;
   ConfigurationComponentStub configurationComponent;
@@ -52,8 +55,10 @@ class StateMachineComponentServerTest : public testing::Test {
   void sendPlayerNameAndWait();
 };
 
+const PlayerId StateMachineComponentServerTest::PLAYER_ID(5);
+const char* StateMachineComponentServerTest::PLAYER_NAME("Other player");
+
 StateMachineComponentServerTest::StateMachineComponentServerTest() :
-  playerId(5),
   application(QCoreApplication::instance()),
   draftApplication(*application, remoteController, configurationComponent,
 		   networkComponent, stateMachineComponent),
@@ -77,13 +82,13 @@ void StateMachineComponentServerTest::hostDraftAndWait() {
 }
 
 void StateMachineComponentServerTest::sendClientConnectedAndWait() {
-  networkComponent.sendClientConnected(playerId);
+  networkComponent.sendClientConnected(PLAYER_ID);
 
   ASSERT_TRUE(stateChangeWaiter.wait("Server::ListeningForConnections"));
 }
 
 void StateMachineComponentServerTest::confirmPlayerIdAndWait() {
-  const AddressedMessage playerIdCnf(new AddressHeader(playerId, PlayerId::SERVER),
+  const AddressedMessage playerIdCnf(new AddressHeader(PLAYER_ID, PlayerId::SERVER),
                                      new NullMessage(MessageNumber::PLAYER_ID_CNF));
   networkComponent.sendDataReceived(playerIdCnf);
 
@@ -91,8 +96,8 @@ void StateMachineComponentServerTest::confirmPlayerIdAndWait() {
 }
 
 void StateMachineComponentServerTest::sendPlayerNameAndWait() {
-  const AddressedMessage playerNameCfg(new AddressHeader(playerId, PlayerId::SERVER),
-				       new PlayerNameCfgMessage("Other player"));
+  const AddressedMessage playerNameCfg(new AddressHeader(PLAYER_ID, PlayerId::SERVER),
+				       new PlayerNameCfgMessage(PLAYER_NAME));
 
   networkComponent.sendDataReceived(playerNameCfg);
 
@@ -100,7 +105,7 @@ void StateMachineComponentServerTest::sendPlayerNameAndWait() {
 }
 
 TEST_F(StateMachineComponentServerTest, shouldSendPlayerIdCfgWhenClientConnected) {
-  AddressedMessage expectedPlayerIdCfg(new AddressHeader(PlayerId::SERVER, playerId),
+  AddressedMessage expectedPlayerIdCfg(new AddressHeader(PlayerId::SERVER, PLAYER_ID),
 				       new NullMessage(MessageNumber::PLAYER_ID_CFG));
 
   startComponentAndWait();
@@ -111,7 +116,7 @@ TEST_F(StateMachineComponentServerTest, shouldSendPlayerIdCfgWhenClientConnected
 }
 
 TEST_F(StateMachineComponentServerTest, shouldSendPlayerNameCnfWhenPlayerNameCfgReceived) {
-  AddressedMessage expectedPlayerNameCnf(new AddressHeader(PlayerId::SERVER, playerId),
+  AddressedMessage expectedPlayerNameCnf(new AddressHeader(PlayerId::SERVER, PLAYER_ID),
                                          new NullMessage(MessageNumber::PLAYER_NAME_CNF));
 
   startComponentAndWait();
@@ -121,4 +126,22 @@ TEST_F(StateMachineComponentServerTest, shouldSendPlayerNameCnfWhenPlayerNameCfg
   sendPlayerNameAndWait();
 
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCnf));
+}
+
+TEST_F(StateMachineComponentServerTest, shouldEmitPlayerConnectedWhenPlayerNameCfgReceived) {
+  QSignalSpy playerConnectedSpy(&stateMachineComponent,
+                                SIGNAL(playerConnected(const PlayerId&, const QString&)));
+  AddressedMessage expectedPlayerNameCnf(new AddressHeader(PlayerId::SERVER, PLAYER_ID),
+                                         new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+
+  startComponentAndWait();
+  hostDraftAndWait();
+  sendClientConnectedAndWait();
+  confirmPlayerIdAndWait();
+  sendPlayerNameAndWait();
+
+  ASSERT_EQ(1, playerConnectedSpy.count());
+  QList<QVariant> arguments = playerConnectedSpy.takeFirst();
+  ASSERT_EQ(PLAYER_ID, arguments.at(0).value<PlayerId>());
+  ASSERT_STREQ(PLAYER_NAME, arguments.at(1).toString().toStdString().c_str());
 }

@@ -32,9 +32,12 @@ void SavingPlayerNameState::onEntry(QEvent* event) {
 
   const PlayerId& ownPlayerId(message.getHeader().getReceiverPlayerId());
   const PlayerId& senderPlayerId(message.getHeader().getSenderPlayerId());
+  const QString& playerName = playerNameCfgMessage.getPlayerName();
+
   AddressHeader* addressHeader = new AddressHeader(ownPlayerId, senderPlayerId);
   NullMessage* playerNameCnf = new NullMessage(MessageNumber::PLAYER_NAME_CNF);
 
+  emit playerConnected(senderPlayerId, playerName);
   emit sendData(AddressedMessage(addressHeader, playerNameCnf));
 
   LOG(INFO) << "Received player name: " << playerNameCfgMessage.getPlayerName();

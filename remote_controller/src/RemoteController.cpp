@@ -46,6 +46,14 @@ void RemoteController::handleConfigurationResponse(const PlayerId& playerId,
   outputStream << "Player name: " << playerName.toStdString() << endl;
 }
 
+void RemoteController::handleConnectedToServer() {
+  outputStream << "Connected to server" << endl;
+}
+
+void RemoteController::handlePlayerConnected(const PlayerId&, const QString& playerName) {
+  outputStream << playerName.toStdString() << " connected" << endl;
+}
+
 void RemoteController::sendHostDraft() {
   emit hostDraft(PORT);
 }

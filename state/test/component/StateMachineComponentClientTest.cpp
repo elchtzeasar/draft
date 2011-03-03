@@ -16,6 +16,7 @@
 #include <gtest/gtest.h>
 
 #include <QCoreApplication>
+#include <QSignalSpy>
 #include <string>
 #include <sstream>
 
@@ -35,9 +36,10 @@ class StateMachineComponentClientTest : public testing::Test {
   StateMachineComponentClientTest();
 
  protected:
-  const PlayerId serverPlayerId;
-  const PlayerId ownPlayerId;
-  const PlayerId otherPlayerId;
+  static const PlayerId OWN_PLAYER_ID;
+  static const PlayerId OTHER_PLAYER_ID;
+  static const char* OTHER_PLAYER_NAME;
+
   QCoreApplication* application;
   RemoteControllerStub remoteController;
   ConfigurationComponentStub configurationComponent;
@@ -54,8 +56,11 @@ class StateMachineComponentClientTest : public testing::Test {
   void sendPlayerNameAndWait();
 };
 
+const PlayerId StateMachineComponentClientTest::OWN_PLAYER_ID(5);
+const PlayerId StateMachineComponentClientTest::OTHER_PLAYER_ID(6);
+const char* StateMachineComponentClientTest::OTHER_PLAYER_NAME("Other player");
+
 StateMachineComponentClientTest::StateMachineComponentClientTest() :
-  ownPlayerId(5), otherPlayerId(6),
   application(QCoreApplication::instance()),
   draftApplication(*application, remoteController, configurationComponent,
 		   networkComponent, stateMachineComponent),
@@ -84,7 +89,7 @@ void StateMachineComponentClientTest::connectToDraftAndWait() {
 
 void StateMachineComponentClientTest::sendPlayerIdAndWait() {
   const AddressedMessage addressedPlayerIdCfg(
-      new AddressHeader(PlayerId::SERVER, ownPlayerId),
+      new AddressHeader(PlayerId::SERVER, OWN_PLAYER_ID),
       new NullMessage(MessageNumber::PLAYER_ID_CFG));
 
   networkComponent.sendDataReceived(addressedPlayerIdCfg);
@@ -93,7 +98,7 @@ void StateMachineComponentClientTest::sendPlayerIdAndWait() {
 }
 
 void StateMachineComponentClientTest::confirmPlayerNameAndWait() {
-  const AddressedMessage playerNameCnf(new AddressHeader(PlayerId::SERVER, ownPlayerId),
+  const AddressedMessage playerNameCnf(new AddressHeader(PlayerId::SERVER, OWN_PLAYER_ID),
 				       new NullMessage(MessageNumber::PLAYER_NAME_CNF));
 
   networkComponent.sendDataReceived(playerNameCnf);
@@ -102,8 +107,8 @@ void StateMachineComponentClientTest::confirmPlayerNameAndWait() {
 }
 
 void StateMachineComponentClientTest::sendPlayerNameAndWait() {
-  const AddressedMessage playerNameCfg(new AddressHeader(otherPlayerId, ownPlayerId),
-				       new PlayerNameCfgMessage("Other player"));
+  const AddressedMessage playerNameCfg(new AddressHeader(OTHER_PLAYER_ID, OWN_PLAYER_ID),
+				       new PlayerNameCfgMessage(OTHER_PLAYER_NAME));
 
   networkComponent.sendDataReceived(playerNameCfg);
 
@@ -111,7 +116,7 @@ void StateMachineComponentClientTest::sendPlayerNameAndWait() {
 }
 
 TEST_F(StateMachineComponentClientTest, shouldSendPlayerIdCnfWhenConnectedToDraftAndPlayerIdCfgReceived) {
-  AddressedMessage expectedPlayerIdCnf(new AddressHeader(ownPlayerId, PlayerId::SERVER),
+  AddressedMessage expectedPlayerIdCnf(new AddressHeader(OWN_PLAYER_ID, PlayerId::SERVER),
 				       new NullMessage(MessageNumber::PLAYER_ID_CNF));
 
   startComponentAndWait();
@@ -122,8 +127,8 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerIdCnfWhenConnectedToDraf
 }
 
 TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCfgWhenConnectedToDraftAndPlayerIdCfgReceived) {
-  AddressedMessage expectedPlayerNameCfg(new AddressHeader(ownPlayerId, PlayerId::SERVER),
-                                         new PlayerNameCfgMessage(configurationComponent.getPlayerName(ownPlayerId).c_str()));
+  AddressedMessage expectedPlayerNameCfg(new AddressHeader(OWN_PLAYER_ID, PlayerId::SERVER),
+                                         new PlayerNameCfgMessage(configurationComponent.getPlayerName(OWN_PLAYER_ID).c_str()));
   startComponentAndWait();
   connectToDraftAndWait();
   sendPlayerIdAndWait();
@@ -134,7 +139,7 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCfgWhenConnectedToDr
 }
  
 TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDraftAndPlayerNameCfgReceived) {
-  AddressedMessage expectedPlayerNameCnf(new AddressHeader(ownPlayerId, otherPlayerId),
+  AddressedMessage expectedPlayerNameCnf(new AddressHeader(OWN_PLAYER_ID, OTHER_PLAYER_ID),
                                          new NullMessage(MessageNumber::PLAYER_NAME_CNF));
 
   startComponentAndWait();
@@ -144,4 +149,22 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDr
   sendPlayerNameAndWait();
 
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCnf));
+}
+
+TEST_F(StateMachineComponentClientTest, shouldEmitPlayerConnectedWhenConnectedToDraftAndPlayerNameCfgReceived) {
+  QSignalSpy playerConnectedSpy(&stateMachineComponent,
+                                SIGNAL(playerConnected(const PlayerId&, const QString&)));
+  AddressedMessage expectedPlayerNameCnf(new AddressHeader(OWN_PLAYER_ID, OTHER_PLAYER_ID),
+                                         new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+
+  startComponentAndWait();
+  connectToDraftAndWait();
+  sendPlayerIdAndWait();
+  confirmPlayerNameAndWait();
+  sendPlayerNameAndWait();
+
+  ASSERT_EQ(1, playerConnectedSpy.count());
+  QList<QVariant> arguments = playerConnectedSpy.takeFirst();
+  ASSERT_EQ(OTHER_PLAYER_ID, arguments.at(0).value<PlayerId>());
+  ASSERT_STREQ(OTHER_PLAYER_NAME, arguments.at(1).toString().toStdString().c_str());
 }

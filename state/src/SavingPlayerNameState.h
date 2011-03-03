@@ -6,6 +6,9 @@
 #include <QObject>
 
 class AddressedMessage;
+class PlayerId;
+
+class QString;
 
 class SavingPlayerNameState : public State {
   Q_OBJECT
@@ -17,6 +20,7 @@ class SavingPlayerNameState : public State {
   virtual void onEntry(QEvent* event);
   
  signals:
+  void playerConnected(const PlayerId& playerId, const QString& playerName);
   void sendData(const AddressedMessage& message);
 
  private:

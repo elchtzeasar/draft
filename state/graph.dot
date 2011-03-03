@@ -10,7 +10,8 @@ digraph G {
       savingPlayerId [label = "savingPlayerId\nenter: save playerId\nenter: send(PlayerIdCnf)"];
       requestingName_client [label = "requestingName\nenter: configurationRequest"];
       sendingName_client [label = "sendingName\nenter: send(PlayerNameCfg)"];
-      savingPlayerName_client [label = "savingPlayerName\nenter: save playerName\nenter: send(PlayerNameCnf)"];
+      receivingPlayerName [label = "receivingPlayerName\nenter: enter: connectedToServer"];
+      savingPlayerName_client [label = "savingPlayerName\nenter: playerConnected\nenter: save playerName\nenter: send(PlayerNameCnf)"];
 
       receivingPlayerId -> savingPlayerId [label = "received: PlayerIdCfg"];
       savingPlayerId -> requestingName_client;
@@ -36,7 +37,7 @@ digraph G {
         label = "Configuring";
 
 	sendingPlayerId [label = "sendingPlayerId\nenter: send(PlayerIdCfg)"];
- 	savingPlayerName_server [label = "savingPlayerName\nenter: save received name\nenter: send PlayerNameCnf"];
+ 	savingPlayerName_server [label = "savingPlayerName\nenter: playerConnected\nenter: save received name\nenter: send PlayerNameCnf"];
 	waitingForOtherPlayers;
  	forwardingPlayerName [label = "forwardingPlayerName\nenter: send(PlayerNameCfg)"];
 

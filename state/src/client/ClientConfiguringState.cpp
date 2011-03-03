@@ -26,6 +26,8 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
   connect(savingPlayerName, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
+  connect(savingPlayerName, SIGNAL(playerConnected(const PlayerId&, const QString&)),
+	  component, SIGNAL(playerConnected(const PlayerId&, const QString&)) );
 
   connect(savingPlayerId, SIGNAL(setOwnPlayerId(const PlayerId&)),
 	  component, SIGNAL(setOwnPlayerId(const PlayerId&)) );

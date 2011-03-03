@@ -39,6 +39,17 @@ void RemoteControllerStub::sendConfigurationRequest(const PlayerId& playerId) {
 
 
 void RemoteControllerStub::handleConfigurationResponse(const PlayerId& playerId, const QString playerName) {
-  LOG(WARNING) << "handleConfigurationResponse(" << playerId << ", " << playerName.toStdString() 
+  LOG(WARNING) << "handleConfigurationResponse(playerId=" << playerId
+               << ", playerName=" << playerName.toStdString() 
+	       << ") called, not doing anything...";
+}
+
+void RemoteControllerStub::handleConnectedToServer() {
+  LOG(WARNING) << "handleConnectedToServer() called, not doing anything...";
+}
+
+void RemoteControllerStub::handlePlayerConnected(const PlayerId& playerId, const QString& playerName) {
+  LOG(WARNING) << "handlePlayerConnected(playerId=" << playerId
+               << ", playerName=" << playerName.toStdString() 
 	       << ") called, not doing anything...";
 }

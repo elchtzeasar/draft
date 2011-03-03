@@ -20,6 +20,8 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
 
   connect(this, SIGNAL(configurationRequest(const PlayerId&)),
 	  component, SIGNAL(configurationRequest(const PlayerId&)));
+  connect(savingPlayerName, SIGNAL(playerConnected(const PlayerId&, const QString&)),
+	  component, SIGNAL(playerConnected(const PlayerId&, const QString&)) );
 
   new ReceivedMessageTransition(
     component, sendingPlayerId, receivingClientName, MessageNumber::PLAYER_ID_CNF);

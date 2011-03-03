@@ -36,6 +36,9 @@ class StateMachineComponent : public QObject {
 
   void stateChanged(const QString& stateName);
 
+  void connectedToServer();
+  void playerConnected(const PlayerId& playerId, const QString& playerName);
+
  private:
   Q_PROPERTY(QString activeState READ getActiveState WRITE setActiveState);
 

@@ -22,6 +22,8 @@ class RemoteControllerStub : public QObject {
 
  public slots:
   void handleConfigurationResponse(const PlayerId& playerId, const QString playerName);
+  void handleConnectedToServer();
+  void handlePlayerConnected(const PlayerId&, const QString& playerName);
 
  signals:
   void exit(int status);
