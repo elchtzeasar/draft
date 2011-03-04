@@ -132,12 +132,20 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCfgWhenConnectedToDr
   startComponentAndWait();
   connectToDraftAndWait();
   sendPlayerIdAndWait();
-  confirmPlayerNameAndWait();
 
-  LOG(INFO) << "Expected message: " << expectedPlayerNameCfg;
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCfg));
 }
- 
+
+TEST_F(StateMachineComponentClientTest, shouldEmitConnectedToServerWhenConnectedToDraftAndPlayerIdCfgReceived) {
+  QSignalSpy connectedToServerSpy(&stateMachineComponent, SIGNAL(connectedToServer()));
+  startComponentAndWait();
+  connectToDraftAndWait();
+  sendPlayerIdAndWait();
+  confirmPlayerNameAndWait();
+
+  ASSERT_EQ(1, connectedToServerSpy.count());
+}
+
 TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDraftAndPlayerNameCfgReceived) {
   AddressedMessage expectedPlayerNameCnf(new AddressHeader(OWN_PLAYER_ID, OTHER_PLAYER_ID),
                                          new NullMessage(MessageNumber::PLAYER_NAME_CNF));
@@ -168,3 +176,4 @@ TEST_F(StateMachineComponentClientTest, shouldEmitPlayerConnectedWhenConnectedTo
   ASSERT_EQ(OTHER_PLAYER_ID, arguments.at(0).value<PlayerId>());
   ASSERT_STREQ(OTHER_PLAYER_NAME, arguments.at(1).toString().toStdString().c_str());
 }
+
