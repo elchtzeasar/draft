@@ -20,61 +20,19 @@ class Connection < Test::Unit::TestCase
     return self.name.gsub(/test: |\.|\([^\)]*\)/, '').gsub(' ', '_')
   end
 
-  should 'change state to ListentingForConnections in server when it listens' do
-    @server.host
-  
-    assert_state_change 'Server::ListeningForConnections', @server
-  end
-
-  should 'change state to WaitingForConnection as it tries to connect' do
-    @client.connect
-
-    assert_state_change 'Client::WaitingForConnection', @client
-  end
-
-  should 'connect client with server without errors' do
+  should 'log in client when it is connected to the server' do
     host_and_wait
     connect_and_wait
 
-    for not_allowed_word in ['Assertion', 'Segmentation fault'] do
-      assert_does_not_include not_allowed_word, @server
-      assert_does_not_include not_allowed_word, @client
-    end
+    assert_includes('Connected to server', @client)
   end
 
-  should 'change state to Configuring in server when client connects' do
-    host_and_wait
-    connect_and_wait
-  
-    assert_state_change 'Server::ClientStateMachine::Configuring', @server
-  end
-
-  should 'send playerId from server when client connects' do
+  should 'log in server when a client is connected' do
+    @client.set_name 'Client'
     host_and_wait
     connect_and_wait
 
-    assert_message_sent 'PlayerIdCfg', @server
-  end
-
-  should 'respond to playerId from client when it is received in server' do
-    host_and_wait
-    connect_and_wait
-
-    assert_message_sent 'PlayerIdCnf', @client
-  end
-
-  should 'send name from client to server upon connection' do
-    host_and_wait
-    connect_and_wait
-
-    assert_message_sent 'PlayerNameCfg', @client
-  end
-  
-  should 'respond to playerName from server when it is received in client' do
-    host_and_wait
-    connect_and_wait
-
-    assert_message_sent 'PlayerNameCnf', @server
+    assert_includes("Client connected", @server)
   end
   
   def host_and_wait
