@@ -3,6 +3,7 @@
 }
 
 LIBS += -lcommoncomponenttest
+LIBS += -lconfigurationcomponenttest
 LIBS += -lstatecomponenttest
 LIBS += -lcommon -lstate
 
