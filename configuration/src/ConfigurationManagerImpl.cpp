@@ -4,6 +4,8 @@
 #include "PlayerContextFactory.h"
 #include "PlayerId.h"
 
+#include <glog/logging.h>
+
 #include <cassert>
 
 using std::map;
@@ -36,9 +38,10 @@ void ConfigurationManagerImpl::setOwnPlayerId(const PlayerId& playerId) {
 void ConfigurationManagerImpl::setPlayerContext(const PlayerId& playerId, const QString& playerName) {
   PlayerContextMap::const_iterator it(playerContexts.find(playerId));
   PlayerContext* playerContext(NULL);
-  if (it == playerContexts.end())
+  if (it == playerContexts.end()) {
+    LOG(WARNING) << "setPlayerContext called for PlayerId=" << playerId << ", it should be created first with createPlayerContext.";
     playerContext = playerContextFactory->createPlayerContext();
-  else
+  } else
     playerContext = it->second;
 
   playerContext->setPlayerName(playerName);

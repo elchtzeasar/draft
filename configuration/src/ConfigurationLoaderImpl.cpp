@@ -11,8 +11,6 @@
 
 using boost::property_tree::ptree;
 
-using std::istream;
-using std::ostream;
 using std::string;
 
 static const char* PLAYER_NAME_PATH = "configuration.player.name";
@@ -45,18 +43,5 @@ void ConfigurationLoaderImpl::save() const {
   pt.put(PLAYER_NAME_PATH, playerContext.getPlayerName());
   
   write_xml(filename, pt);
-}
-
-ostream& operator<<(ostream& stream, const QString& string) {
-  stream << string.toStdString();
-  return stream;
-}
-
-istream& operator>>(istream& stream, QString& string) {
-  std::string stdString;
-  stream >> stdString;
-  string = QString(stdString.c_str());
-
-  return stream;
 }
 
