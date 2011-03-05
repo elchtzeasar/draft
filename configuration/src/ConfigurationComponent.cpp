@@ -21,15 +21,14 @@ void ConfigurationComponent::handleExit(int) {
 
 void ConfigurationComponent::handleConfigurationRequest(const PlayerId& playerId) {
   const PlayerContext& playerContext = configurationManager->getPlayerContext(playerId);
-  const QString playerName(playerContext.getPlayerName().c_str());
 
-  emit configurationResponse(playerId, playerName);
+  emit configurationResponse(playerId, playerContext.getPlayerName());
 }
 
 void ConfigurationComponent::handleSetOwnPlayerId(const PlayerId& playerId) {
   configurationManager->setOwnPlayerId(playerId);
 }
 
-void ConfigurationComponent::handleSetPlayerName(const PlayerId& playerId, QString playerName) {
-  configurationManager->setPlayerContext(playerId, playerName.toStdString());
+void ConfigurationComponent::handleSetPlayerName(const PlayerId& playerId, const QString& playerName) {
+  configurationManager->setPlayerContext(playerId, playerName);
 }

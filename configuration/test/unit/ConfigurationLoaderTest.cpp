@@ -2,6 +2,7 @@
 
 #include "PlayerContextMock.h"
 
+#include <QString>
 #include <fstream>
 #include <cstdio>
 #include <string>
@@ -16,7 +17,7 @@ using testing::ReturnRef;
 using std::ofstream;
 
 static const char* FILENAME("testFile.xml");
-static const std::string PLAYER_NAME("playername");
+static const QString PLAYER_NAME("playername");
 
 class ConfigurationLoaderTest : public testing::Test {
 protected:

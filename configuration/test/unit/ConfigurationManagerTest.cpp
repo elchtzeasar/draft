@@ -6,13 +6,13 @@
 
 #include <gtest/gtest.h>
 
-#include <string>
+#include <QString>
 
 using testing::Return;
 using testing::NiceMock;
 
 const quint8 PLAYER_ID(21);
-const std::string PLAYER_NAME("Name of player");
+const QString PLAYER_NAME("Name of player");
 
 class ConfigurationManagerTest : public testing::Test {
 protected:

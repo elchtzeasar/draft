@@ -24,10 +24,10 @@ class ConfigurationComponent : public QObject {
   void handleExit(int);
   void handleConfigurationRequest(const PlayerId& playerId);
   void handleSetOwnPlayerId(const PlayerId& playerId);
-  void handleSetPlayerName(const PlayerId& playerId, QString playerName);
+  void handleSetPlayerName(const PlayerId& playerId, const QString& playerName);
 
  signals:
-  void configurationResponse(const PlayerId& playerId, const QString playerName);
+  void configurationResponse(const PlayerId& playerId, const QString& playerName);
 
  private:
   ConfigurationComponent(const ConfigurationComponent&);

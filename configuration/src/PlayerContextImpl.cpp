@@ -5,10 +5,10 @@ PlayerContextImpl::PlayerContextImpl() : playerName("Unknown player") {}
 PlayerContextImpl::~PlayerContextImpl() {
 }
 
-const std::string& PlayerContextImpl::getPlayerName() const {
+const QString& PlayerContextImpl::getPlayerName() const {
   return playerName;
 }
 
-void PlayerContextImpl::setPlayerName(const std::string& playerName) {
+void PlayerContextImpl::setPlayerName(const QString& playerName) {
   this->playerName = playerName;
 }

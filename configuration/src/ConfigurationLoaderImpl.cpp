@@ -2,6 +2,8 @@
 
 #include "PlayerContext.h"
 
+#include <QString>
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
@@ -9,6 +11,8 @@
 
 using boost::property_tree::ptree;
 
+using std::istream;
+using std::ostream;
 using std::string;
 
 static const char* PLAYER_NAME_PATH = "configuration.player.name";
@@ -21,12 +25,12 @@ ConfigurationLoaderImpl::~ConfigurationLoaderImpl() {}
 
 void ConfigurationLoaderImpl::load() {
   ptree pt;
-  std::string playerName("No name");
+  QString playerName("No name");
 
   try {
     read_xml(filename, pt);
 
-    playerName = pt.get<std::string>(PLAYER_NAME_PATH, "");
+    playerName = pt.get<QString>(PLAYER_NAME_PATH, "");
     if (playerName.length() > 0) {
       playerContext.setPlayerName(playerName);
     }
@@ -42,3 +46,17 @@ void ConfigurationLoaderImpl::save() const {
   
   write_xml(filename, pt);
 }
+
+ostream& operator<<(ostream& stream, const QString& string) {
+  stream << string.toStdString();
+  return stream;
+}
+
+istream& operator>>(istream& stream, QString& string) {
+  std::string stdString;
+  stream >> stdString;
+  string = QString(stdString.c_str());
+
+  return stream;
+}
+

@@ -3,6 +3,9 @@
 
 #include "ConfigurationLoader.h"
 
+#include <iostream>
+#include <string>
+
 class PlayerContext;
 
 class ConfigurationLoaderImpl : public ConfigurationLoader {
@@ -21,5 +24,6 @@ class ConfigurationLoaderImpl : public ConfigurationLoader {
   const std::string filename;
   PlayerContext& playerContext;
 };
+
 
 #endif // CONFIGURATION_LOADER_IMPL_H_

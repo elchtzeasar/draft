@@ -21,9 +21,7 @@ using testing::_;
 using std::string;
 using std::ostream;
 
-ostream& operator<<(ostream& os, const QString& qString);
-
-static const std::string PLAYER_NAME = "Player Name";
+static const QString PLAYER_NAME = "Player Name";
 static const PlayerId PLAYER_ID(15);
 
 class ConfigurationComponentTest : public testing::Test {
@@ -61,7 +59,7 @@ TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithCorrec
 
   ASSERT_EQ(1, responseSpy.count());
   QList<QVariant> arguments = responseSpy.takeFirst();
-  ASSERT_EQ(PLAYER_NAME, arguments.at(1).toString().toStdString());
+  ASSERT_EQ(PLAYER_NAME, arguments.at(1).toString());
   ASSERT_EQ(PLAYER_ID, arguments.at(0).value<PlayerId>());
 }
 
@@ -73,7 +71,7 @@ TEST_F(ConfigurationComponentTest, shouldUpdateOwnPlayerIdInManagerUponSetOwnPla
 
 TEST_F(ConfigurationComponentTest, shouldSetPlayerContextInManagerOnSetPlayerName) {
   QString playerName("player name");
-  EXPECT_CALL(*configurationManager, setPlayerContext(PLAYER_ID, testing::StrEq(playerName.toStdString())));
+  EXPECT_CALL(*configurationManager, setPlayerContext(PLAYER_ID, playerName));
 
   configurationComponent.handleSetPlayerName(PLAYER_ID, playerName);
 }
@@ -82,9 +80,4 @@ TEST_F(ConfigurationComponentTest, shouldSaveConfigurationUponExit) {
   EXPECT_CALL(*configurationLoader, save()).WillOnce(Return());
 
   configurationComponent.handleExit(0);
-}
-
-ostream& operator<<(ostream& os, const QString& qString) {
-  os << qString.toStdString();
-  return os;
 }

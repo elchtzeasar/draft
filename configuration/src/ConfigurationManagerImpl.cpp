@@ -33,7 +33,7 @@ void ConfigurationManagerImpl::setOwnPlayerId(const PlayerId& playerId) {
   playerContexts[playerId] = ownPlayerContext;
 }
 
-void ConfigurationManagerImpl::setPlayerContext(const PlayerId& playerId, const std::string& playerName) {
+void ConfigurationManagerImpl::setPlayerContext(const PlayerId& playerId, const QString& playerName) {
   PlayerContextMap::const_iterator it(playerContexts.find(playerId));
   PlayerContext* playerContext(NULL);
   if (it == playerContexts.end())

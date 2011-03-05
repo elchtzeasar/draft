@@ -1,14 +1,14 @@
 #ifndef PLAYER_CONTEXT_H_
 #define PLAYER_CONTEXT_H_
 
-#include <string>
+class QString;
 
 class PlayerContext {
  public:
   virtual ~PlayerContext() {}
 
-  virtual const std::string& getPlayerName() const = 0;
-  virtual void setPlayerName(const std::string& playerName) = 0;
+  virtual const QString& getPlayerName() const = 0;
+  virtual void setPlayerName(const QString& playerName) = 0;
 };
 
 #endif // PLAYER_CONTEXT_H_

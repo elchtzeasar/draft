@@ -5,6 +5,7 @@
 
 #include <gmock/gmock.h>
 
+#include <QString>
 #include <iostream>
 
 class PlayerContextMock : public PlayerContext {
@@ -14,8 +15,8 @@ class PlayerContextMock : public PlayerContext {
 
   MOCK_METHOD0(load, void());
   MOCK_CONST_METHOD0(save, void());
-  MOCK_CONST_METHOD0(getPlayerName, const std::string&());
-  MOCK_METHOD1(setPlayerName, void(const std::string& playerName));
+  MOCK_CONST_METHOD0(getPlayerName, const QString&());
+  MOCK_METHOD1(setPlayerName, void(const QString& playerName));
 };
 
 bool operator==(const PlayerContext& lhs, const PlayerContext& rhs);

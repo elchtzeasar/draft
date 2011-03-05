@@ -11,7 +11,7 @@ class ConfigurationManagerMock : public ConfigurationManager {
   virtual ~ConfigurationManagerMock() {}
 
   MOCK_METHOD1(setOwnPlayerId, void(const PlayerId& playerId));
-  MOCK_METHOD2(setPlayerContext, void(const PlayerId& playerId, const std::string& playerName));
+  MOCK_METHOD2(setPlayerContext, void(const PlayerId& playerId, const QString& playerName));
   MOCK_CONST_METHOD1(getPlayerContext, const PlayerContext&(const PlayerId& playerId));
 };
 

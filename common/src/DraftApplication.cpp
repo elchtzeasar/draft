@@ -67,14 +67,14 @@ void DraftApplication::connectSlotsToSignals() {
 
   // UI -> ConfigurationComponent:
   connect( &ui, SIGNAL(setPlayerName(const PlayerId&, QString)),
-	   &configurationComponent, SLOT(handleSetPlayerName(const PlayerId&, QString)) );
+	   &configurationComponent, SLOT(handleSetPlayerName(const PlayerId&, const QString&)) );
   connect( &ui, SIGNAL(configurationRequest(const PlayerId&)),
 	   &configurationComponent, SLOT(handleConfigurationRequest(const PlayerId&)) );
   connect( &ui, SIGNAL(exit(int)),
 	   &configurationComponent, SLOT(handleExit(int)) );
   // UI <- ConfigurationComponent:
-  connect( &configurationComponent, SIGNAL(configurationResponse(const PlayerId&, const QString)),
-	   &ui, SLOT(handleConfigurationResponse(const PlayerId&, const QString)) );
+  connect( &configurationComponent, SIGNAL(configurationResponse(const PlayerId&, const QString&)),
+	   &ui, SLOT(handleConfigurationResponse(const PlayerId&, const QString&)) );
 
   // UI -> DraftApplication:
   connect( &ui, SIGNAL(exit(int)),
