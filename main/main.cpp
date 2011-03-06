@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
   stateMachineComponent->start();
 
   // TODO: Move into factory:
-  RemoteController remoteController(std::cout, std::cin);
+  RemoteController remoteController;
   remoteController.start(QThread::LowPriority);
 
   // Todo: Make sure a GuiDraftApplication is created for the gui binary

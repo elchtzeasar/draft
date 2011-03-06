@@ -2,28 +2,29 @@
 
 #include "PlayerId.h"
 
+#include <glog/logging.h>
 #include <QString>
 
 #include <string>
 #include <cstdlib>
 
+using std::cin;
 using std::endl;
 using std::string;
 
-using std::ostream;
 using std::istream;
+using std::ostream;
 
 static const unsigned int PORT = 10001;
 
-RemoteController::RemoteController(ostream& outputStream, istream& inputStream )
-  : outputStream(outputStream), inputStream(inputStream) {}
+RemoteController::RemoteController() {}
 
 RemoteController::~RemoteController() {}
 
 void RemoteController::run() {
   string command;
   while (command != "exit") {
-    inputStream >> command;
+    cin >> command;
 
     if (command == "host_draft") {
       sendHostDraft();
@@ -36,45 +37,55 @@ void RemoteController::run() {
     } else if (command == "get_name") {
       getPlayerName();
     } else {
-      outputStream << "unknown command: " << command << endl;
+      LOG(ERROR) << "unknown command: " << command << endl;
     }
   }
 }
 
 void RemoteController::handleConfigurationResponse(const PlayerId& playerId,
 						   const QString playerName) {
-  outputStream << "Player name: " << playerName.toStdString() << endl;
+  LOG(INFO) << "Player name: " << playerName.toStdString() << endl;
 }
 
 void RemoteController::handleConnectedToServer() {
-  outputStream << "Connected to server" << endl;
+  LOG(INFO) << "Connected to server" << endl;
 }
 
 void RemoteController::handlePlayerConnected(const PlayerId&, const QString& playerName) {
-  outputStream << playerName.toStdString() << " connected" << endl;
+  LOG(INFO) << playerName.toStdString() << " connected" << endl;
 }
 
 void RemoteController::sendHostDraft() {
+  LOG(INFO) << "sendHostDraft";
+
   emit hostDraft(PORT);
 }
 
 void RemoteController::connectToDraft() {
+  LOG(INFO) << "connectToDraft";
+
   const QString hostName("localhost");
   emit connectToDraft(hostName, PORT);
 }
 
 void RemoteController::exitCommand() {
+  LOG(INFO) << "exitCommand";
+
   emit exit(0);
 }
 
 void RemoteController::setPlayerName() {
   string stdPlayerName;
-  inputStream >> stdPlayerName;
+  cin >> stdPlayerName;
+
+  LOG(INFO) << "setPlayerName: " << stdPlayerName;
 
   QString playerName(stdPlayerName.c_str());
   emit setPlayerName(PlayerId::OWN, playerName);
 }
 
 void RemoteController::getPlayerName() {
+  LOG(INFO) << "getPlayerName";
+
   emit configurationRequest(PlayerId::OWN);
 }
