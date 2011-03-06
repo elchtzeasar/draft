@@ -17,6 +17,7 @@ class ConfigurationManagerImpl : public ConfigurationManager {
   virtual ~ConfigurationManagerImpl();
 
   void setOwnPlayerId(const PlayerId& playerId);
+  void createPlayerContext(const PlayerId& playerId, const QString& playerName);
   void setPlayerContext(const PlayerId& playerId, const QString& playerName);
   const PlayerContext& getPlayerContext(const PlayerId& playerId) const;
 

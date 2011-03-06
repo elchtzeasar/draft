@@ -35,11 +35,14 @@ void ConfigurationManagerImpl::setOwnPlayerId(const PlayerId& playerId) {
   playerContexts[playerId] = ownPlayerContext;
 }
 
+void ConfigurationManagerImpl::createPlayerContext(const PlayerId& playerId, const QString& playerName) {
+}
+
 void ConfigurationManagerImpl::setPlayerContext(const PlayerId& playerId, const QString& playerName) {
   PlayerContextMap::const_iterator it(playerContexts.find(playerId));
   PlayerContext* playerContext(NULL);
   if (it == playerContexts.end()) {
-    LOG(WARNING) << "setPlayerContext called for PlayerId=" << playerId << ", it should be created first with createPlayerContext.";
+    LOG(WARNING) << "setPlayerContext called for PlayerId=" << playerId << ", it should be created first with createPlayerContext. Creating context anyways.";
     playerContext = playerContextFactory->createPlayerContext();
   } else
     playerContext = it->second;

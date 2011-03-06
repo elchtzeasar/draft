@@ -5,9 +5,12 @@
 #include "PlayerId.h"
 
 #include <gtest/gtest.h>
+#include "mock-log.h"
 
 #include <QString>
 
+using google::glog_testing::ScopedMockLog;
+using testing::_;
 using testing::Return;
 using testing::NiceMock;
 
@@ -19,7 +22,8 @@ protected:
   ConfigurationManagerTest() : ownPlayerContext(new NiceMock<PlayerContextMock>),
 			       newPlayerContext(new NiceMock<PlayerContextMock>),
 			       playerContextFactory(new NiceMock<PlayerContextFactoryMock>),
-			       configurationManager(ownPlayerContext, playerContextFactory) {}
+			       configurationManager(ownPlayerContext, playerContextFactory) {
+  }
 
   NiceMock<PlayerContextMock>* ownPlayerContext;
   NiceMock<PlayerContextMock>* newPlayerContext;
@@ -36,6 +40,16 @@ TEST_F(ConfigurationManagerTest, shouldReturnOwnPlayerContextAfterSettingOwnPlay
 
 TEST_F(ConfigurationManagerTest, shouldCreatePlayerContextOnSetPlayerContextIfNoPlayerExists) {
   EXPECT_CALL(*playerContextFactory, createPlayerContext()).WillOnce(Return(newPlayerContext));
+
+  configurationManager.setPlayerContext(PLAYER_ID, PLAYER_NAME);
+}
+
+TEST_F(ConfigurationManagerTest, shouldLogWarningOnSetPlayerContextIfNoPlayerExists) {
+  ScopedMockLog log;
+  ON_CALL(*playerContextFactory, createPlayerContext()).WillByDefault(Return(newPlayerContext));
+
+  EXPECT_CALL(log, Log(WARNING, _, "setPlayerContext called for PlayerId=21, it should "
+                       "be created first with createPlayerContext. Creating context anyways."));
 
   configurationManager.setPlayerContext(PLAYER_ID, PLAYER_NAME);
 }
