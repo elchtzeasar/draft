@@ -37,6 +37,10 @@ void ConfigurationComponentStub::handleSetOwnPlayerId(const PlayerId& playerId) 
   ownPlayerId = playerId;
 }
 
+void ConfigurationComponentStub::handleUpdatePlayerConfiguration(const PlayerId& playerId, QString playerName) {
+  LOG(WARNING) << "handleUpdatePlayerConfiguration(" << playerId << ", " << playerName.toStdString() << ") called, not doing anything...";
+}
+
 void ConfigurationComponentStub::handleSetPlayerName(const PlayerId& playerId, QString playerName) {
   LOG(WARNING) << "handleSetPlayerName(" << playerId << ", " << playerName.toStdString() << ") called, not doing anything...";
 }

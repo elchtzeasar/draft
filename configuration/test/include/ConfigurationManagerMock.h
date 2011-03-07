@@ -12,7 +12,7 @@ class ConfigurationManagerMock : public ConfigurationManager {
 
   MOCK_METHOD1(setOwnPlayerId, void(const PlayerId& playerId));
   MOCK_METHOD2(createPlayerContext, void(const PlayerId& playerId, const QString& playerName));
-  MOCK_METHOD2(setPlayerContext, void(const PlayerId& playerId, const QString& playerName));
+  MOCK_METHOD2(updatePlayerContext, void(const PlayerId& playerId, const QString& playerName));
   MOCK_CONST_METHOD1(getPlayerContext, const PlayerContext&(const PlayerId& playerId));
 };
 

@@ -18,10 +18,12 @@ class ConfigurationManagerImpl : public ConfigurationManager {
 
   void setOwnPlayerId(const PlayerId& playerId);
   void createPlayerContext(const PlayerId& playerId, const QString& playerName);
-  void setPlayerContext(const PlayerId& playerId, const QString& playerName);
+  void updatePlayerContext(const PlayerId& playerId, const QString& playerName);
   const PlayerContext& getPlayerContext(const PlayerId& playerId) const;
 
  private:
+  PlayerContext* findContext(const PlayerId& playerId) const;
+  
   ConfigurationManagerImpl(const ConfigurationManagerImpl&);
   ConfigurationManagerImpl& operator=(ConfigurationManagerImpl&);
 

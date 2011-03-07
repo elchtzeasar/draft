@@ -21,6 +21,7 @@ class ConfigurationComponentStub : public QObject {
   void handleExit(int);
   void handleConfigurationRequest(const PlayerId& playerId);
   void handleSetOwnPlayerId(const PlayerId& playerId);
+  void handleUpdatePlayerConfiguration(const PlayerId& playerId, QString playerName);
   void handleSetPlayerName(const PlayerId& playerId, QString playerName);
 
  signals:

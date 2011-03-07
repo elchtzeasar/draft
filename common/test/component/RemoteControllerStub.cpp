@@ -26,14 +26,15 @@ void RemoteControllerStub::sendConnectToDraft(const QString& hostName, unsigned 
   emit connectToDraft(hostName, port);
 }
 
-void RemoteControllerStub::sendSetPlayerName(const PlayerId& playerId, QString playerName) {
-  VLOG(COMPONENT_STUB_VLEVEL) << "sendHostDraft(playerId=" << playerId << ", "
+void RemoteControllerStub::sendUpdatePlayerConfiguration(
+  const PlayerId& playerId, QString playerName) {
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendUpdatePlayerConfiguration(playerId=" << playerId << ", "
                               << "playerName=" << playerName.toStdString() << ')';
-  emit setPlayerName(playerId, playerName);
+  emit updatePlayerConfiguration(playerId, playerName);
 }
 
 void RemoteControllerStub::sendConfigurationRequest(const PlayerId& playerId) {
-  VLOG(COMPONENT_STUB_VLEVEL) << "sendHostDraft(playerId=" << playerId << ')';
+  VLOG(COMPONENT_STUB_VLEVEL) << "sendConfigurationRequest(playerId=" << playerId << ')';
   emit configurationRequest(playerId);
 }
 

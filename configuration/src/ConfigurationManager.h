@@ -14,7 +14,7 @@ class ConfigurationManager {
 
   virtual void setOwnPlayerId(const PlayerId& playerId) = 0;
   virtual void createPlayerContext(const PlayerId& playerId, const QString& playerName) = 0;
-  virtual void setPlayerContext(const PlayerId& playerId, const QString& playerName) = 0;
+  virtual void updatePlayerContext(const PlayerId& playerId, const QString& playerName) = 0;
   virtual const PlayerContext& getPlayerContext(const PlayerId& playerId) const = 0;
 };
 

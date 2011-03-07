@@ -17,7 +17,7 @@ class RemoteControllerStub : public QObject {
   void sendExit(int status);
   void sendHostDraft(unsigned int port);
   void sendConnectToDraft(const QString& hostName, unsigned int port);
-  void sendSetPlayerName(const PlayerId& playerId, QString playerName);
+  void sendUpdatePlayerConfiguration(const PlayerId& playerId, QString playerName);
   void sendConfigurationRequest(const PlayerId& playerId);
 
  public slots:
@@ -29,7 +29,7 @@ class RemoteControllerStub : public QObject {
   void exit(int status);
   void hostDraft(unsigned int port);
   void connectToDraft(const QString& hostName, unsigned int port);
-  void setPlayerName(const PlayerId& playerId, QString playerName);
+  void updatePlayerConfiguration(const PlayerId& playerId, QString playerName);
   void configurationRequest(const PlayerId& playerId);
 };
 

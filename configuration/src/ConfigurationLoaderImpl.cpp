@@ -33,7 +33,7 @@ void ConfigurationLoaderImpl::load() {
       playerContext.setPlayerName(playerName);
     }
   } catch (boost::property_tree::xml_parser::xml_parser_error& e) {
-    LOG(ERROR) << "ERROR: Got an error from xml_parser: " << e.what() << " with file: " << filename;
+    LOG(ERROR) << "Got an error from xml_parser: " << e.what() << " with filename: " << filename;
   }
 }
 

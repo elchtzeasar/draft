@@ -22,7 +22,8 @@ class ConfigurationComponent : public QObject {
   void handleExit(int);
   void handleConfigurationRequest(const PlayerId& playerId);
   void handleSetOwnPlayerId(const PlayerId& playerId);
-  void handleSetPlayerName(const PlayerId& playerId, const QString& playerName);
+  void handleUpdatePlayerConfiguration(const PlayerId& playerId, const QString& playerName);
+  void handleCreatePlayerConfiguration(const PlayerId& playerId, const QString& playerName);
 
  signals:
   void configurationResponse(const PlayerId& playerId, const QString& playerName);

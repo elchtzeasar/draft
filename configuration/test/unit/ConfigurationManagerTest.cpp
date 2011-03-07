@@ -38,34 +38,55 @@ TEST_F(ConfigurationManagerTest, shouldReturnOwnPlayerContextAfterSettingOwnPlay
 	    configurationManager.getPlayerContext(PLAYER_ID));
 }
 
-TEST_F(ConfigurationManagerTest, shouldCreatePlayerContextOnSetPlayerContextIfNoPlayerExists) {
+TEST_F(ConfigurationManagerTest, shouldCreatePlayerContextOnCreatePlayerContextIfNoPlayerExists) {
   EXPECT_CALL(*playerContextFactory, createPlayerContext()).WillOnce(Return(newPlayerContext));
 
-  configurationManager.setPlayerContext(PLAYER_ID, PLAYER_NAME);
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
 }
 
-TEST_F(ConfigurationManagerTest, shouldLogWarningOnSetPlayerContextIfNoPlayerExists) {
+TEST_F(ConfigurationManagerTest, shouldLogErrorOnCreatePlayerContextIfPlayerExists) {
   ScopedMockLog log;
   ON_CALL(*playerContextFactory, createPlayerContext()).WillByDefault(Return(newPlayerContext));
 
-  EXPECT_CALL(log, Log(WARNING, _, "setPlayerContext called for PlayerId=21, it should "
-                       "be created first with createPlayerContext. Creating context anyways."));
+  EXPECT_CALL(log, Log(ERROR, _, "createPlayerContext called with PlayerId=21, "
+                       "There is allready a context with that id, not doing anything."));
 
-  configurationManager.setPlayerContext(PLAYER_ID, PLAYER_NAME);
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
 }
 
-TEST_F(ConfigurationManagerTest, shouldNotCreatePlayerContextOnSetPlayerContextIfPlayerAllreadyExists) {
+TEST_F(ConfigurationManagerTest, shouldNotCreatePlayerContextOnCreatePlayerContextIfPlayerExists) {
+  ON_CALL(*playerContextFactory, createPlayerContext()).WillByDefault(Return(newPlayerContext));
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
+
   EXPECT_CALL(*playerContextFactory, createPlayerContext()).Times(0);
 
-  configurationManager.setPlayerContext(PlayerId::OWN, PLAYER_NAME);
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
 }
 
-TEST_F(ConfigurationManagerTest, shouldSetCorrectParametersInNewPlayerContextOnSetPlayerContext) {
+TEST_F(ConfigurationManagerTest, shouldSetCorrectParametersOnCreatePlayerContext) {
   ON_CALL(*playerContextFactory, createPlayerContext()).WillByDefault(Return(newPlayerContext));
 
   EXPECT_CALL(*newPlayerContext, setPlayerName(PLAYER_NAME));
 
-  configurationManager.setPlayerContext(PLAYER_ID, PLAYER_NAME);
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
+}
+
+TEST_F(ConfigurationManagerTest, shouldLogErrorOnUpdatePlayerContextWhenNoContextExists) {
+  ScopedMockLog log;
+  EXPECT_CALL(log, Log(ERROR, _, "updatePlayerContext called with PlayerId=21, "
+                       "there is no context for that id, not doing anything."));
+
+  configurationManager.updatePlayerContext(PLAYER_ID, PLAYER_NAME);
+}
+
+TEST_F(ConfigurationManagerTest, shouldSetCorrectParametersOnUpdatePlayerContext) {
+  ON_CALL(*playerContextFactory, createPlayerContext()).WillByDefault(Return(newPlayerContext));
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
+
+  EXPECT_CALL(*newPlayerContext, setPlayerName(PLAYER_NAME));
+
+  configurationManager.updatePlayerContext(PLAYER_ID, PLAYER_NAME);
 }
 
 TEST_F(ConfigurationManagerTest, shouldReturnOwnPlayerContextWhenPlayerIdIsOwnPlayerId) {
@@ -76,7 +97,7 @@ TEST_F(ConfigurationManagerTest, shouldReturnOwnPlayerContextWhenPlayerIdIsOwnPl
 TEST_F(ConfigurationManagerTest, shouldReturnCorrectPlayerContextWhenFetchingWithPlayerId) {
   ON_CALL(*playerContextFactory, createPlayerContext()).WillByDefault(Return(newPlayerContext));
 
-  configurationManager.setPlayerContext(PLAYER_ID, PLAYER_NAME);
+  configurationManager.createPlayerContext(PLAYER_ID, PLAYER_NAME);
 
   ASSERT_EQ(*newPlayerContext, configurationManager.getPlayerContext(PLAYER_ID));
 }

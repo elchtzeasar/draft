@@ -55,7 +55,6 @@ void DraftApplication::connectSlotsToSignals() {
   connect( &networkComponent, SIGNAL(dataReceived(const AddressedMessage&)),
 	   &stateMachineComponent, SIGNAL(dataReceived(const AddressedMessage&)) );
 
-  
   // StateMachine -> ConfigurationComponent
   connect( &stateMachineComponent, SIGNAL(configurationRequest(const PlayerId&)),
 	   &configurationComponent, SLOT(handleConfigurationRequest(const PlayerId&)) );
@@ -66,8 +65,9 @@ void DraftApplication::connectSlotsToSignals() {
 	   &stateMachineComponent, SIGNAL(configurationResponse(const PlayerId&, const QString)) );
 
   // UI -> ConfigurationComponent:
-  connect( &ui, SIGNAL(setPlayerName(const PlayerId&, QString)),
-	   &configurationComponent, SLOT(handleSetPlayerName(const PlayerId&, const QString&)) );
+  connect( &ui, SIGNAL(updatePlayerConfiguration(const PlayerId&, QString)),
+	   &configurationComponent, SLOT(
+             handleUpdatePlayerConfiguration(const PlayerId&, const QString&)) );
   connect( &ui, SIGNAL(configurationRequest(const PlayerId&)),
 	   &configurationComponent, SLOT(handleConfigurationRequest(const PlayerId&)) );
   connect( &ui, SIGNAL(exit(int)),

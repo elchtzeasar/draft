@@ -29,6 +29,10 @@ void ConfigurationComponent::handleSetOwnPlayerId(const PlayerId& playerId) {
   configurationManager->setOwnPlayerId(playerId);
 }
 
-void ConfigurationComponent::handleSetPlayerName(const PlayerId& playerId, const QString& playerName) {
-  configurationManager->setPlayerContext(playerId, playerName);
+void ConfigurationComponent::handleUpdatePlayerConfiguration(const PlayerId& playerId, const QString& playerName) {
+  configurationManager->updatePlayerContext(playerId, playerName);
+}
+
+void ConfigurationComponent::handleCreatePlayerConfiguration(const PlayerId& playerId, const QString& playerName) {
+  configurationManager->createPlayerContext(playerId, playerName);
 }

@@ -20,7 +20,6 @@ protected:
   
   static const PlayerId PLAYER_ID;
   static const QString PLAYER_NAME;
-  static const QString OWN_PLAYER_NAME;
 
   ConfigurationComponentFactory configurationComponentFactory;
   ConfigurationComponent* configurationComponent;
@@ -39,19 +38,21 @@ ConfigurationComponentTest::ConfigurationComponentTest() :
 }
 
 TEST_F(ConfigurationComponentTest, shouldUpdateOwnPlayerIdWhenSetOwnPlayerIdCalled) {
-  configurationComponent->handleSetPlayerName(PlayerId::OWN, OWN_PLAYER_NAME);
   configurationComponent->handleSetOwnPlayerId(PLAYER_ID);
 
   configurationComponent->handleConfigurationRequest(PLAYER_ID);
   configurationResponseWaiter.wait();
+  const QString playerNameFromPlayerId(extractPlayerNameFromConfigurationResponse());
 
-  ASSERT_EQ(1, configurationResponseSpy.count());
-  ASSERT_EQ(PLAYER_ID, extractPlayerIdFromConfigurationResponse());
-  ASSERT_EQ(OWN_PLAYER_NAME, extractPlayerNameFromConfigurationResponse());
+  configurationComponent->handleConfigurationRequest(PlayerId::OWN);
+  configurationResponseWaiter.wait();
+  const QString playerNameFromOwnPlayerId(extractPlayerNameFromConfigurationResponse());
+
+  ASSERT_EQ(playerNameFromOwnPlayerId, playerNameFromPlayerId);
 }
 
 TEST_F(ConfigurationComponentTest, shouldRespondToConfigurationRequestWithConfigurationResponseForCorrectPlayer) {
-  configurationComponent->handleSetPlayerName(PLAYER_ID, PLAYER_NAME);
+  configurationComponent->handleCreatePlayerConfiguration(PLAYER_ID, PLAYER_NAME);
 
   configurationComponent->handleConfigurationRequest(PLAYER_ID);
   configurationResponseWaiter.wait();
@@ -73,4 +74,3 @@ QString ConfigurationComponentTest::extractPlayerNameFromConfigurationResponse()
 
 const PlayerId ConfigurationComponentTest::PLAYER_ID(101);
 const QString ConfigurationComponentTest::PLAYER_NAME("[player name]");
-const QString ConfigurationComponentTest::OWN_PLAYER_NAME("[own player name]");

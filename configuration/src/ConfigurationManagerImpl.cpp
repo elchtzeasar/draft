@@ -36,19 +36,35 @@ void ConfigurationManagerImpl::setOwnPlayerId(const PlayerId& playerId) {
 }
 
 void ConfigurationManagerImpl::createPlayerContext(const PlayerId& playerId, const QString& playerName) {
-}
+  PlayerContext* playerContext(findContext(playerId));
+  if (playerContext != NULL) {
+    LOG(ERROR) << "createPlayerContext called with PlayerId=" << playerId << ", "
+               << "There is allready a context with that id, not doing anything.";
+    return;
+  }
 
-void ConfigurationManagerImpl::setPlayerContext(const PlayerId& playerId, const QString& playerName) {
-  PlayerContextMap::const_iterator it(playerContexts.find(playerId));
-  PlayerContext* playerContext(NULL);
-  if (it == playerContexts.end()) {
-    LOG(WARNING) << "setPlayerContext called for PlayerId=" << playerId << ", it should be created first with createPlayerContext. Creating context anyways.";
-    playerContext = playerContextFactory->createPlayerContext();
-  } else
-    playerContext = it->second;
+  playerContext = playerContextFactory->createPlayerContext();
 
   playerContext->setPlayerName(playerName);
   playerContexts[playerId] = playerContext;
+}
+
+void ConfigurationManagerImpl::updatePlayerContext(const PlayerId& playerId, const QString& playerName) {
+  PlayerContext* playerContext(findContext(playerId));
+  if (playerContext == NULL) {
+    LOG(ERROR) << "updatePlayerContext called with PlayerId=" << playerId << ", "
+               << "there is no context for that id, not doing anything.";
+    return;
+  }
+  
+  playerContext->setPlayerName(playerName);
+}
+
+PlayerContext* ConfigurationManagerImpl::findContext(const PlayerId& playerId) const {
+  PlayerContextMap::const_iterator it(playerContexts.find(playerId));
+  if (it == playerContexts.end())
+    return NULL;
+  return it->second;
 }
 
 const PlayerContext& ConfigurationManagerImpl::getPlayerContext(const PlayerId& playerId) const {

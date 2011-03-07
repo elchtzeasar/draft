@@ -33,7 +33,7 @@ void RemoteController::run() {
     } else if (command == "exit") {
       exitCommand();
     } else if (command == "set_name") {
-      setPlayerName();
+      updatePlayerName();
     } else if (command == "get_name") {
       getPlayerName();
     } else {
@@ -74,14 +74,14 @@ void RemoteController::exitCommand() {
   emit exit(0);
 }
 
-void RemoteController::setPlayerName() {
+void RemoteController::updatePlayerName() {
   string stdPlayerName;
   cin >> stdPlayerName;
 
-  LOG(INFO) << "setPlayerName: " << stdPlayerName;
+  LOG(INFO) << "updatePlayerName: " << stdPlayerName;
 
   QString playerName(stdPlayerName.c_str());
-  emit setPlayerName(PlayerId::OWN, playerName);
+  emit updatePlayerConfiguration(PlayerId::OWN, playerName);
 }
 
 void RemoteController::getPlayerName() {
