@@ -7,4 +7,4 @@ TARGET = commonunittest
 SOURCES += AddressHeaderTest.cpp
 SOURCES += MessageTest.cpp
 SOURCES += NullMessageTest.cpp
-SOURCES += PlayerNameCfgMessageTest.cpp
+SOURCES += PlayerConfigurationCfgMessageTest.cpp

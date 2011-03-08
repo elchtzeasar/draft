@@ -4,8 +4,8 @@
 #include "PlayerId.h"
 #include "ReceivedMessageTransition.h"
 #include "SendingPlayerIdState.h"
-#include "SendingNameState.h"
-#include "SavingPlayerNameState.h"
+#include "SendingPlayerConfigurationState.h"
+#include "SavingPlayerConfigurationState.h"
 
 #include <QVariant>
 
@@ -15,7 +15,7 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   State(component, parent, name, false),
   sendingPlayerId(new SendingPlayerIdState(component, this)),
   receivingClientName(new State(component, this, "ReceivingClientName")),
-  savingPlayerName(new SavingPlayerNameState(component, this)),
+  savingPlayerName(new SavingPlayerConfigurationState(component, this)),
   waitingForOtherPlayers(new State(component, this, "WaitingForOtherPlayers")) {
 
   connect(this, SIGNAL(configurationRequest(const PlayerId&)),
@@ -26,7 +26,7 @@ ServerConfiguringState::ServerConfiguringState(QObject* component, State* parent
   new ReceivedMessageTransition(
     component, sendingPlayerId, receivingClientName, MessageNumber::PLAYER_ID_CNF);
   new ReceivedMessageTransition(
-    component, receivingClientName, savingPlayerName, MessageNumber::PLAYER_NAME_CFG);
+    component, receivingClientName, savingPlayerName, MessageNumber::PLAYER_CONFIGURATION_CFG);
   savingPlayerName->addTransition(waitingForOtherPlayers);
 
   connect(sendingPlayerId, SIGNAL(sendData(const AddressedMessage&)),

@@ -9,8 +9,8 @@ class MessageNumber {
   static const MessageNumber NULL_MESSAGE;
   static const MessageNumber PLAYER_ID_CFG;
   static const MessageNumber PLAYER_ID_CNF;
-  static const MessageNumber PLAYER_NAME_CFG;
-  static const MessageNumber PLAYER_NAME_CNF;
+  static const MessageNumber PLAYER_CONFIGURATION_CFG;
+  static const MessageNumber PLAYER_CONFIGURATION_CNF;
 
   static const MessageNumber NO_MESSAGE;
 

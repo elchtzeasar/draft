@@ -7,21 +7,21 @@ digraph G {
     subgraph cluster11 {
       label = "Configuring";
 
-      savingPlayerId [label = "savingPlayerId\nenter: save playerId\nenter: send(PlayerIdCnf)"];
-      requestingName_client [label = "requestingName\nenter: configurationRequest"];
-      sendingName_client [label = "sendingName\nenter: send(PlayerNameCfg)"];
-      receivingPlayerName [label = "receivingPlayerName\nenter: enter: connectedToServer"];
-      savingPlayerName_client [label = "savingPlayerName\nenter: playerConnected\nenter: save playerName\nenter: send(PlayerNameCnf)"];
+      savingPlayerId [label = "savingPlayerId\nenter: setOwnPlayerId\nenter: send(PlayerIdCnf)"];
+      requestingPlayerConfiguration_client [label = "requestingPlayerConfiguration\nenter: configurationRequest"];
+      sendingPlayerConfiguration_client [label = "sendingPlayerConfiguration\nenter: send(PlayerConfigurationCfg)"];
+      receivingPlayerConfiguration [label = "receivingPlayerConfiguration\nenter: connectedToServer"];
+      savingPlayerConfiguration_client [label = "savingPlayerConfiguration\nenter: playerConnected\nenter: createPlayerConfiguration\nenter: send(PlayerConfigurationCnf)"];
 
       receivingPlayerId -> savingPlayerId [label = "received: PlayerIdCfg"];
-      savingPlayerId -> requestingName_client;
-      requestingName_client -> sendingName_client [label = "configurationResponse"];
-      sendingName_client -> receivingPlayerName [label = "received PlayerNameCnf"];
-      receivingPlayerName -> savingPlayerName_client [label = "received: PlayerNameCfg"];
-      savingPlayerName_client -> receivingPlayerName;
+      savingPlayerId -> requestingPlayerConfiguration_client;
+      requestingPlayerConfiguration_client -> sendingPlayerConfiguration_client [label = "configurationResponse"];
+      sendingPlayerConfiguration_client -> receivingPlayerConfiguration [label = "received PlayerConfigurationCnf"];
+      receivingPlayerConfiguration -> savingPlayerConfiguration_client [label = "received: PlayerConfigurationCfg"];
+      savingPlayerConfiguration_client -> receivingPlayerConfiguration;
     }
 
-    receivingPlayerName -> TBI_client [label = "received: startDraft"];
+    receivingPlayerConfiguration -> TBI_client [label = "received: startDraft"];
     waitingForConnection -> receivingPlayerId [label = "connectedToDraft"];
   }
 
@@ -37,15 +37,15 @@ digraph G {
         label = "Configuring";
 
 	sendingPlayerId [label = "sendingPlayerId\nenter: send(PlayerIdCfg)"];
- 	savingPlayerName_server [label = "savingPlayerName\nenter: playerConnected\nenter: save received name\nenter: send PlayerNameCnf"];
+ 	savingPlayerConfiguration_server [label = "savingPlayerConfiguration\nenter: playerConnected\nenter: createPlayerConfiguration\nenter: send(PlayerConfigurationCnf)"];
 	waitingForOtherPlayers;
- 	forwardingPlayerName [label = "forwardingPlayerName\nenter: send(PlayerNameCfg)"];
+ 	forwardingPlayerConfiguration [label = "forwardingPlayerConfiguration\nenter: send(PlayerConfigurationCfg)"];
 
 	sendingPlayerId -> receivingClientName [label = "received: PlayerIdCnf"];
-	receivingClientName -> savingPlayerName_server [label = "received: PlayerNameCfg"];
-	savingPlayerName_server -> waitingForOtherPlayers;
-	waitingForOtherPlayers -> forwardingPlayerName [label = "playerConnected"];
-	forwardingPlayerName -> waitingForOtherPlayers [label = "received: PlayerNameCnf"];
+	receivingClientName -> savingPlayerConfiguration_server [label = "received: PlayerConfigurationCfg"];
+	savingPlayerConfiguration_server -> waitingForOtherPlayers;
+	waitingForOtherPlayers -> forwardingPlayerConfiguration [label = "playerConnected"];
+	forwardingPlayerConfiguration -> waitingForOtherPlayers [label = "received: PlayerConfigurationCnf"];
       }
     } 
 

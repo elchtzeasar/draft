@@ -4,8 +4,8 @@
 #include "PlayerId.h"
 #include "ReceivedMessageTransition.h"
 #include "SavingPlayerIdState.h"
-#include "SavingPlayerNameState.h"
-#include "SendingNameState.h"
+#include "SavingPlayerConfigurationState.h"
+#include "SendingPlayerConfigurationState.h"
 
 #include <QVariant>
 
@@ -16,9 +16,9 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
   receivingPlayerId(new State(component, this, "ReceivingPlayerId")),
   savingPlayerId(new SavingPlayerIdState(component, this)),
   requestingName(new State(component, this, "RequestingName")),
-  sendingName(new SendingNameState(component, this)),
+  sendingName(new SendingPlayerConfigurationState(component, this)),
   receivingPlayerName(new State(component, this, "ReceivingPlayerName")),
-  savingPlayerName(new SavingPlayerNameState(component, this)) {
+  savingPlayerName(new SavingPlayerConfigurationState(component, this)) {
 
   connect(savingPlayerId, SIGNAL(sendData(const AddressedMessage&)),
 	  component, SIGNAL(sendData(const AddressedMessage&)) );
@@ -45,10 +45,10 @@ ClientConfiguringState::ClientConfiguringState(QObject* component, State* parent
     component, SIGNAL(configurationResponse(const PlayerId&, const QString)), sendingName);
 
   new ReceivedMessageTransition(
-    component, sendingName, receivingPlayerName, MessageNumber::PLAYER_NAME_CNF);
+    component, sendingName, receivingPlayerName, MessageNumber::PLAYER_CONFIGURATION_CNF);
 
   new ReceivedMessageTransition(
-    component, receivingPlayerName, savingPlayerName, MessageNumber::PLAYER_NAME_CFG);
+    component, receivingPlayerName, savingPlayerName, MessageNumber::PLAYER_CONFIGURATION_CFG);
 
   savingPlayerName->addTransition(receivingPlayerName);
 

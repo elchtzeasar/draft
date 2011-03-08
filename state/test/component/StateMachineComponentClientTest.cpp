@@ -6,7 +6,7 @@
 #include "NullMessage.h"
 #include "PlayerId.h"
 #include "RemoteControllerStub.h"
-#include "PlayerNameCfgMessage.h"
+#include "PlayerConfigurationCfgMessage.h"
 #include "StateChangeWaiter.h"
 #include "StateMachineComponent.h"
 
@@ -99,7 +99,7 @@ void StateMachineComponentClientTest::sendPlayerIdAndWait() {
 
 void StateMachineComponentClientTest::confirmPlayerNameAndWait() {
   const AddressedMessage playerNameCnf(new AddressHeader(PlayerId::SERVER, OWN_PLAYER_ID),
-				       new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+				       new NullMessage(MessageNumber::PLAYER_CONFIGURATION_CNF));
 
   networkComponent.sendDataReceived(playerNameCnf);
 
@@ -108,7 +108,7 @@ void StateMachineComponentClientTest::confirmPlayerNameAndWait() {
 
 void StateMachineComponentClientTest::sendPlayerNameAndWait() {
   const AddressedMessage playerNameCfg(new AddressHeader(OTHER_PLAYER_ID, OWN_PLAYER_ID),
-				       new PlayerNameCfgMessage(OTHER_PLAYER_NAME));
+				       new PlayerConfigurationCfgMessage(OTHER_PLAYER_NAME));
 
   networkComponent.sendDataReceived(playerNameCfg);
 
@@ -126,14 +126,14 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerIdCnfWhenConnectedToDraf
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerIdCnf));
 }
 
-TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCfgWhenConnectedToDraftAndPlayerIdCfgReceived) {
-  AddressedMessage expectedPlayerNameCfg(new AddressHeader(OWN_PLAYER_ID, PlayerId::SERVER),
-                                         new PlayerNameCfgMessage(configurationComponent.getPlayerName(OWN_PLAYER_ID).c_str()));
+TEST_F(StateMachineComponentClientTest, shouldSendPlayerConfigurationCfgWhenConnectedToDraftAndPlayerIdCfgReceived) {
+  AddressedMessage expectedPlayerConfigurationCfg(new AddressHeader(OWN_PLAYER_ID, PlayerId::SERVER),
+                                         new PlayerConfigurationCfgMessage(configurationComponent.getPlayerName(OWN_PLAYER_ID).c_str()));
   startComponentAndWait();
   connectToDraftAndWait();
   sendPlayerIdAndWait();
 
-  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCfg));
+  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerConfigurationCfg));
 }
 
 TEST_F(StateMachineComponentClientTest, shouldEmitConnectedToServerWhenConnectedToDraftAndPlayerIdCfgReceived) {
@@ -146,9 +146,9 @@ TEST_F(StateMachineComponentClientTest, shouldEmitConnectedToServerWhenConnected
   ASSERT_EQ(1, connectedToServerSpy.count());
 }
 
-TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDraftAndPlayerNameCfgReceived) {
-  AddressedMessage expectedPlayerNameCnf(new AddressHeader(OWN_PLAYER_ID, OTHER_PLAYER_ID),
-                                         new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+TEST_F(StateMachineComponentClientTest, shouldSendPlayerConfigurationCnfWhenConnectedToDraftAndPlayerConfigurationCfgReceived) {
+  AddressedMessage expectedPlayerConfigurationCnf(new AddressHeader(OWN_PLAYER_ID, OTHER_PLAYER_ID),
+                                         new NullMessage(MessageNumber::PLAYER_CONFIGURATION_CNF));
 
   startComponentAndWait();
   connectToDraftAndWait();
@@ -156,14 +156,14 @@ TEST_F(StateMachineComponentClientTest, shouldSendPlayerNameCnfWhenConnectedToDr
   confirmPlayerNameAndWait();
   sendPlayerNameAndWait();
 
-  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCnf));
+  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerConfigurationCnf));
 }
 
-TEST_F(StateMachineComponentClientTest, shouldEmitPlayerConnectedWhenConnectedToDraftAndPlayerNameCfgReceived) {
+TEST_F(StateMachineComponentClientTest, shouldEmitPlayerConnectedWhenConnectedToDraftAndPlayerConfigurationCfgReceived) {
   QSignalSpy playerConnectedSpy(&stateMachineComponent,
                                 SIGNAL(playerConnected(const PlayerId&, const QString&)));
-  AddressedMessage expectedPlayerNameCnf(new AddressHeader(OWN_PLAYER_ID, OTHER_PLAYER_ID),
-                                         new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+  AddressedMessage expectedPlayerConfigurationCnf(new AddressHeader(OWN_PLAYER_ID, OTHER_PLAYER_ID),
+                                         new NullMessage(MessageNumber::PLAYER_CONFIGURATION_CNF));
 
   startComponentAndWait();
   connectToDraftAndWait();

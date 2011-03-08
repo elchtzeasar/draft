@@ -6,7 +6,7 @@
 #include "NullMessage.h"
 #include "PlayerId.h"
 #include "RemoteControllerStub.h"
-#include "PlayerNameCfgMessage.h"
+#include "PlayerConfigurationCfgMessage.h"
 #include "StateChangeWaiter.h"
 #include "StateMachineComponent.h"
 
@@ -97,7 +97,7 @@ void StateMachineComponentServerTest::confirmPlayerIdAndWait() {
 
 void StateMachineComponentServerTest::sendPlayerNameAndWait() {
   const AddressedMessage playerNameCfg(new AddressHeader(PLAYER_ID, PlayerId::SERVER),
-				       new PlayerNameCfgMessage(PLAYER_NAME));
+				       new PlayerConfigurationCfgMessage(PLAYER_NAME));
 
   networkComponent.sendDataReceived(playerNameCfg);
 
@@ -115,9 +115,9 @@ TEST_F(StateMachineComponentServerTest, shouldSendPlayerIdCfgWhenClientConnected
   ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerIdCfg));
 }
 
-TEST_F(StateMachineComponentServerTest, shouldSendPlayerNameCnfWhenPlayerNameCfgReceived) {
-  AddressedMessage expectedPlayerNameCnf(new AddressHeader(PlayerId::SERVER, PLAYER_ID),
-                                         new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+TEST_F(StateMachineComponentServerTest, shouldSendPlayerConfigurationCnfWhenPlayerConfigurationCfgReceived) {
+  AddressedMessage expectedPlayerConfigurationCnf(new AddressHeader(PlayerId::SERVER, PLAYER_ID),
+                                         new NullMessage(MessageNumber::PLAYER_CONFIGURATION_CNF));
 
   startComponentAndWait();
   hostDraftAndWait();
@@ -125,14 +125,14 @@ TEST_F(StateMachineComponentServerTest, shouldSendPlayerNameCnfWhenPlayerNameCfg
   confirmPlayerIdAndWait();
   sendPlayerNameAndWait();
 
-  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerNameCnf));
+  ASSERT_TRUE(networkComponent.waitForSendData(expectedPlayerConfigurationCnf));
 }
 
-TEST_F(StateMachineComponentServerTest, shouldEmitPlayerConnectedWhenPlayerNameCfgReceived) {
+TEST_F(StateMachineComponentServerTest, shouldEmitPlayerConnectedWhenPlayerConfigurationCfgReceived) {
   QSignalSpy playerConnectedSpy(&stateMachineComponent,
                                 SIGNAL(playerConnected(const PlayerId&, const QString&)));
-  AddressedMessage expectedPlayerNameCnf(new AddressHeader(PlayerId::SERVER, PLAYER_ID),
-                                         new NullMessage(MessageNumber::PLAYER_NAME_CNF));
+  AddressedMessage expectedPlayerConfigurationCnf(new AddressHeader(PlayerId::SERVER, PLAYER_ID),
+                                         new NullMessage(MessageNumber::PLAYER_CONFIGURATION_CNF));
 
   startComponentAndWait();
   hostDraftAndWait();

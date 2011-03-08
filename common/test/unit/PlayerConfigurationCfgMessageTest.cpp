@@ -1,4 +1,4 @@
-#include "PlayerNameCfgMessage.h"
+#include "PlayerConfigurationCfgMessage.h"
 
 #include <QByteArray>
 #include <QDataStream>
@@ -10,25 +10,25 @@
 #include <gtest/gtest.h>
 
 using std::stringstream;
-class PlayerNameCfgMessageTest : public testing::Test {
+class PlayerConfigurationCfgMessageTest : public testing::Test {
 protected:
   static const char* PLAYER_NAME;
 };
 
-const char* PlayerNameCfgMessageTest::PLAYER_NAME("PLAYER NAME");
+const char* PlayerConfigurationCfgMessageTest::PLAYER_NAME("PLAYER NAME");
 
-TEST_F(PlayerNameCfgMessageTest, shouldPrintMessageCorrectly) {
+TEST_F(PlayerConfigurationCfgMessageTest, shouldPrintMessageCorrectly) {
   stringstream s;
-  PlayerNameCfgMessage playerNameCfgMessage(PLAYER_NAME);
+  PlayerConfigurationCfgMessage playerNameCfgMessage(PLAYER_NAME);
   s << playerNameCfgMessage;
 
-  ASSERT_EQ("PlayerNameCfgMessage { playerName='PLAYER NAME' }", s.str());
+  ASSERT_EQ("PlayerConfigurationCfgMessage { playerName='PLAYER NAME' }", s.str());
 }
 
-TEST_F(PlayerNameCfgMessageTest,
-       shouldGetACopyOfPlayerNameCfgMessageAfterSerializingThenDeserializing) {
-  PlayerNameCfgMessage playerNameCfgMessage1(PLAYER_NAME);
-  PlayerNameCfgMessage playerNameCfgMessage2;
+TEST_F(PlayerConfigurationCfgMessageTest,
+       shouldGetACopyOfPlayerConfigurationCfgMessageAfterSerializingThenDeserializing) {
+  PlayerConfigurationCfgMessage playerNameCfgMessage1(PLAYER_NAME);
+  PlayerConfigurationCfgMessage playerNameCfgMessage2;
   Message& message1(playerNameCfgMessage1);
   Message& message2(playerNameCfgMessage2);
 

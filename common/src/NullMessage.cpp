@@ -19,7 +19,7 @@ bool NullMessage::messageNumberIsAllowed(const MessageNumber& messageNumber) {
   return MessageNumber::NULL_MESSAGE == messageNumber ||
          MessageNumber::PLAYER_ID_CFG == messageNumber ||
          MessageNumber::PLAYER_ID_CNF == messageNumber ||
-         MessageNumber::PLAYER_NAME_CNF == messageNumber;
+         MessageNumber::PLAYER_CONFIGURATION_CNF == messageNumber;
 }
 
 bool operator==(const NullMessage& lhs, const NullMessage& rhs) {

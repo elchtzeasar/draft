@@ -1,9 +1,9 @@
-#include "SendingNameState.h"
+#include "SendingPlayerConfigurationState.h"
 
 #include "AddressHeader.h"
 #include "AddressedMessage.h"
 #include "PlayerId.h"
-#include "PlayerNameCfgMessage.h"
+#include "PlayerConfigurationCfgMessage.h"
 
 #include <QEvent>
 #include <QSignalTransition>
@@ -11,21 +11,21 @@
 
 #include <cassert>
 
-SendingNameState::SendingNameState(QObject* component, State* parent) : 
+SendingPlayerConfigurationState::SendingPlayerConfigurationState(QObject* component, State* parent) : 
   State(component, parent, "SendingName") {
 }
 
-SendingNameState::~SendingNameState() {}
+SendingPlayerConfigurationState::~SendingPlayerConfigurationState() {}
 
-void SendingNameState::onEntry(QEvent* event) {
+void SendingPlayerConfigurationState::onEntry(QEvent* event) {
   assert(event->type() == QEvent::StateMachineSignal &&
-	 "SendingNameState should only be entered with a QEvent::StateMachineSignal");
+	 "SendingPlayerConfigurationState should only be entered with a QEvent::StateMachineSignal");
   QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
 
   const PlayerId& playerId = signalEvent->arguments().at(0).value<PlayerId>();
   const QString playerName = signalEvent->arguments().at(1).toString();
 
   AddressHeader* addressHeader = new AddressHeader(playerId, PlayerId::SERVER);
-  PlayerNameCfgMessage* playerNameCfg = new PlayerNameCfgMessage(playerName.toStdString().c_str());
+  PlayerConfigurationCfgMessage* playerNameCfg = new PlayerConfigurationCfgMessage(playerName.toStdString().c_str());
   emit sendData(AddressedMessage(addressHeader, playerNameCfg));
 }

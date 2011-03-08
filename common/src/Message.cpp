@@ -1,7 +1,7 @@
 #include "Message.h"
 
 #include "NullMessage.h"
-#include "PlayerNameCfgMessage.h"
+#include "PlayerConfigurationCfgMessage.h"
 
 #include <QDataStream>
 #include <glog/logging.h>
@@ -17,10 +17,10 @@ MessageNumber Message::getMessageNumber() const {
 const char* Message::messageNumberToString(const MessageNumber& messageNumber) {
   if (messageNumber == MessageNumber::NULL_MESSAGE) {
     return "NullMessage";
-  } else if (messageNumber == MessageNumber::PLAYER_NAME_CFG) {
-    return "PlayerNameCfg";
-  } else if (messageNumber == MessageNumber::PLAYER_NAME_CNF) {
-    return "PlayerNameCnf";
+  } else if (messageNumber == MessageNumber::PLAYER_CONFIGURATION_CFG) {
+    return "PlayerConfigurationCfg";
+  } else if (messageNumber == MessageNumber::PLAYER_CONFIGURATION_CNF) {
+    return "PlayerConfigurationCnf";
   } else if (messageNumber == MessageNumber::PLAYER_ID_CFG) {
     return "PlayerIdCfg";
   } else if (messageNumber == MessageNumber::PLAYER_ID_CNF) {
@@ -58,8 +58,8 @@ std::ostream& operator<<(std::ostream& stream, const Message& message) {
   PRINT_MESSAGE(MessageNumber::NULL_MESSAGE, NullMessage) else
   PRINT_MESSAGE(MessageNumber::PLAYER_ID_CFG, NullMessage) else
   PRINT_MESSAGE(MessageNumber::PLAYER_ID_CNF, NullMessage) else
-  PRINT_MESSAGE(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
-  PRINT_MESSAGE(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
+  PRINT_MESSAGE(MessageNumber::PLAYER_CONFIGURATION_CFG, PlayerConfigurationCfgMessage) else
+  PRINT_MESSAGE(MessageNumber::PLAYER_CONFIGURATION_CNF, NullMessage) else {
     assert(false && "Unkown message number!");
   }
   stream << " }";
@@ -70,13 +70,13 @@ bool operator==(const Message& lhs, const Message& rhs) {
   if (lhs.getMessageNumber() == rhs.getMessageNumber()) {
     if (lhs.getMessageNumber() == MessageNumber::NULL_MESSAGE ||
 	lhs.getMessageNumber() == MessageNumber::PLAYER_ID_CNF ||
-	lhs.getMessageNumber() == MessageNumber::PLAYER_NAME_CNF ||
+	lhs.getMessageNumber() == MessageNumber::PLAYER_CONFIGURATION_CNF ||
 	lhs.getMessageNumber() == MessageNumber::PLAYER_ID_CFG) {
       return static_cast<const NullMessage&>(lhs) ==
 	static_cast<const NullMessage&>(rhs);
-    } else if(lhs.getMessageNumber() == MessageNumber::PLAYER_NAME_CFG) {
-      return static_cast<const PlayerNameCfgMessage&>(lhs) ==
-	static_cast<const PlayerNameCfgMessage&>(rhs);
+    } else if(lhs.getMessageNumber() == MessageNumber::PLAYER_CONFIGURATION_CFG) {
+      return static_cast<const PlayerConfigurationCfgMessage&>(lhs) ==
+	static_cast<const PlayerConfigurationCfgMessage&>(rhs);
     } else {
       assert(false && "Received message with unknown MessageNumber");
     }
@@ -90,8 +90,8 @@ QDataStream& operator<<(QDataStream& stream, const Message& message) {
   SERIALIZE_MESSAGE(MessageNumber::NULL_MESSAGE, NullMessage) else
   SERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CFG, NullMessage) else
   SERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CNF, NullMessage) else
-  SERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
-  SERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
+  SERIALIZE_MESSAGE(MessageNumber::PLAYER_CONFIGURATION_CFG, PlayerConfigurationCfgMessage) else
+  SERIALIZE_MESSAGE(MessageNumber::PLAYER_CONFIGURATION_CNF, NullMessage) else {
     assert(false && "Unkown message number!");
   }
   return stream;
@@ -104,8 +104,8 @@ QDataStream& operator>>(QDataStream& stream, Message*& message) {
   DESERIALIZE_MESSAGE_PTR(MessageNumber::NULL_MESSAGE, NullMessage) else
   DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_ID_CFG, NullMessage) else
   DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_ID_CNF, NullMessage) else
-  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
-  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
+  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_CONFIGURATION_CFG, PlayerConfigurationCfgMessage) else
+  DESERIALIZE_MESSAGE_PTR(MessageNumber::PLAYER_CONFIGURATION_CNF, NullMessage) else {
     LOG(ERROR) << "MessageNumber=" << messageNumber;
     assert(false && "Unkown message number!");
   }
@@ -118,8 +118,8 @@ QDataStream& operator>>(QDataStream& stream, Message& message) {
   DESERIALIZE_MESSAGE(MessageNumber::NULL_MESSAGE, NullMessage) else
   DESERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CFG, NullMessage) else
   DESERIALIZE_MESSAGE(MessageNumber::PLAYER_ID_CNF, NullMessage) else
-  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CFG, PlayerNameCfgMessage) else
-  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_NAME_CNF, NullMessage) else {
+  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_CONFIGURATION_CFG, PlayerConfigurationCfgMessage) else
+  DESERIALIZE_MESSAGE(MessageNumber::PLAYER_CONFIGURATION_CNF, NullMessage) else {
     assert(false && "Unkown message number!");
   }
   return stream;

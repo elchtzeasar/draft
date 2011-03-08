@@ -3,7 +3,7 @@
 #include "AddressHeader.h"
 #include "Message.h"
 #include "NullMessage.h"
-#include "PlayerNameCfgMessage.h"
+#include "PlayerConfigurationCfgMessage.h"
 
 #include <QDataStream>
 

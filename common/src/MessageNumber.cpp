@@ -11,8 +11,8 @@ enum {
   NULL_MESSAGE_NUMBER,
   PLAYER_ID_CFG_NUMBER,
   PLAYER_ID_CNF_NUMBER,
-  PLAYER_NAME_CFG_NUMBER,
-  PLAYER_NAME_CNF_NUMBER,
+  PLAYER_CONFIGURATION_CFG_NUMBER,
+  PLAYER_CONFIGURATION_CNF_NUMBER,
  
   NO_MESSAGE_NUMBER = 0xff
 };
@@ -41,11 +41,11 @@ QDataStream& operator>>(QDataStream& stream, MessageNumber& messageNumber) {
   case PLAYER_ID_CNF_NUMBER:
     messageNumber = MessageNumber::PLAYER_ID_CNF;
     break;
-  case PLAYER_NAME_CFG_NUMBER:
-    messageNumber = MessageNumber::PLAYER_NAME_CFG;
+  case PLAYER_CONFIGURATION_CFG_NUMBER:
+    messageNumber = MessageNumber::PLAYER_CONFIGURATION_CFG;
     break;
-  case PLAYER_NAME_CNF_NUMBER:
-    messageNumber = MessageNumber::PLAYER_NAME_CNF;
+  case PLAYER_CONFIGURATION_CNF_NUMBER:
+    messageNumber = MessageNumber::PLAYER_CONFIGURATION_CNF;
     break;
   case NO_MESSAGE_NUMBER:
     LOG(ERROR) << "Deserialized message number: " << number << " (NoMessage)";
@@ -74,7 +74,7 @@ ostream& operator<<(ostream& stream, const MessageNumber& message) {
 const MessageNumber MessageNumber::NULL_MESSAGE(0, "NullMessage");
 const MessageNumber MessageNumber::PLAYER_ID_CFG(1, "PlayerIdCfg");
 const MessageNumber MessageNumber::PLAYER_ID_CNF(2, "PlayerIdCnf");
-const MessageNumber MessageNumber::PLAYER_NAME_CFG(3, "PlayerNameCfg");
-const MessageNumber MessageNumber::PLAYER_NAME_CNF(4, "PlayerNameCnf");
+const MessageNumber MessageNumber::PLAYER_CONFIGURATION_CFG(3, "PlayerConfigurationCfg");
+const MessageNumber MessageNumber::PLAYER_CONFIGURATION_CNF(4, "PlayerConfigurationCnf");
 
 const MessageNumber MessageNumber::NO_MESSAGE(NO_MESSAGE_NUMBER, NO_MESSAGE_NAME);
