@@ -14,9 +14,9 @@ using testing::NiceMock;
 using testing::Return;
 using testing::SaveArg;
 
-class NetworkComponentTest : public testing::Test {
+class NetworkComponentUnitTest : public testing::Test {
 public:
-  NetworkComponentTest() : 
+  NetworkComponentUnitTest() : 
     connectionListener(new NiceMock<ConnectionListenerMock>),
     component(networkComponentFactory, connectionListener) {}
 
@@ -30,20 +30,20 @@ protected:
 static unsigned int PORT(12345);
 static const QString HOST("localhost");
 
-TEST_F(NetworkComponentTest, shouldListenWithListenerWhenHostingDraft) {
+TEST_F(NetworkComponentUnitTest, shouldListenWithListenerWhenHostingDraft) {
   EXPECT_CALL(*connectionListener, listen(PORT));
 
   component.handleHostDraft(PORT);
 }
 
-TEST_F(NetworkComponentTest, shouldCreateConnectionWhenConnectingToDraftSlot) {
+TEST_F(NetworkComponentUnitTest, shouldCreateConnectionWhenConnectingToDraftSlot) {
   EXPECT_CALL(networkComponentFactory, createConnection(_)).WillOnce(Return(&connection));;
   ON_CALL(connection, connectToHost(_, _)).WillByDefault(Return());
 
   component.handleConnectToDraft(HOST, PORT);
 }
 
-TEST_F(NetworkComponentTest, shouldConnectNewConnectionWhenConnectingToDraftSlot) {
+TEST_F(NetworkComponentUnitTest, shouldConnectNewConnectionWhenConnectingToDraftSlot) {
   ON_CALL(networkComponentFactory, createConnection(_)).WillByDefault(Return(&connection));;
   EXPECT_CALL(connection, connectToHost(HOST, PORT)).WillOnce(Return());
 

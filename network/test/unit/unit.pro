@@ -6,4 +6,4 @@ QT += network
     error( Couldnt find the test.pri file! )
 }
 
-SOURCES += NetworkComponentTest.cpp
+SOURCES += NetworkComponentUnitTest.cpp
