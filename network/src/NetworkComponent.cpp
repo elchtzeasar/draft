@@ -5,8 +5,6 @@
 #include "NetworkComponentFactory.h"
 #include <QTcpSocket>
 
-using std::string;
-
 NetworkComponent::NetworkComponent(NetworkComponentFactory& componentFactory,
 				   ConnectionListener* connectionListener) 
   : componentFactory(componentFactory),

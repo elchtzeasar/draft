@@ -4,6 +4,7 @@
 
 LIBS += -lcommoncomponenttest
 LIBS += -lconfigurationcomponenttest
+LIBS += -lnetworkcomponenttest
 LIBS += -lstatecomponenttest
 LIBS += -lcommon -lstate
 

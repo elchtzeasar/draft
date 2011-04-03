@@ -27,5 +27,4 @@ void ConnectionListenerImpl::acceptConnection() {
     componentFactory.createConnection(tcpServer.nextPendingConnection());
 
   emit clientConnected(connection->getPlayerId());
-  //connection.handleSendData(QString("This is server speaking..."));
 }
