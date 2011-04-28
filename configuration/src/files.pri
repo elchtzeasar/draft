@@ -1,4 +1,4 @@
-INCLUDEPATH += /usr/src/boost_1_44_0
+INCLUDEPATH += /usr/local/include/boost
 
 HEADERS += $${DIR_PREFIX}/configuration/src/ConfigurationLoader.h
 HEADERS += $${DIR_PREFIX}/configuration/src/ConfigurationLoaderImpl.h
