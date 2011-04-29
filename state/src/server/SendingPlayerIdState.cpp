@@ -22,7 +22,7 @@ void SendingPlayerIdState::onEntry(QEvent* event) {
 
   QStateMachine::SignalEvent* signalEvent(static_cast<QStateMachine::SignalEvent*>(event));
   const QVariant& playerIdVariant(signalEvent->arguments().at(0));
-  assert(playerIdVariant.canConvert<quint8>() && 
+  assert(playerIdVariant.canConvert<PlayerId>() &&
   	 "Must be able to convert argument to quint8!");
   const PlayerId& playerId(playerIdVariant.value<PlayerId>());
 
