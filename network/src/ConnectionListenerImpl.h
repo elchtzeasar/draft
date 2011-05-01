@@ -5,6 +5,8 @@
 
 #include <QTcpServer>
 
+#include <QtGlobal>
+
 class NetworkComponentFactory;
 
 class ConnectionListenerImpl : public ConnectionListener {
@@ -22,6 +24,8 @@ class ConnectionListenerImpl : public ConnectionListener {
  private:
   ConnectionListenerImpl(const ConnectionListenerImpl&);
   ConnectionListenerImpl& operator=(ConnectionListenerImpl&);
+
+  quint8 nextPlayerId;
 
   NetworkComponentFactory& componentFactory;
   QTcpServer tcpServer;

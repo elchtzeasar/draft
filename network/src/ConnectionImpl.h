@@ -3,18 +3,15 @@
 
 #include "Connection.h"
 
-#include "PlayerId.h"
-
 class AddressedMessage;
 
 class ConnectionImpl : public Connection {
  public:
-  ConnectionImpl(const PlayerId& playerId, QTcpSocket* tcpSocket);
+  ConnectionImpl(QTcpSocket* tcpSocket);
   virtual ~ConnectionImpl();
 
   void connectToHost(const QString& hostName, unsigned int port);
   void disconnectFromHost();
-  const PlayerId& getPlayerId() const;
 
  public slots:
   virtual void sendData(const AddressedMessage& message) const;
@@ -24,7 +21,6 @@ class ConnectionImpl : public Connection {
   void socketError(QAbstractSocket::SocketError socketError);
 
  private:
-  PlayerId playerId;
   QTcpSocket* tcpSocket;
 };
 

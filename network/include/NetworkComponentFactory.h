@@ -3,6 +3,7 @@
 
 class Connection;
 class NetworkComponent;
+class PlayerId;
 
 class QTcpSocket;
 

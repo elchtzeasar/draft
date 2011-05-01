@@ -6,8 +6,8 @@
 
 #include <glog/logging.h>
 
-ConnectionImpl::ConnectionImpl(const PlayerId& playerId, QTcpSocket* tcpSocket) :
-  playerId(playerId), tcpSocket(tcpSocket) {
+ConnectionImpl::ConnectionImpl(QTcpSocket* tcpSocket) :
+  tcpSocket(tcpSocket) {
 
   connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readIncommingData()));
   connect(tcpSocket, SIGNAL(connected()), this, SIGNAL(connectedToDraft()));
@@ -25,10 +25,6 @@ void ConnectionImpl::connectToHost(const QString& hostName, unsigned int port) {
 
 void ConnectionImpl::disconnectFromHost() {
   tcpSocket->disconnectFromHost();
-}
-
-const PlayerId& ConnectionImpl::getPlayerId() const {
-  return playerId;
 }
 
 void ConnectionImpl::sendData(const AddressedMessage& message) const {

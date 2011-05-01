@@ -3,6 +3,7 @@
 #include "Connection.h"
 #include "ConnectionListener.h"
 #include "NetworkComponentFactory.h"
+
 #include <QTcpSocket>
 
 NetworkComponent::NetworkComponent(NetworkComponentFactory& componentFactory,
@@ -18,6 +19,7 @@ NetworkComponent::~NetworkComponent() {
 void NetworkComponent::addConnection(const Connection& connection) {
   this->connection = &connection;
 }
+
 void NetworkComponent::handleHostDraft(unsigned int port) {
   connectionListener->listen(port);
 }
