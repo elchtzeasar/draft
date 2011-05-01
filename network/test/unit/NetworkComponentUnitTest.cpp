@@ -18,7 +18,7 @@ class NetworkComponentUnitTest : public testing::Test {
 public:
   NetworkComponentUnitTest() : 
     connectionListener(new NiceMock<ConnectionListenerMock>),
-    component(networkComponentFactory, connectionListener) {}
+    component(networkComponentFactory) {}
 
 protected:
   NiceMock<ConnectionMock> connection;
@@ -31,6 +31,8 @@ static unsigned int PORT(12345);
 static const QString HOST("localhost");
 
 TEST_F(NetworkComponentUnitTest, shouldListenWithListenerWhenHostingDraft) {
+  ON_CALL(networkComponentFactory, createConnectionListener()).
+		  WillByDefault(Return(connectionListener));
   EXPECT_CALL(*connectionListener, listen(PORT));
 
   component.handleHostDraft(PORT);

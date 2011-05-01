@@ -11,20 +11,13 @@ NetworkComponentFactoryImpl::NetworkComponentFactoryImpl() :
 }
 
 NetworkComponent* NetworkComponentFactoryImpl::createComponent() {
-  ConnectionListener* connectionListener = new ConnectionListenerImpl(*this);
-  networkComponent = new NetworkComponent(*this, connectionListener);
-
-  // ConnectionListener -> NetworkComponent
-  QObject::connect( connectionListener, SIGNAL(clientConnected(const PlayerId&)),
-		    networkComponent, SIGNAL(clientConnected(const PlayerId&)) );
+  networkComponent = new NetworkComponent(*this);
 
   return networkComponent;
 }
 
 Connection* NetworkComponentFactoryImpl::createConnection(QTcpSocket* tcpSocket) {
   Connection* connection = new ConnectionImpl(tcpSocket);
-
-  networkComponent->addConnection(*connection);
 
   // Connection -> NetworkComponent
   QObject::connect( connection, SIGNAL(connectedToDraft()),
@@ -33,4 +26,14 @@ Connection* NetworkComponentFactoryImpl::createConnection(QTcpSocket* tcpSocket)
 		    networkComponent, SIGNAL(dataReceived(const AddressedMessage&)) );
 
   return connection;
+}
+
+ConnectionListener* NetworkComponentFactoryImpl::createConnectionListener() {
+  ConnectionListener* connectionListener = new ConnectionListenerImpl(*networkComponent, *this);
+
+  // ConnectionListener -> NetworkComponent
+  QObject::connect( connectionListener, SIGNAL(clientConnected(const PlayerId&)),
+		    networkComponent, SIGNAL(clientConnected(const PlayerId&)) );
+
+  return connectionListener;
 }

@@ -14,11 +14,10 @@ class NetworkComponent : public QObject {
   Q_OBJECT
 
  public:
-  NetworkComponent(NetworkComponentFactory& componentFactory,
-		   ConnectionListener* connectionListener);
+  NetworkComponent(NetworkComponentFactory& componentFactory);
   virtual ~NetworkComponent();
 
-  void addConnection(const Connection& connection);
+  void addConnection(Connection* connection);
 
  public slots:
   void handleHostDraft(unsigned int port);
@@ -37,7 +36,7 @@ class NetworkComponent : public QObject {
 
   NetworkComponentFactory& componentFactory;
   ConnectionListener* connectionListener;
-  const Connection* connection;
+  Connection* connection;
 };
 
 #endif // NETWORK_COMPONENT_H_

@@ -1,13 +1,15 @@
 #include "ConnectionListenerImpl.h"
 
 #include "Connection.h"
+#include "NetworkComponent.h"
 #include "NetworkComponentFactory.h"
 #include "PlayerId.h"
 
 #include <glog/logging.h>
 
-ConnectionListenerImpl::ConnectionListenerImpl(NetworkComponentFactory& componentFactory) :
-  nextPlayerId(0), componentFactory(componentFactory) {
+ConnectionListenerImpl::ConnectionListenerImpl(NetworkComponent& networkComponent,
+		NetworkComponentFactory& componentFactory) :
+  nextPlayerId(0), networkComponent(networkComponent), componentFactory(componentFactory) {
   connect(&tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
@@ -25,7 +27,8 @@ void ConnectionListenerImpl::listen(unsigned int port) {
 void ConnectionListenerImpl::acceptConnection() {
   PlayerId playerId(nextPlayerId++);
 
-  componentFactory.createConnection(tcpServer.nextPendingConnection());
+  Connection* connection = componentFactory.createConnection(tcpServer.nextPendingConnection());
+  networkComponent.addConnection(connection);
 
   emit clientConnected(playerId);
 }

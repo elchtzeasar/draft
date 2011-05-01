@@ -7,13 +7,15 @@
 
 #include <QtGlobal>
 
+class NetworkComponent;
 class NetworkComponentFactory;
 
 class ConnectionListenerImpl : public ConnectionListener {
   Q_OBJECT
 
  public:
-  ConnectionListenerImpl(NetworkComponentFactory& componentFactory);
+  ConnectionListenerImpl(NetworkComponent& networkComponent,
+		  NetworkComponentFactory& componentFactory);
   ~ConnectionListenerImpl();
 
   void listen(unsigned int port);
@@ -27,6 +29,7 @@ class ConnectionListenerImpl : public ConnectionListener {
 
   quint8 nextPlayerId;
 
+  NetworkComponent& networkComponent;
   NetworkComponentFactory& componentFactory;
   QTcpServer tcpServer;
 };

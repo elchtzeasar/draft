@@ -9,6 +9,7 @@ class NetworkComponentFactoryMock : public NetworkComponentFactory {
 
   MOCK_METHOD0(createComponent, NetworkComponent*());
   MOCK_METHOD1(createConnection, Connection*(QTcpSocket* tcpSocket));
+  MOCK_METHOD0(createConnectionListener, ConnectionListener*());
 };
 
 #endif // NETWORK_COMPONENT_FACTORY_MOCK_H_

@@ -12,6 +12,7 @@ class NetworkComponentFactoryImpl : public NetworkComponentFactory {
 
   NetworkComponent* createComponent();
   Connection* createConnection(QTcpSocket* tcpSocket);
+  ConnectionListener* createConnectionListener();
 
  private:
   NetworkComponentFactoryImpl(const NetworkComponentFactoryImpl&);
