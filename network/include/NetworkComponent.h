@@ -10,6 +10,8 @@ class NetworkComponentFactory;
 class PlayerId;
 class AddressedMessage;
 
+#include <map>
+
 class NetworkComponent : public QObject {
   Q_OBJECT
 
@@ -17,7 +19,7 @@ class NetworkComponent : public QObject {
   NetworkComponent(NetworkComponentFactory& componentFactory);
   virtual ~NetworkComponent();
 
-  void addConnection(Connection* connection);
+  void addConnection(const PlayerId& playerId, Connection* connection);
 
  public slots:
   void handleHostDraft(unsigned int port);
@@ -36,7 +38,9 @@ class NetworkComponent : public QObject {
 
   NetworkComponentFactory& componentFactory;
   ConnectionListener* connectionListener;
-  Connection* connection;
+
+  typedef std::map<const PlayerId, Connection*> ConnectionMap;
+  ConnectionMap connections;
 };
 
 #endif // NETWORK_COMPONENT_H_

@@ -28,7 +28,7 @@ void ConnectionListenerImpl::acceptConnection() {
   PlayerId playerId(nextPlayerId++);
 
   Connection* connection = componentFactory.createConnection(tcpServer.nextPendingConnection());
-  networkComponent.addConnection(connection);
+  networkComponent.addConnection(playerId, connection);
 
   emit clientConnected(playerId);
 }
