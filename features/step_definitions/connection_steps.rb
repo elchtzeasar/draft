@@ -2,10 +2,6 @@ require 'features/test_helper'
 
 require 'draft_app'
 
-Before do
-  @applications = {}
-end
-
 Given /^I have started an application with the user "([^"]*)"$/ do |username|
   @applications[username] = DraftApp.new(username, @current_scenario.name)
   @applications[username].configure_name

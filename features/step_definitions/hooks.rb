@@ -1,9 +1,9 @@
 Before do |scenario|
   @current_scenario = scenario
-end
 
-Before do
   check_instances('before')
+
+  @applications = {}
 end
 
 After do
@@ -15,6 +15,6 @@ end
 
 def check_instances(time_description)
   if `pgrep console_draft`.split("\n").size > 0
-    puts 'Found console_draft instances #{time_description} starting. This is bad!'
+    puts "Found console_draft instances #{time_description} starting. This is bad!"
   end
 end

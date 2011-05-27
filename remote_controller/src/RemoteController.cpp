@@ -42,8 +42,8 @@ void RemoteController::run() {
   }
 }
 
-void RemoteController::handleConfigurationResponse(const PlayerId& playerId,
-						   const QString playerName) {
+void RemoteController::handleConfigurationResponse(
+		const PlayerId&, const QString playerName) {
   LOG(INFO) << "Player name: " << playerName.toStdString() << endl;
 }
 
@@ -75,12 +75,13 @@ void RemoteController::exitCommand() {
 }
 
 void RemoteController::updatePlayerName() {
-  string stdPlayerName;
-  cin >> stdPlayerName;
+  const unsigned int NR_OF_CHARS(256);
+  char cPlayerName[NR_OF_CHARS];
+  cin.getline(cPlayerName, NR_OF_CHARS);
 
-  LOG(INFO) << "updatePlayerName: " << stdPlayerName;
+  LOG(INFO) << "updatePlayerName: " << cPlayerName;
 
-  QString playerName(stdPlayerName.c_str());
+  QString playerName(cPlayerName + 1); // Skip initial spaces
   emit updatePlayerConfiguration(PlayerId::OWN, playerName);
 }
 
